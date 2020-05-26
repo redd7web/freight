@@ -1,0 +1,28 @@
+ if( $('.setThisRoute').prop('checked') ){
+        $("input:checked").each(function () {
+            if( $(this).attr('rel')){
+                routes = $(this).attr('rel')+"|"+routes;               
+            } 
+            if($(this).attr('xlr') ){
+                acnts  = $(this).attr('xlr')+"|"+acnts;   
+            }
+        });
+        $(".schecheduled_ids").val(routes);
+        $(".accounts_checked").val(acnts);
+    } else {
+        var removeThisRouteID = $(this).attr('rel')+"|";
+        var removeThisAccountID = $(this).attr('xlr')+"|";
+        
+        var stringToEvaulate1 = $(".schecheduled_ids").val();
+        var stringToEvaulate2 = $(".accounts_checked").val();
+        
+        stringToEvaulate1 = stringToEvaulate1.replace(removeThisRouteID,"");        
+        stringToEvaulate2 = stringToEvaulate2.replace(removeThisAccountID,"");
+        $(".accounts_checked").val(stringToEvaulate2);
+        $(".schecheduled_ids").val(stringToEvaulate1);
+        
+    }
+
+
+$(".scheduled_ids").val(    $(".scheduled_ids").val() +    $(this).attr('rel')+"|" );  
+        //$(".accounts_checked").val( $(".accounts_checked").val() + $(this).attr('xlr')+"|" );   
