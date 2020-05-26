@@ -1,0 +1,49 @@
+$expected = 0;
+    $askthree = $db->where('account_no',$_POST['account_no'])->orderby("date_of_pickup","DESC")->get($dbprefix."_data_table","inches_to_gallons,date_of_pickup");
+    if(count($askthree)>0){
+        $i = count($askthree);                    
+        if($i>=4){
+            //start completed pickups formula
+           for($i=0;$i<5;$i++){           
+                $expected = $expected + $askthree[$i]['inches_to_gallons'];
+           }                            
+           $expected_pickup_total =  $expected/4 ;
+        }
+        else {
+            $expected_pickup_total=$account->estimated_monthly;
+        }
+    }
+    
+    
+    
+    $data_table = $dbprefix."_data_table";
+    $gv = $db->query("SELECT * FROM $data_table WHERE (date_of_pickup >= '$_POST[from]'  && date_of_pickup <= '$_POST[to]') && account_no=$_POST[account_no]");
+    
+    
+    
+            
+    if(count($gv)>0){
+        $alter=0;
+        foreach($gv as $gvo){
+            
+            $adj=0;                        
+            $adj = round($gvo['inches_to_gallons']-($gvo['inches_to_gallons']*.25));            
+            $alter++;
+            if($alter%2 == 0){
+                $bg = '-moz-linear-gradient(center top , #F7F7F9, #E5E5E7) repeat scroll 0 0 rgba(0, 0, 0, 0)';
+            }
+            else { 
+                $bg = 'transparent';
+            }
+            $html .= "
+                <tr style='background:$bg'>
+                    <td>$gvo[date_of_pickup]</td>
+                    <td>$gvo[inches_to_gallons]</td>
+                    <td>$adj</td>
+                    <td>".round($expected_pickup_total,2)."</td>                            
+                    <td>$gvo[route_id]</td>                    
+                </tr>";
+        }
+    }    
+    
+    $html .="</table></body></html>";
