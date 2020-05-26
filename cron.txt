@@ -1,0 +1,1 @@
+5 * * * * /var/www/html/cronjobs/calculate_avg_gallons_per_month.php

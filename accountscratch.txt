@@ -1,0 +1,377 @@
+<style type="text/css">
+                   #acountTable{
+                    border:0px grey solid; font-size:smaller;width:90%;margin:auto;margin-top:10px;margin-bottom:10px;padding:0px 0px 0px 0px;
+                   }
+                   
+                    #acountTable td{
+                        border:0px solid #bbb;
+                        padding:0px 0px 0px 0px;
+                    }
+                   </style>
+
+<table   id="acountTable"><tbody><tr><td>
+
+<table border="0" align="center" cellpadding="5" style="font-size:smaller;border:0px solid #bbb;" id="extras_box">
+
+<tbody><tr><td style="border: 0px solid #bbb;">
+
+            <table cellspacing="0" cellpadding="0" style="border: 0px solid #bbb;"><tbody><tr  style="border: 0px solid #bbb;">
+        
+        <td nowrap="" align="right" class="field_label">Account Status&nbsp;</td>
+        <td width="100"><select id="account_status" name="account_status"><option value="">All</option>
+        <option value="new_active">New and Active</option>
+        
+        <option value="inc_inacive">Include On Hold</option>
+        
+        <option value="inc_archive">Include Archive</option>
+        
+        <option value="inc_delete_me">Include Delete Me</option>
+        
+        <option value="1">New</option>
+        
+        <option value="2">Active Only</option>
+        
+        <option value="3">On Hold</option>
+        
+        <option value="4">Archived</option>
+        
+        <option value="8">Delete Me</option>
+        </select></td>
+        </tr><tr>
+        <td nowrap="" align="right" class="field_label">Payment Type&nbsp;</td>
+        <td><select id="payment_type_id" name="payment_type_id"><option value="">All</option>
+        <option value="1">Normal</option>
+        
+        <option value="2">Split Account</option>
+        
+        <option value="9">Index</option>
+        
+        <option value="3">Donation</option>
+        
+        <option value="4">Free</option>
+        
+        <option value="8">Do Not Pay</option>
+        </select></td>
+        </tr><tr>
+        <td nowrap="" align="right" class="field_label">Account Class&nbsp;</td>
+        <td><select id="account_class_id" name="account_class_id"><option value="">All</option></select></td>
+        </tr><tr>
+        </tr></tbody></table>
+
+</td>
+
+<td valign="top" nowrap="" align="left" class="field_label" style="border: 0px solid #bbb;">Flag&nbsp;&nbsp;&nbsp;&nbsp;<select id="flag_id" name="flag_id"><option value="">--</option>
+<option value="1">Needs Contract</option>
+
+<option value="2">Needs Profile</option>
+
+<option value="3">Needs Cancellation Letter</option>
+
+<option value="6">Bad Payment Address</option>
+
+<option value="7">Bad Main Address</option>
+
+<option value="10">Re-sale Prospect</option>
+
+
+<option value="4">Out Of Business</option>
+
+<option value="8">Restaurant Canceled</option>
+
+<option value="9">Lost to General</option>
+
+<option value="11">Lost to Baker</option>
+
+<option value="12">Lost to Darling</option>
+</select><br>Original Sale By&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select id="sales_person_id" name="sales_person_id"><option value="">All</option>
+<option value="1387">Jim Austin</option>
+
+<option value="1325">Jose M. Avila</option>
+
+<option value="1375">Chris Beltran</option>
+
+<option value="1281">Rees Clark</option>
+
+<option value="1339">The Dang</option>
+
+<option value="1368">Tim Davis</option>
+
+<option value="1324">Jose De Lorea</option>
+
+<option value="1316">Edward Delgado</option>
+
+<option value="1343">Armando Deloera</option>
+
+<option value="1308">Ashley Dewitt</option>
+
+<option value="1388">Harvey Estrada</option>
+
+<option value="1318">Geoff Forbes</option>
+
+<option value="1290">Tino Garza</option>
+
+<option value="1459">New Guy</option>
+
+<option value="1291">David Isen</option>
+
+<option value="1292">William Keifer</option>
+
+<option value="1367">Scott Lopez</option>
+
+<option value="1187">Ken Mickle</option>
+
+<option value="1284">Adam Parsons</option>
+
+<option value="1287">Ryan Parsons</option>
+
+<option value="1288">Mike Pires</option>
+
+<option value="1309">Victor Rodriguez</option>
+
+<option value="1398">PRIOR SALESMAN</option>
+
+<option value="1294">Antonio Sanchez</option>
+
+<option value="1342">Andy Shubin</option>
+
+<option value="1399">Jared Trawick</option>
+
+<option value="1337">Sam Wroolie</option>
+</select><br>Account Rep <select id="account_rep_id" name="account_rep_id"><option value="">All</option>
+<option value="1387">Jim Austin</option>
+
+<option value="1375">Chris Beltran</option>
+
+<option value="1339">The Dang</option>
+
+<option value="1368">Tim Davis</option>
+
+<option value="1343">Armando Deloera</option>
+
+<option value="1388">Harvey Estrada</option>
+
+<option value="1318">Geoff Forbes</option>
+
+<option value="1290">Tino Garza</option>
+
+<option value="1296">Saida Gastelum</option>
+
+<option value="1459">New Guy</option>
+
+<option value="1291">David Isen</option>
+
+<option value="1292">William Keifer</option>
+
+<option value="1367">Scott Lopez</option>
+
+<option value="1187">Ken Mickle</option>
+
+<option value="1284">Adam Parsons</option>
+
+<option value="1287">Ryan Parsons</option>
+
+<option value="1288">Mike Pires</option>
+
+<option value="1309">Victor Rodriguez</option>
+
+<option value="1398">PRIOR SALESMAN</option>
+
+<option value="1294">Antonio Sanchez</option>
+
+<option value="1342">Andy Shubin</option>
+
+<option value="1337">Sam Wroolie</option>
+</select></td>
+
+<td valign="top"><table width="100%" cellspacing="0" cellpadding="0" style="border: 0px solid #bbb;"><tbody><tr>
+
+<td nowrap="" align="right" class="field_label" style="border: 0px solid #bbb;">Friendly&nbsp;
+<?php
+
+echo getFriendLists();
+
+?>
+<br>Previous Provider&nbsp;<select id="previous_provider_id" name="previous_provider_id"><option value="">All</option>
+<option value="20">Unknown</option>
+
+<option value="102">Baker Commodities</option>
+
+<option value="101">Darling International</option>
+
+<option value="133">General</option>
+
+<option value="40">Other</option>
+
+<option value="37">New</option>
+
+<option value="35">Homebrewer</option>
+
+<option value="30">Out of Business</option>
+
+<option value="10">None</option>
+
+<option value="125">Bio Gals</option>
+
+<option value="107">Cascade</option>
+
+<option value="110">Cedar Grove</option>
+
+<option value="111">Clean Scapes</option>
+
+<option value="114">Cloudburst</option>
+
+<option value="120">Cloudburst</option>
+
+<option value="121">EC</option>
+
+<option value="122">EC / Baker</option>
+
+<option value="105">EC Restaurant Services</option>
+
+<option value="126">ECO Recycler</option>
+
+<option value="127">Evergreen</option>
+
+<option value="118">Footprint</option>
+
+<option value="115">GoBio</option>
+
+<option value="113">Grease Spot</option>
+
+<option value="123">Green Eye</option>
+
+<option value="112">Greentruck</option>
+
+<option value="134">JR Grease</option>
+
+<option value="128">Midnight Oil</option>
+
+<option value="129">Modesto Tallow</option>
+
+<option value="108">MRP</option>
+
+<option value="117">NorthState</option>
+
+<option value="119">Northwest County Biofuels</option>
+
+<option value="124">Oregon Oils</option>
+
+<option value="104">Pacific Rendering</option>
+
+<option value="103">Rainier Farms</option>
+
+<option value="100">Rainier Ranch</option>
+
+<option value="116">Rogue</option>
+
+<option value="109">RTI</option>
+
+<option value="130">Sacramento</option>
+
+<option value="131">Salinas Tallow</option>
+
+<option value="132">San Jose Tallow</option>
+
+<option value="135">Valley Proteins</option>
+
+<option value="106">Waste Management</option>
+</select><br>Disposition&nbsp;<select id="disposition" name="disposition">
+<option value="all">All</option>
+
+<option value="own">Accounts I Own</option>
+
+<option value="orig">Accounts I Originated</option>
+
+<option value="own_not_orig">Own but did not Originate</option>
+</select></td></tr></tbody></table>
+
+</td></tr></tbody></table>
+
+</td></tr><tr><td><table border="0" align="center" cellpadding="1" style="font-size:smaller" id="fields_box">
+
+<tbody><tr><td width="30" valign="bottom" align="center" class="field_label">ID</td><td width="100" valign="bottom" align="center" class="field_label">Name</td><td width="100" valign="bottom" align="center" class="field_label">Address</td><td width="100" valign="bottom" align="center" class="field_label">City</td><td width="40" valign="bottom" align="center" class="field_label">State</td><td width="40" valign="bottom" align="center" class="field_label">Zip</td><td width="40" valign="bottom" align="center" class="field_label">Area</td><td width="40" valign="bottom" align="center" class="field_label">Phone</td></tr><tr><td width="30"><input value="" size="8" id="sb_account_id" name="sb_account_id"></td>
+<td width="100"><input value="" size="15" id="company_name" name="company_name"></td>
+<td width="100"><input value="" size="15" id="address_1" name="address_1"></td>
+<td width="100"><input value="" size="15" id="city" name="city"></td>
+<td width="40"><input value="" size="4" id="state" name="state"></td>
+<td width="40"><input value="" size="12" id="postal" name="postal"></td>
+<td width="40"><input value="" size="5" id="area_code" name="area_code"></td>
+<td width="40"><input value="" size="10" id="phone" name="phone"></td>
+</tr></tbody></table>
+
+</td></tr><tr><td align="center">
+
+<table border="0" align="center" cellpadding="1" style="font-size:smaller;padding:5px; border:1px solid #efefef; -moz-border-radius: 10px; border-radius: 10px; -webkit-border-radius: 10px;-webkit-box-shadow: 2px 2px 2px #bbbbbb;" id="sort_box">
+
+<tbody><tr><td nowrap="" align="center" class="field_label">Sort By</td>
+<td><select id="sort_fields_0" name="sort_fields[0]">
+<option selected="" value="">None</option>
+<option value="sb_account_id">ID</option>
+<option value="account_status_id">Status</option>
+<option value="account_class_id">Class</option>
+<option value="company_name">Name</option>
+<option value="city">City</option>
+<option value="state">State</option>
+<option value="date_created">Created</option>
+<option value="date_contract_<br />expires">Expires</option>
+<option value="lcount">Locations</option>
+</select>
+</td><td width="70"><select id="sort_directions_0" name="sort_directions[0]">
+<option selected="" value=""> - </option>
+<option value="asc">^</option>
+<option value="desc">V</option>
+</select>
+</td>
+<td nowrap="" align="center" class="field_label">Then By</td>
+<td><select id="sort_fields_1" name="sort_fields[1]">
+<option selected="" value="">None</option>
+<option value="sb_account_id">ID</option>
+<option value="account_status_id">Status</option>
+<option value="account_class_id">Class</option>
+<option value="company_name">Name</option>
+<option value="city">City</option>
+<option value="state">State</option>
+<option value="date_created">Created</option>
+<option value="date_contract_expires">Expires</option>
+<option value="lcount">Locations</option>
+</select>
+</td><td width="70"><select id="sort_directions_1" name="sort_directions[1]">
+<option selected="" value=""> - </option>
+<option value="asc">^</option>
+<option value="desc">V</option>
+</select>
+</td>
+<td nowrap="" align="center" class="field_label">Then By</td>
+<td><select id="sort_fields_2" name="sort_fields[2]">
+<option selected="" value="">None</option>
+<option value="sb_account_id">ID</option>
+<option value="account_status_id">Status</option>
+<option value="account_class_id">Class</option>
+<option value="company_name">Name</option>
+<option value="city">City</option>
+<option value="state">State</option>
+<option value="date_created">Created</option>
+<option value="date_contract_expires">Expires</option>
+<option value="lcount">Locations</option>
+</select>
+</td><td width="70"><select id="sort_directions_2" name="sort_directions[2]">
+<option selected="" value=""> - </option>
+<option value="asc">^</option>
+<option value="desc">V</option>
+</select>
+</td>
+</tr>
+
+</tbody></table></td></tr><tr><td align="center">
+
+<table><tbody><tr><td nowrap="" align="right" class="field_label"><div style="border:1px solid #efefef; padding:5px; padding-left:20px; -moz-border-radius: 10px; border-radius: 10px; -webkit-border-radius: 10px;-webkit-box-shadow: 2px 2px 2px #bbbbbb;">
+<span style="font-size:smaller; margin-right:20px;" class="field_label">View:</span><span style="margin-right:20px;" class="field_label"><input type="checkbox" id="full_contact" name="full_contact">More Contact Info</span>
+<span style="margin-right:20px;" class="field_label"><input type="checkbox" title="Display uploaded files" id="get_files" name="get_files">Uploaded Files</span>
+<span style="margin-right:20px;" class="field_label"><input type="checkbox" id="oil_stats" name="oil_stats">Pickup Info</span>
+<span style="margin-right:20px;" class="field_label"><input type="checkbox" id="get_ppg" name="get_ppg">Payment Info</span>
+<span style="margin-right:20px;" class="field_label"><input type="checkbox" id="get_sales_rep" name="get_sales_rep">Sales &amp; Rep</span>
+</div>
+</td>
+<td width="90" nowrap="" align="right" class="field_label"><input type="button" value="Clear" onclick="clear_search_form('account');return 0;" name="Clear"></td>
+<td width="120" nowrap="" align="right" class="field_label"><div id="export_box"><input type="submit" value="Search" style="margin-right:40px;" name="search">
+</div></td></tr></tbody></table></td></tr><tr></tr></tbody></table>

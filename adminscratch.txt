@@ -1,0 +1,98 @@
+if(count($gvx)>0){
+                $alter =1;
+                foreach($gvx as $jav){
+                    $adj =0;
+                    $kl = 0;
+                    $tv =0;
+                    
+                    if($alter !=1 && $alter%2 == 0){
+                       $bg = '-moz-linear-gradient(center top , #F7F7F9, #E5E5E7) repeat scroll 0 0 rgba(0, 0, 0, 0)';
+                    }
+                    else {
+                        $bg ='transparent;';
+                    }
+                    
+                    $alter++;
+                    echo "<tr style='background:$bg;'>
+                        <td>";//date 
+                        $total_g_collected = $total_g_collected + $jav['inches_to_gallons'];
+                        echo  round($jav['date_of_pickup'],2). "
+                        </td>
+                        <td>".round($jav['inches_to_gallons'],2) ."</td>
+                        ";//gallons
+                         
+                        echo "<td>";                                                                            
+                            $adj = $jav['inches_to_gallons'] - ($jav['inches_to_gallons'] * $account->miu); 
+                            echo round($adj,2);
+                            $total_g_adjusted = $total_g_adjusted +$adj;
+                        echo"</td>
+                        
+                        
+                        <td>";
+                        
+                          if($account->payment_method == "Per Gallon" || $account->payment_method == "Normal" ){
+                            echo round($account->ppg_jacobsen_percentage,2);
+                          }
+                          else if($account->payment_method == "Jacobson" || $account->payment_method == "Index"){
+                            echo round($account->index_percentage,2);
+                          } else if ($account->payment_method == "One Time Payment")
+                          {
+                             echo round($account->ppg_jacobsen_percentage,2);
+                          }else if ($account->payment_method == "O.T.P. Per Gallon" || $account->payment_method == "One Time Payment Per Gallon" || $account->payment_method == "O.T.P. PG" ){
+                             echo round($account->price_per_gallon,2);
+                          }
+                        echo "</td>"; 
+                        
+                        
+                        
+                        
+                        
+                        echo"<td>";
+                         if($account->payment_method == "Jacobson" || $account->payment_method == "Index"){
+                            $getjake = $db->orderby("date","DESC")->get($dbprefix."_Jacobsen");
+                            
+                            if(count($getjake)>0){
+                                 $buffer4 = $getjake[0]['percentage']* $account->index_percentage;
+                            //10.5
+                                
+                                $kl = $buffer4 * $fixed_lbs;
+                                echo  round($kl,2);
+                            } else {
+                                echo "0";
+                            }
+                           
+                         }
+                         else if($account->payment_method=="Per Gallon" || $account->payment_method=="Normal"){
+                                $ok = 0;
+                                $ok = round( ($jav['inches_to_gallons'] - ($jav['inches_to_gallons'] * $account->miu)) * $account->ppg_jacobsen_percentage,2 ); 
+                                echo $ok;
+                                $total_value = $total_value + $ok; 
+                            
+                         }
+                          else if ($account->payment_method == "One Time Payment" )
+                          {
+                             echo round($account->ppg_jacobsen_percentage,2);
+                          } else if ($account->payment_method == "O.T.P. Per Gallon" || $account->payment_method == "One Time Payment Per Gallon" || $account->payment_method == "O.T.P. PG" ){
+                           $ok = round( ($jav['inches_to_gallons'] - ($jav['inches_to_gallons'] * $account->miu)) * $account->price_per_gallon,2 ); 
+                           echo $ok;
+                           $total_value = $total_value + $ok; 
+                          
+                          }
+                        echo "</td>";
+                        
+                        
+                        
+                        if($account->payment_method == "Index" || $account->payment_method =="Jacobson"){
+                        echo"<td>";
+                            $tv = 0;
+                            $tv = $adj * round($kl,2);
+                            $total_value = $total_value +  $tv;                                           
+                        echo "$tv</td>";
+                        }
+                        
+                        echo "<td>$account->acount_id</td>";//account id 
+                        
+                        echo"<td>$jav[route_id]</td>";//route id
+                        echo "</tr>";
+                }
+            }

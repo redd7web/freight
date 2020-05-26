@@ -1,0 +1,9 @@
+login ->  issues - >
+
+
+
+customers -> locations
+	status, service issue, pure program ?, oil pickup status, oil service type, trap service status, id, name, address, city, state
+		(click on on opens profile page) -> 
+			profile page ->
+				
