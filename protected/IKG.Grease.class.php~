@@ -1,0 +1,164 @@
+<?php
+ini_set("display_errors", 1);
+class Grease_IKG {
+    public $ikg_manifest_route_number;
+    public $scheduled_date;
+    public $completed_date;
+    public $pick_upID;
+    public $route_id;
+    public $account_numbers = Array();
+    public $acount_numbers_full_string;
+    public $inventory_code;
+    public $lot_no;
+    public $recieving_facility;
+    public $recieving_facility_no;
+    public $facility_address;
+    public $facility_rep;
+    public $driver;
+    public $driver_no;
+    public $ikg_transporter;
+    public $number_days_route;
+    public $tank1;
+    public $tank2;
+    public $truck;
+    public $license_plate;
+    public $ikg_decal;
+    public $ikg_collected;
+    public $location;
+    public $ikg_gross_weight;
+    public $tare_weight;
+    public $net_weight;
+    public $time_start;
+    public $start_mileage;
+    public $first_stop;
+    public $first_stop_mileage;
+    public $last_stop;
+    public $last_stop_mileage;
+    public $end_time;
+    public $end_mileage;
+    public $fuel;
+    public $vehicle;
+    //***** FROM LIST OF ROUTES DB ******//
+    public $list_of_routes_id;
+    public $route_status;
+    public $created_date;
+    public $created_by;
+    public $stops;
+    public $expected;
+    public $collected;
+    
+    //************* SCHEDULED ROUTES ASSOCIATED WITH THIS ROUTE **///
+    public $scheduled_routes = array();
+    public $scheduled_route_notes;
+    //************* SCHEDULED ROUTES ASSOCIATED WITH THIS ROUTE **///
+    function __construct($route_id = NULL){
+            global $dbprefix;
+            $db = new Database();
+            if (is_numeric($route_id)){
+             
+             $ikg_table = $dbprefix."_ikg_grease";
+             $from_oilrouted = $db->query("SELECT * FROM $ikg_table WHERE route_id=$route_id");
+             if(count($from_oilrouted) >0){
+               foreach($from_oilrouted as $value){
+                   $this->scheduled_date = $value['scheduled_date'];
+                   $this->ikg_manifest_route_number = $value['ikg_manifest_route_number'];
+                   $this->completed_date = $value['completed_date'];
+                   $this->route_id = (int)$route_id;
+                   //$this->pick_upID = $value['entry_number'];
+                   $this->acount_numbers_full_string = $value['account_numbers'];
+                   //********* SPLITS account numbers into member array
+                  
+                   
+                   
+                   $this->account_numbers =  explode("|",$value['account_numbers']);;
+                   
+                   array_pop($this->account_numbers);
+                   //*********                         ***********//
+                   
+                   $this->inventory_code = $value['inventory_code'];
+                   $this->lot_no = $value['lot_no'];
+                   $this->recieving_facility = numberToFacility($value['recieving_facility']);
+                   $this->recieving_facility_no = $value['recieving_facility'];
+                   $this->facility_address = $value['facility_address'];
+                   $this->facility_rep = $value['facility_rep'];
+                   //$this->driver = $value['driver'];
+                   $this->ikg_transporter = $value['ikg_transporter'];
+                   $this->number_days_route = $value['number_days_route'];
+                   $this->tank1 = $value['tank1'];
+                   $this->tank2 = $value['tank2'];
+                   $this->truck = $value['truck'];
+                   $this->license_plate = $value['license_plate'];
+                   $this->ikg_decal = $value['ikg_decal'];
+                   $this->location = $value['location'];
+                   $this->ikg_collected = $value['ikg_collected'];
+                   $this->ikg_gross_weight = $value['gross_weight'];
+                   $this->tare_weight = $value['tare_weight'];
+                   $this->net_weight = $value['net_weight'];
+                   $this->time_start = $value['time_start'];
+                   $this->start_mileage = $value['start_mileage'];
+                   $this->first_stop = $value['first_stop'];
+                   $this->first_stop_mileage = $value['first_stop_mileage'];
+                   $this->last_stop = $value['last_stop'];
+                   $this->last_stop_mileage = $value['last_top_mileage'];
+                   $this->end_time = $value['end_time'];
+                   $this->end_mileage = $value['end_mileage'];
+                   $this->fuel = $value['fuel'];     
+                   $this->driver_no = $value['driver'];  
+                   $this->vehicle = $value['truck'];   
+                   
+               }
+                
+                //***************** LIST OF ROUTES DB INFO ************************//
+               $upo = $db->where('route_id',$route_id)->get($dbprefix.'_list_of_grease');
+                foreach ($upo as $value2){
+                    $this->list_of_routes_id = $value2['list_of_routes_id'];
+                    $this->route_status = $value2['status'];
+                    $this->created_date = $value2['created_date'];
+                    $this->created_by = uNumToName($value2['created_by']);
+                    $this->stops = $value2['stops'];
+                    $this->expected = $value2['expected'];
+                    $this->collected = $value2['collected'];   
+                }
+                
+                //************** SCHEDULED ROUTES / NOTES DB **********************//
+                
+                foreach($this->account_numbers as $act){
+                    $ik = $db->query("SELECT grease_no FROM gt_grease_traps WHERe grease_route_no = $this->route_id AND account_no = $act");
+                    
+                    $buff[] = $ik[0]['grease_no'];
+                    
+                  
+
+                }
+                $this->scheduled_routes = array_unique($buff);
+                
+                
+                
+                $this->scheduled_route_notes = $db->where('route_id',$this->route_id)->get($dbprefix."_notes");
+                
+                
+             }
+        }
+        else { 
+             $ikg_table = $dbprefix."_ikg_manifest_info";
+             $from_oilrouted = $db->query("SELECT * FROM $ikg_table WHERE  	ikg_manifest_route_number='$route_id'");
+        }
+    }
+    
+    function fix_self(){//remove duplicates from the account string
+        global $db;
+        $string ="";
+        $h = $db->query("SELECT account_numbers FROM gt_ikg_grease WHERE route_id = $this->route_id");
+        $buffer = explode("|",$h[0]['account_numbers']);
+        array_pop($buffer);
+        $buffer2 = array_unique($buffer);
+        foreach($buffer2 as $new){
+            $string .= $new."|";
+        }
+        $db->query("UPDATE gt_ikg_grease SET account_numbers = '$string' WHERE route_id=$this->route_id");
+    }
+}
+
+
+
+?>
