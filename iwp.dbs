@@ -1,0 +1,1122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="MySql" id="Project3299936" template="Default" database="MySql" >
+	<schema name="iwp" catalogname="iwp" defo="y" >
+		<table name="iwp_account_barrelinfo" >
+			<column name="entry_number" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="account_no" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="number_of_barrels" type="int" length="10" decimal="0" jt="4" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<column name="total_barrel_cap" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<index name="pk_iwp_account_barrelinfo" unique="PRIMARY_KEY" >
+				<column name="entry_number" />
+			</index>
+		</table>
+		<table name="iwp_account_pickup" >
+			<column name="pick_up_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="route_no" type="varchar" length="11" decimal="0" jt="12" mandatory="y" />
+			<column name="account_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="inches_collected" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="gallons" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="yards_collected" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="lbs" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="rout2_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="driver_accont_issues" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="residual_inches" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="residual_gallons" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="residual_yards" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="residual_lbs" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+		</table>
+		<table name="iwp_accounts" >
+			<column name="account_ID" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="status" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="class" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="name" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="city" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="state" type="varchar" length="2" decimal="0" jt="12" />
+			<column name="created" type="datetime" length="19" decimal="0" jt="93" />
+			<column name="expires" type="date" length="10" decimal="0" jt="91" />
+			<column name="locations" type="int" length="10" decimal="0" jt="4" />
+			<column name="address" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="zip" type="int" length="10" decimal="0" jt="4" />
+			<column name="billing_address" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="billing_state" type="char" length="2" decimal="0" jt="1" />
+			<column name="billing_city" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="billing_zip" type="int" length="10" decimal="0" jt="4" />
+			<column name="new_bos" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="area_code" type="int" length="10" decimal="0" jt="4" />
+			<column name="phone" type="int" length="10" decimal="0" jt="4" />
+			<column name="contact_name" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="contact_title" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="email_address" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="division" type="int" length="10" decimal="0" jt="4" />
+			<column name="original_sales_person" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="re_assigned_sales_person" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="account_rep" type="int" length="10" decimal="0" jt="4" />
+			<column name="state_date" type="date" length="10" decimal="0" jt="91" />
+			<column name="previous_provider" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="friendly" type="int" length="10" decimal="0" jt="4" />
+			<column name="pickup_frequency" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="pick_up_time" type="time" length="8" decimal="0" jt="92" />
+			<column name="starting_oil_bakery" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="first_removal" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="second_removal" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="good_cleaning_practice_poster" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="account_fact_sheet" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="legal_docs" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="ach" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="payment_method" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="yards_to_lbs" type="decimal" length="15" decimal="2" jt="3" />
+			<column name="latitude" type="float" length="12" decimal="0" jt="7" />
+			<column name="longitude" type="float" length="12" decimal="0" jt="7" />
+			<column name="contract" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="guest_host" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="url" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="customer_id" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="notes" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="ticks_per_day" type="decimal" length="15" decimal="2" jt="3" />
+			<column name="avg_gallons_per_Month" type="decimal" length="15" decimal="2" jt="3" />
+			<column name="estimated_volume" type="decimal" length="15" decimal="2" jt="3" />
+			<column name="payee_name" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="floor" type="int" length="10" decimal="0" jt="4" />
+			<column name="ppg_jacobsen_percentage" type="decimal" length="15" decimal="2" jt="3" />
+			<column name="price_per_gallon" type="decimal" length="15" decimal="2" jt="3" />
+			<column name="index_percentage" type="decimal" length="15" decimal="2" jt="3" />
+			<column name="miu" type="decimal" length="15" decimal="2" jt="3" />
+			<index name="pk_iwp_accounts" unique="PRIMARY_KEY" >
+				<column name="account_ID" />
+			</index>
+			<fk name="fk_iwp_accounts" virtual="y" to_schema="iwp" to_table="iwp_scheduled_routes" >
+				<fk_column name="account_ID" pk="account_no" />
+			</fk>
+			<fk name="fk_iwp_accounts_iwp_activity" virtual="y" to_schema="iwp" to_table="iwp_activity" >
+				<fk_column name="account_ID" pk="account" />
+			</fk>
+		</table>
+		<table name="iwp_accounts_on_route" >
+			<column name="number" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="rout_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="account_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<index name="pk_iwp_accounts_on_route" unique="PRIMARY_KEY" >
+				<column name="number" />
+			</index>
+		</table>
+		<table name="iwp_activity" >
+			<column name="transID" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="user" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="actionType" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="type" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="pertains" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="descript" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="account" type="int" length="10" decimal="0" jt="4" />
+			<index name="pk_iwp_activity" unique="PRIMARY_KEY" >
+				<column name="transID" />
+			</index>
+			<fk name="fk_iwp_activity_iwp_users" virtual="y" to_schema="iwp" to_table="iwp_users" >
+				<fk_column name="user" pk="user_id" />
+			</fk>
+		</table>
+		<table name="iwp_container_inventory" >
+			<column name="serial_no" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="facility" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="container_type" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="account_no" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<index name="pk_iwp_container_inventory" unique="PRIMARY_KEY" >
+				<column name="serial_no" />
+			</index>
+		</table>
+		<table name="iwp_container_lists" >
+			<column name="division" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="contract_version" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="payment_type" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="category" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="priority_level" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="list_issue_status" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="job_duty" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="route_status" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="previous_provider" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="account_status" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="pick_up_times" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="payment_method" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="waring_issues" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="container" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+		</table>
+		<table name="iwp_containers" >
+			<column name="entry" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="container_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="account_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="request_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="delivery_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="removal_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="container" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="notes" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="serial_no" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="assigned_by" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<index name="pk_iwp_containers" unique="PRIMARY_KEY" >
+				<column name="entry" />
+			</index>
+			<fk name="fk_iwp_containers_iwp_accounts" virtual="y" to_schema="iwp" to_table="iwp_accounts" >
+				<fk_column name="account_no" pk="account_ID" />
+			</fk>
+		</table>
+		<table name="iwp_contract" >
+			<column name="contract_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="account_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="start_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="end_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="contract_version" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="copy_of_contract" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<index name="pk_iwp_contract" unique="PRIMARY_KEY" >
+				<column name="contract_id" />
+			</index>
+		</table>
+		<table name="iwp_data_table" >
+			<column name="entry_number" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="route_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="schedule_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="inches_entered" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="inches_to_gallons" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="inches_leftover" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="inches_to_gallons_leftover" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="expected_gallons" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="avg_exp" type="float" length="12" decimal="0" jt="7" />
+			<column name="container_label" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="number_of_barrels" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="fieldreport" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="zero_gallon_reason" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="account_no" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="completed" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="driver" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="date_of_pickup" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="issue_number" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<index name="pk_iwp_data_table" unique="PRIMARY_KEY" >
+				<column name="entry_number" />
+			</index>
+			<index name="pk_iwp_data_table_0" unique="UNIQUE" >
+				<column name="schedule_id" />
+				<column name="account_no" />
+				<column name="route_id" />
+			</index>
+			<index name="idx_iwp_data_table" unique="NORMAL" >
+				<column name="account_no" />
+			</index>
+			<fk name="fk_iwp_data_table" virtual="y" to_schema="iwp" to_table="iwp_scheduled_routes" >
+				<fk_column name="schedule_id" pk="schedule_id" />
+				<fk_column name="route_id" pk="route_id" />
+				<fk_column name="account_no" pk="account_no" />
+			</fk>
+			<fk name="fk_iwp_data_table2" virtual="y" to_schema="iwp" to_table="iwp_ikg_manifest_info" >
+				<fk_column name="route_id" pk="route_id" />
+			</fk>
+			<fk name="fk_iwp_data_table3" virtual="y" to_schema="iwp" to_table="iwp_list_of_routes" >
+				<fk_column name="route_id" pk="route_id" />
+			</fk>
+			<fk name="fk_iwp_data_table_iwp_accounts" virtual="y" to_schema="iwp" to_table="iwp_accounts" >
+				<fk_column name="account_no" pk="account_ID" />
+			</fk>
+		</table>
+		<table name="iwp_facility" >
+			<column name="facility" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="location_address" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="location_state" type="char" length="2" decimal="0" jt="1" mandatory="y" />
+			<column name="location_city" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="location_zip" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="manager" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="division" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+		</table>
+		<table name="iwp_friendly" >
+			<column name="comp_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="comp_name" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="comp_address" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="comp_rep_fname" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="com_rep_lname" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="com_rep" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="comp_rep_email" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="comp_rep_phone" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<index name="pk_iwp_friendly" unique="PRIMARY_KEY" >
+				<column name="comp_id" />
+			</index>
+			<fk name="fk_iwp_friendly_iwp_accounts" virtual="y" to_schema="iwp" to_table="iwp_accounts" >
+				<fk_column name="comp_id" pk="previous_provider" />
+			</fk>
+		</table>
+		<table name="iwp_grease_data_table" >
+			<column name="entry_number" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="route_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="schedule_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="inches_entered" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="inches_to_gallons" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="inches_leftover" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="inches_to_gallons_leftover" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="expected_gallons" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="number_of_barrels" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="fieldreport" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="zero_gallon_reason" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="account_no" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="completed" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="driver" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="date_of_pickup" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="issue_number" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<index name="pk_iwp_grease_data_table" unique="PRIMARY_KEY" >
+				<column name="entry_number" />
+			</index>
+		</table>
+		<table name="iwp_grease_traps" >
+			<column name="grease_no" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="account_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="notes" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="created_by" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="grease_trap_size" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="frequency" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="price_per_gallon" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="completed" type="bit" decimal="0" jt="-7" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<column name="service" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="grease_name" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="grease_route_no" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="volume" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="base_rate" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="stairs" type="bit" decimal="0" jt="-7" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<column name="hoseline_length" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="time_of_service" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="addt_price" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="addt_info" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="fire" type="bit" decimal="0" jt="-7" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<column name="service_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="route_status" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="active" type="bit" decimal="0" jt="-7" mandatory="y" />
+			<index name="pk_iwp_grease_traps" unique="PRIMARY_KEY" >
+				<column name="grease_no" />
+			</index>
+			<index name="pk_iwp_grease_traps_0" unique="UNIQUE" >
+				<column name="grease_route_no" />
+			</index>
+			<fk name="fk_iwp_grease_traps" virtual="y" to_schema="iwp" to_table="iwp_accounts" >
+				<fk_column name="account_no" pk="account_ID" />
+			</fk>
+			<fk name="fk_iwp_grease_traps-data_table" virtual="y" to_schema="iwp" to_table="iwp_grease_data_table" >
+				<fk_column name="account_no" pk="account_no" />
+				<fk_column name="grease_no" pk="schedule_id" />
+				<fk_column name="grease_route_no" pk="route_id" />
+			</fk>
+			<fk name="fk_iwp_grease_traps-grease_ikg" virtual="y" to_schema="iwp" to_table="iwp_ikg_grease" >
+				<fk_column name="grease_route_no" pk="route_id" />
+			</fk>
+		</table>
+		<table name="iwp_ikg_grease" >
+			<column name="route_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="ikg_manifest_route_number" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="scheduled_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="completed_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="account_numbers" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="inventory_code" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="lot_no" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="recieving_facility" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="facility_address" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="facility_rep" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="driver" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="ikg_transporter" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="number_days_route" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="tank1" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="tank2" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="truck" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="license_plate" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="ikg_decal" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="location" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="ikg_collected" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="gross_weight" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="tare_weight" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="net_weight" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="time_start" type="time" length="8" decimal="0" jt="92" mandatory="y" />
+			<column name="start_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="first_stop" type="time" length="8" decimal="0" jt="92" mandatory="y" />
+			<column name="first_stop_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="last_stop" type="time" length="8" decimal="0" jt="92" mandatory="y" />
+			<column name="last_top_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="end_time" type="time" length="8" decimal="0" jt="92" mandatory="y" />
+			<column name="end_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="fuel" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<index name="pk_iwp_ikg_grease" unique="PRIMARY_KEY" >
+				<column name="route_id" />
+			</index>
+			<index name="idx_iwp_ikg_grease" unique="NORMAL" >
+				<column name="route_id" />
+				<column name="ikg_manifest_route_number" />
+			</index>
+			<fk name="fk_iwp_ikg_grease" virtual="y" to_schema="iwp" to_table="iwp_grease_data_table" >
+				<fk_column name="route_id" pk="route_id" />
+			</fk>
+		</table>
+		<table name="iwp_ikg_manifest_info" >
+			<column name="route_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="ikg_manifest_route_number" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="scheduled_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="completed_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="account_numbers" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="inventory_code" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="lot_no" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="recieving_facility" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="facility_address" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="facility_rep" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="driver" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="ikg_transporter" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="number_days_route" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="tank1" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="tank2" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="truck" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="license_plate" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="ikg_decal" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="location" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="ikg_collected" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="gross_weight" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="tare_weight" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="net_weight" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="collected" type="float" length="12" decimal="0" jt="7" />
+			<column name="differences" type="float" length="12" decimal="0" jt="7" />
+			<column name="time_start" type="time" length="8" decimal="0" jt="92" mandatory="y" />
+			<column name="start_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="first_stop" type="time" length="8" decimal="0" jt="92" mandatory="y" />
+			<column name="first_stop_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="last_stop" type="time" length="8" decimal="0" jt="92" mandatory="y" />
+			<column name="last_top_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="end_time" type="time" length="8" decimal="0" jt="92" mandatory="y" />
+			<column name="end_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="fuel" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<index name="pk_iwp_ikg_manifest_info" unique="PRIMARY_KEY" >
+				<column name="route_id" />
+			</index>
+			<fk name="fk_iwp_ikg_manifest_info" virtual="y" to_schema="iwp" to_table="iwp_scheduled_routes" >
+				<fk_column name="route_id" pk="schedule_id" />
+			</fk>
+			<fk name="fk_iwp_ikg_manifest_infox" virtual="y" to_schema="iwp" to_table="iwp_list_of_routes" >
+				<fk_column name="route_id" pk="route_id" />
+				<fk_column name="ikg_manifest_route_number" pk="ikg_manifest_route_number" />
+				<fk_column name="completed_date" pk="completed_date" />
+			</fk>
+			<fk name="fk_iwp_ikg_manifest_info-route_history" virtual="y" to_schema="iwp" to_table="iwp_rout_history" >
+				<fk_column name="route_id" pk="route_no" />
+				<fk_column name="truck" pk="truck_id" />
+				<fk_column name="start_mileage" pk="start_mileage" />
+				<fk_column name="first_stop" pk="first_stop" />
+				<fk_column name="first_stop_mileage" pk="first_stop_mileage" />
+				<fk_column name="last_top_mileage" pk="last_stop_mileage" />
+				<fk_column name="last_stop" pk="last_stop" />
+				<fk_column name="end_mileage" pk="end_mileage" />
+			</fk>
+			<fk name="fk_iwp_ikg_manifest_info-accounts" virtual="y" to_schema="iwp" to_table="iwp_accounts" >
+				<fk_column name="account_numbers" pk="account_ID" />
+			</fk>
+		</table>
+		<table name="iwp_ikg_utility" >
+			<column name="route_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="ikg_manifest_route_number" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="scheduled_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="completed_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="account_numbers" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="inventory_code" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="lot_no" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="recieving_facility" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="facility_address" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="facility_rep" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="driver" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="ikg_transporter" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="number_days_route" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="tank1" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="tank2" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="truck" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="license_plate" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="ikg_decal" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="location" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="ikg_collected" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="gross_weight" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="net_weight" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="tare_weight" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="time_start" type="time" length="8" decimal="0" jt="92" mandatory="y" />
+			<column name="start_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="first_stop" type="time" length="8" decimal="0" jt="92" mandatory="y" />
+			<column name="first_stop_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="last_stop" type="time" length="8" decimal="0" jt="92" mandatory="y" />
+			<column name="last_top_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="end_time" type="time" length="8" decimal="0" jt="92" mandatory="y" />
+			<column name="end_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="fuel" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<index name="pk_iwp_ikg_utility" unique="PRIMARY_KEY" >
+				<column name="route_id" />
+			</index>
+			<fk name="fk_iwp_ikg_utility-account_no" virtual="y" to_schema="iwp" to_table="iwp_accounts" >
+				<fk_column name="account_numbers" pk="account_ID" />
+			</fk>
+		</table>
+		<table name="iwp_issue_notes" >
+			<column name="message_no" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="issue_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="message" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="message_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="created_by" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="issue_photo" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<index name="pk_iwp_issue_notes" unique="PRIMARY_KEY" >
+				<column name="message_no" />
+			</index>
+			<fk name="fk_iwp_issue_notes_iwp_users" virtual="y" to_schema="iwp" to_table="iwp_users" >
+				<fk_column name="created_by" pk="user_id" />
+			</fk>
+		</table>
+		<table name="iwp_issues" >
+			<column name="issue_no" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="issue" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="account_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="date_created" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="category" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="message" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="assigned_to" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="reported_by" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="priority_level" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="completed_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="completed_by" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="issue_status" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="issue_photo" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="following" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<index name="pk_iwp_issues" unique="PRIMARY_KEY" >
+				<column name="issue_no" />
+			</index>
+			<index name="idx_iwp_issues" unique="NORMAL" >
+				<column name="assigned_to" />
+			</index>
+			<fk name="fk_iwp_issues_iwp_accounts" virtual="y" to_schema="iwp" to_table="iwp_accounts" >
+				<fk_column name="account_no" pk="account_ID" />
+			</fk>
+			<fk name="fk_iwp_issues_iwp_users-assigned_to" virtual="y" to_schema="iwp" to_table="iwp_users" >
+				<fk_column name="assigned_to" pk="user_id" />
+			</fk>
+			<fk name="fk_iwp_issues_iwp_users-reported_by" virtual="y" to_schema="iwp" to_table="iwp_users" >
+				<fk_column name="reported_by" pk="user_id" />
+			</fk>
+			<fk name="fk_iwp_issues_iwp_users-completed_by" virtual="y" to_schema="iwp" to_table="iwp_users" >
+				<fk_column name="completed_by" pk="user_id" />
+			</fk>
+		</table>
+		<table name="iwp_jacobsen" >
+			<column name="id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="percentage" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="user" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="modified" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<index name="pk_iwp_jacobsen" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_iwp_jacobsen_iwp_accounts" virtual="y" to_schema="iwp" to_table="iwp_accounts" >
+				<fk_column name="percentage" pk="ppg_jacobsen_percentage" />
+			</fk>
+		</table>
+		<table name="iwp_list_of_containers" >
+			<column name="container_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="container_label" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="amount_holds" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="gpi" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<index name="pk_iwp_list_of_containers" unique="PRIMARY_KEY" >
+				<column name="container_id" />
+			</index>
+			<fk name="fk_iwp_list_of_containers" virtual="y" to_schema="iwp" to_table="iwp_containers" >
+				<fk_column name="container_id" pk="container_no" />
+				<fk_column name="container_label" pk="container" />
+			</fk>
+		</table>
+		<table name="iwp_list_of_grease" >
+			<column name="list_of_routes_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="status" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="ikg_manifest_route_number" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="facility" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="created_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="created_by" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="scheduled" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="driver" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="stops" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="inc" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="expected" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="collected" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="route_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="completed_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<index name="pk_iwp_list_of_grease" unique="PRIMARY_KEY" >
+				<column name="list_of_routes_id" />
+			</index>
+			<index name="pk_iwp_list_of_grease_0" unique="UNIQUE" >
+				<column name="route_id" />
+				<column name="ikg_manifest_route_number" />
+			</index>
+			<index name="idx_iwp_list_of_grease" unique="NORMAL" >
+				<column name="route_id" />
+			</index>
+			<fk name="iwp_ikg_grease_3" virtual="y" to_schema="iwp" to_table="iwp_ikg_grease" >
+				<fk_column name="route_id" pk="route_id" />
+				<fk_column name="ikg_manifest_route_number" pk="ikg_manifest_route_number" />
+				<fk_column name="completed_date" pk="completed_date" />
+			</fk>
+			<fk name="fk_iwp_list_of_grease" to_schema="iwp" to_table="iwp_grease_traps" >
+				<fk_column name="route_id" pk="grease_route_no" />
+			</fk>
+		</table>
+		<table name="iwp_list_of_routes" >
+			<column name="list_of_routes_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="status" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="ikg_manifest_route_number" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="facility" type="int" length="10" decimal="0" jt="4" />
+			<column name="created_date" type="date" length="10" decimal="0" jt="91" />
+			<column name="created_by" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="scheduled" type="date" length="10" decimal="0" jt="91" />
+			<column name="driver" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="stops" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="inc" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="expected" type="float" length="12" decimal="0" jt="7" />
+			<column name="collected" type="float" length="12" decimal="0" jt="7" />
+			<column name="route_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="completed_date" type="datetime" length="19" decimal="0" jt="93" />
+			<index name="pk_iwp_list_of_routes" unique="PRIMARY_KEY" >
+				<column name="list_of_routes_id" />
+			</index>
+			<fk name="fk_iwp_list_of_routes-scheduled_routes" virtual="y" to_schema="iwp" to_table="iwp_scheduled_routes" >
+				<fk_column name="status" pk="route_status" />
+				<fk_column name="route_id" pk="route_id" />
+			</fk>
+			<fk name="fk_iwp_list_of_routes-history" virtual="y" to_schema="iwp" to_table="iwp_rout_history" >
+				<fk_column name="route_id" pk="route_no" />
+			</fk>
+		</table>
+		<table name="iwp_list_of_utility" >
+			<column name="list_of_routes_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="status" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="ikg_manifest_route_number" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="facility" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="created_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="created_by" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="scheduled" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="driver" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="stops" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="inc" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="route_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="completed_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<index name="pk_iwp_list_of_utility" unique="PRIMARY_KEY" >
+				<column name="list_of_routes_id" />
+			</index>
+			<fk name="fk_iwp_list_of_utility" virtual="y" to_schema="iwp" to_table="iwp_ikg_utility" >
+				<fk_column name="route_id" pk="route_id" />
+				<fk_column name="completed_date" pk="completed_date" />
+				<fk_column name="ikg_manifest_route_number" pk="ikg_manifest_route_number" />
+			</fk>
+		</table>
+		<table name="iwp_lists" >
+			<column name="division" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="contract_version" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="payment_type" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="category" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="priority_level" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="list_issue_status" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="job_duty" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="route_status" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="previous_provider" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="account_status" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="pick_up_times" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="payment_method" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="warning_times" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="container" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+		</table>
+		<table name="iwp_locations" >
+			<column name="location_ID" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="location_status" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="service_issue" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="pure_program" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="oil_pick_up_status" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="oil_service_type" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="trap_service" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="address" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="city" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="state" type="varchar" length="2" decimal="0" jt="12" mandatory="y" />
+			<index name="pk_iwp_locations" unique="PRIMARY_KEY" >
+				<column name="location_ID" />
+			</index>
+		</table>
+		<table name="iwp_notes" >
+			<column name="note_no" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="schedule_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="author_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="account_no" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="notes" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="type" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="route_id" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="created_by" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<index name="pk_iwp_notes" unique="PRIMARY_KEY" >
+				<column name="note_no" />
+			</index>
+			<fk name="fk_iwp_notes_iwp_accounts" virtual="y" to_schema="iwp" to_table="iwp_accounts" >
+				<fk_column name="account_no" pk="account_ID" />
+			</fk>
+			<fk name="fk_iwp_notes" virtual="y" to_schema="iwp" to_table="iwp_scheduled_routes" >
+				<fk_column name="schedule_id" pk="schedule_id" />
+				<fk_column name="account_no" pk="account_no" />
+				<fk_column name="route_id" pk="route_id" />
+			</fk>
+			<fk name="fk_iwp_notes_iwp_utility" virtual="y" to_schema="iwp" to_table="iwp_utility" >
+				<fk_column name="schedule_id" pk="utility_sched_id" />
+				<fk_column name="account_no" pk="account_no" />
+				<fk_column name="route_id" pk="rout_no" />
+			</fk>
+			<fk name="fk_iwp_notes-ikg_manifest" virtual="y" to_schema="iwp" to_table="iwp_ikg_manifest_info" >
+				<fk_column name="route_id" pk="route_id" />
+			</fk>
+			<fk name="fk_iwp_notes-list_of_routes" virtual="y" to_schema="iwp" to_table="iwp_list_of_routes" >
+				<fk_column name="route_id" pk="route_id" />
+			</fk>
+			<fk name="fk_iwp_notes_iwp_data_table" virtual="y" to_schema="iwp" to_table="iwp_data_table" >
+				<fk_column name="route_id" pk="route_id" />
+				<fk_column name="schedule_id" pk="schedule_id" />
+				<fk_column name="account_no" pk="account_no" />
+			</fk>
+			<fk name="fk_iwp_notes-util-data" virtual="y" to_schema="iwp" to_table="iwp_utility_data_table" >
+				<fk_column name="schedule_id" pk="schedule_id" />
+				<fk_column name="route_id" pk="route_id" />
+				<fk_column name="account_no" pk="account_no" />
+			</fk>
+			<fk name="fk_iwp_notes_iwp_ikg_utility" virtual="y" to_schema="iwp" to_table="iwp_ikg_utility" >
+				<fk_column name="route_id" pk="route_id" />
+			</fk>
+		</table>
+		<table name="iwp_payments" >
+			<column name="payment_no" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="account_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="from_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="to_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="date_paid" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="amount" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="check_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<index name="pk_iwp_payments" unique="PRIMARY_KEY" >
+				<column name="payment_no" />
+			</index>
+		</table>
+		<table name="iwp_payrment_type" >
+			<column name="payment_no" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="account_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="start_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="end_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="payment_type" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="payment_amount" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<index name="pk_iwp_payrment_type" unique="PRIMARY_KEY" >
+				<column name="payment_no" />
+			</index>
+			<fk name="iwp_payments" virtual="y" to_schema="iwp" to_table="iwp_payments" >
+				<fk_column name="payment_no" pk="payment_no" />
+			</fk>
+		</table>
+		<table name="iwp_private" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="recipient" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="author" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="message" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<index name="pk_iwp_private" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_iwp_private" unique="NORMAL" >
+				<column name="recipient" />
+			</index>
+			<index name="idx_iwp_private_0" unique="NORMAL" >
+				<column name="author" />
+			</index>
+			<fk name="fk_iwp_private_iwp_users-recipient" virtual="y" to_schema="iwp" to_table="iwp_users" >
+				<fk_column name="recipient" pk="user_id" />
+			</fk>
+			<fk name="fk_iwp_private_iwp_users-author" virtual="y" to_schema="iwp" to_table="iwp_users" >
+				<fk_column name="author" pk="user_id" />
+			</fk>
+		</table>
+		<table name="iwp_private_thread" >
+			<column name="id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="pm_thread_no" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="recipient" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="author" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="message" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="created" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<index name="pk_iwp_private_thread" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_iwp_private_thread-author" virtual="y" to_schema="iwp" to_table="iwp_users" >
+				<fk_column name="author" pk="user_id" />
+			</fk>
+			<fk name="fk_iwp_private_thread-private" virtual="y" to_schema="iwp" to_table="iwp_private" >
+				<fk_column name="pm_thread_no" pk="id" />
+			</fk>
+			<fk name="fk_iwp_private_thread-recipient" virtual="y" to_schema="iwp" to_table="iwp_users" >
+				<fk_column name="recipient" pk="user_id" />
+			</fk>
+		</table>
+		<table name="iwp_rout_history" >
+			<column name="route_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="what_day" type="int" length="10" decimal="0" jt="4" />
+			<column name="start_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="end_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="first_stop" type="time" length="8" decimal="0" jt="92" />
+			<column name="last_stop" type="time" length="8" decimal="0" jt="92" />
+			<column name="start_mileage" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="end_mileage" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="first_stop_mileage" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="last_stop_mileage" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="truck_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="driver" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="tanker_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="wc_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="gross_weight" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="tare_weight" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="miu" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="destination_account_no" type="text" length="65535" decimal="0" jt="-1" />
+			<index name="route_no" unique="NORMAL" >
+				<column name="route_no" />
+			</index>
+		</table>
+		<table name="iwp_scheduled_routes" >
+			<column name="schedule_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="route_id" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="scheduled_start_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="facility_origin" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="route_status" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="created_by" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="driver" type="int" length="10" decimal="0" jt="4" />
+			<column name="account_no" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="code_red" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="en_route_id" type="bigint" length="19" decimal="0" jt="-5" />
+			<column name="date_created" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<index name="pk_iwp_scheduled_routes" unique="PRIMARY_KEY" >
+				<column name="schedule_id" />
+			</index>
+			<index name="pk_iwp_scheduled_routes_0" unique="UNIQUE" >
+				<column name="account_no" />
+			</index>
+			<index name="idx_iwp_scheduled_routes" unique="NORMAL" >
+				<column name="schedule_id" />
+				<column name="account_no" />
+				<column name="route_id" />
+			</index>
+			<fk name="fk_iwp_scheduled_routes" virtual="y" to_schema="iwp" to_table="iwp_accounts" >
+				<fk_column name="schedule_id" pk="account_ID" />
+			</fk>
+			<fk name="fk_iwp_scheduled_routess" virtual="y" to_schema="iwp" to_table="iwp_data_table" >
+				<fk_column name="schedule_id" pk="schedule_id" />
+				<fk_column name="account_no" pk="account_no" />
+				<fk_column name="route_id" pk="route_id" />
+			</fk>
+		</table>
+		<table name="iwp_shrink" >
+			<column name="shrink_no" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="account_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="start_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="end_date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="shrink" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="notes" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<index name="pk_iwp_shrink" unique="PRIMARY_KEY" >
+				<column name="shrink_no" />
+			</index>
+		</table>
+		<table name="iwp_shrinkage" >
+			<column name="date" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="jacobsen" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+		</table>
+		<table name="iwp_tanker" >
+			<column name="tanker_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="tanker_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="lp_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="ikg_decal_no" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="max_capacity" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="lot_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="rm_total" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="overhead" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="misc_cost" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<fk name="fk_iwp_tanker" virtual="y" to_schema="iwp" to_table="iwp_ikg_manifest_info" >
+				<fk_column name="tanker_id" pk="truck" />
+				<fk_column name="lp_no" pk="license_plate" />
+				<fk_column name="ikg_decal_no" pk="ikg_decal" />
+			</fk>
+		</table>
+		<table name="iwp_truck_id" >
+			<column name="truck_id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="truck_year" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="truck_model" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="truck_make" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="truck_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="lp_no" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="ikg_decal" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="max_capacity" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="coa" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="rm_total" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="start_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="current_mileage" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="mpg" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="facility" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="division" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="overhead" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="misc_cost" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="status" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="name" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="type" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="acquired" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="renewed" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="expires" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="vin" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="plates" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="description" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="state_acquired" type="char" length="2" decimal="0" jt="1" mandatory="y" />
+			<column name="notes" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="placard" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="lic_requirement" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="insurance_id" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="insurance_carrier" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<index name="pk_iwp_truck_id" unique="PRIMARY_KEY" >
+				<column name="truck_id" />
+			</index>
+		</table>
+		<table name="iwp_users" >
+			<column name="user_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="first" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="last" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="middle" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="email" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="address" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="city" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="state" type="varchar" length="2" decimal="0" jt="12" mandatory="y" />
+			<column name="zip" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="areacode" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="phone" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="carrier" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="roles" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="title" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="facility" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="staff_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="account_created" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="last_login" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="duty" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="login_name" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="password" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="facility_restriction" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="division_restriction" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="driver_hourly_pay" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="notes" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<index name="pk_iwp_users" unique="PRIMARY_KEY" >
+				<column name="user_id" />
+			</index>
+			<fk name="fk_iwp_users_iwp_accounts" virtual="y" to_schema="iwp" to_table="iwp_accounts" >
+				<fk_column name="facility" pk="division" />
+				<fk_column name="user_id" pk="account_rep" />
+			</fk>
+			<fk name="fk_iwp_users-driver" virtual="y" to_schema="iwp" to_table="iwp_scheduled_routes" >
+				<fk_column name="user_id" pk="driver" />
+			</fk>
+			<fk name="fk_iwp_users" virtual="y" to_schema="iwp" to_table="iwp_scheduled_routes" >
+				<fk_column name="user_id" pk="created_by" />
+			</fk>
+		</table>
+		<table name="iwp_utility" >
+			<column name="utility_sched_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="rout_no" type="int" length="10" decimal="0" jt="4" />
+			<column name="account_no" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="type_of_service" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="date_of_service" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="container_size" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="container_label" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="container_being_swapped_size" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="container_being_swapped_label" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="dispatcher_note" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="driver_note" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="quantity" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="code_red" type="int" length="10" decimal="0" jt="4" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<column name="route_status" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="created_by" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="created_date" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<index name="pk_iwp_utility" unique="PRIMARY_KEY" >
+				<column name="utility_sched_id" />
+			</index>
+			<index name="idx_iwp_utility" unique="UNIQUE" >
+				<column name="rout_no" />
+			</index>
+			<index name="idx_iwp_utility_0" unique="NORMAL" >
+				<column name="account_no" />
+			</index>
+			<fk name="fk_iwp_utility" virtual="y" to_schema="iwp" to_table="iwp_utility_data_table" >
+				<fk_column name="utility_sched_id" pk="schedule_id" />
+				<fk_column name="rout_no" pk="route_id" />
+				<fk_column name="account_no" pk="account_no" />
+			</fk>
+			<fk name="fk_iwp_utility_iwp_utility" virtual="y" to_schema="iwp" to_table="iwp_ikg_utility" >
+				<fk_column name="rout_no" pk="route_id" />
+			</fk>
+			<fk name="fk_iwp_utility-list_of_util" virtual="y" to_schema="iwp" to_table="iwp_list_of_utility" >
+				<fk_column name="rout_no" pk="route_id" />
+			</fk>
+			<fk name="fk_iwp_utility_iwp_accounts" to_schema="iwp" to_table="iwp_accounts" >
+				<fk_column name="account_no" pk="account_ID" />
+			</fk>
+		</table>
+		<table name="iwp_utility_data_table" >
+			<column name="entry_number" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" autoincrement="y" />
+			<column name="route_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="schedule_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="inches_entered" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="inches_to_gallons" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="inches_leftover" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="inches_to_gallons_leftover" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="expected_gallons" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="number_of_barrels" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="fieldreport" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="zero_gallon_reason" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="account_no" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="completed" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="driver" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="date_of_pickup" type="date" length="10" decimal="0" jt="91" mandatory="y" />
+			<column name="issue_number" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<index name="pk_iwp_utility_data_table" unique="PRIMARY_KEY" >
+				<column name="entry_number" />
+			</index>
+			<index name="idx_iwp_utility_data_table" unique="NORMAL" >
+				<column name="account_no" />
+			</index>
+			<fk name="fk_iwp_utility_data_table" virtual="y" to_schema="iwp" to_table="iwp_ikg_utility" >
+				<fk_column name="route_id" pk="route_id" />
+			</fk>
+			<fk name="fk_iwp_utility_data_table-ikg_utility" virtual="y" to_schema="iwp" to_table="iwp_list_of_utility" >
+				<fk_column name="route_id" pk="route_id" />
+			</fk>
+			<fk name="fk_iwp_utility_data_table-account_no" to_schema="iwp" to_table="iwp_accounts" >
+				<fk_column name="account_no" pk="account_ID" />
+			</fk>
+		</table>
+		<table name="temp_locations" >
+			<column name="sb_location_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="account_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="location_name" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="is_PURE" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="longitude" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="latitude" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="address_1" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="city" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="state" type="char" length="2" decimal="0" jt="1" mandatory="y" />
+			<column name="postal" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="area_code" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="phone" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="email_address" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="contact" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="zone_id" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+			<column name="facility_name" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="location_status" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="service_type" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="pickup_status" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="estimated_gpm" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="est_oil_on_site" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="date_last_oil_pickup" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="on_site_capacity" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="container_info" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="container_2" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="container_3" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+		</table>
+		<table name="temp_pickup" >
+			<column name="pickup_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="location_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="route_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="route_title" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="fire" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="date_created" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="date_of_pickup" type="datetime" length="19" decimal="0" jt="93" mandatory="y" />
+			<column name="gallons" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="field_report_note" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="location_name" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="driver" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="data_entry_name" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="facility_name" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="PURE" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="account_no" type="bigint" length="19" decimal="0" jt="-5" mandatory="y" />
+		</table>
+		<table name="temp_routes" >
+			<column name="route_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="route_status" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="recurring" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="date_created" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="date_scheduled" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="date_completed" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="title" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="pickup_count" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="gals_expt_ZAP" type="float" length="12" decimal="0" jt="7" mandatory="y" />
+			<column name="gals_col" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="driver" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="creator" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+			<column name="facility_name" type="text" length="65535" decimal="0" jt="-1" mandatory="y" />
+		</table>
+	</schema>
+	<connector name="MySql" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.34-bin.jar" host="localhost" port="3306" user="reddawg" passwd="cXV5bGU3MTQ=" schema_mapping="" />
+	<layout id="Layout3422972" name="iwp" show_relation_columns="y" >
+		<entity schema="iwp" name="iwp_rout_history" color="b3ccf5" x="1170" y="435" />
+		<entity schema="iwp" name="iwp_tanker" color="b3b3f5" x="960" y="1080" />
+		<entity schema="iwp" name="iwp_list_of_containers" color="b3ccf5" x="105" y="1050" />
+		<entity schema="iwp" name="iwp_containers" color="b3ccf5" x="135" y="1320" />
+		<entity schema="iwp" name="iwp_notes" color="b3ccf5" x="930" y="1395" />
+		<entity schema="iwp" name="iwp_list_of_utility" color="b2cdf7" x="345" y="2370" />
+		<entity schema="iwp" name="iwp_list_of_routes" color="bef5b3" x="960" y="765" />
+		<entity schema="iwp" name="iwp_utility" color="b3b3f5" x="165" y="2040" />
+		<entity schema="iwp" name="iwp_ikg_utility" color="bef5b3" x="615" y="1830" />
+		<entity schema="iwp" name="iwp_utility_data_table" color="bef5b3" x="90" y="1665" />
+		<entity schema="iwp" name="iwp_data_table" color="bef5b3" x="375" y="495" />
+		<entity schema="iwp" name="iwp_grease_traps" color="b3ccf5" x="1140" y="1545" />
+		<entity schema="iwp" name="iwp_truck_id" color="b3ccf5" x="1320" y="2385" />
+		<entity schema="iwp" name="iwp_private" color="b2cdf7" x="60" y="510" />
+		<entity schema="iwp" name="iwp_users" color="b3b3f5" x="45" y="45" />
+		<entity schema="iwp" name="iwp_issue_notes" color="b2cdf7" x="300" y="1155" />
+		<entity schema="iwp" name="iwp_friendly" color="b3ccf5" x="300" y="1335" />
+		<entity schema="iwp" name="iwp_issues" color="f5d8b3" x="480" y="1110" />
+		<entity schema="iwp" name="iwp_private_thread" color="cab3f5" x="60" y="810" />
+		<entity schema="iwp" name="iwp_scheduled_routes" color="b3ccf5" x="420" y="45" />
+		<entity schema="iwp" name="iwp_ikg_manifest_info" color="bef5b3" x="825" y="45" />
+		<entity schema="iwp" name="iwp_jacobsen" color="cab3f5" x="555" y="1395" />
+		<entity schema="iwp" name="iwp_list_of_grease" color="cab3f5" x="1125" y="1995" />
+		<entity schema="iwp" name="iwp_ikg_grease" color="bef5b3" x="1380" y="1080" />
+		<entity schema="iwp" name="iwp_grease_data_table" color="bef5b3" x="1500" y="1725" />
+		<entity schema="iwp" name="iwp_accounts" color="ff0033" x="690" y="1110" >
+			<column name="account_ID" />
+			<column name="id" />
+			<column name="division" />
+			<column name="account_rep" />
+		</entity>
+		<entity schema="iwp" name="iwp_activity" color="f5d8b3" x="915" y="1650" />
+		<group name="Oil Routing &amp; Stops Information" color="c4e0f9" >
+			<entity schema="iwp" name="iwp_rout_history" />
+			<entity schema="iwp" name="iwp_list_of_routes" />
+			<entity schema="iwp" name="iwp_data_table" />
+			<entity schema="iwp" name="iwp_ikg_manifest_info" />
+			<entity schema="iwp" name="iwp_scheduled_routes" />
+		</group>
+		<group name="Container Information" color="c4e0f9" >
+			<entity schema="iwp" name="iwp_list_of_containers" />
+			<entity schema="iwp" name="iwp_containers" />
+		</group>
+		<group name="Utility Route &amp; Stops Information" color="c4e0f9" >
+			<entity schema="iwp" name="iwp_utility_data_table" />
+			<entity schema="iwp" name="iwp_utility" />
+			<entity schema="iwp" name="iwp_ikg_utility" />
+			<entity schema="iwp" name="iwp_list_of_utility" />
+		</group>
+		<group name="Grease Routes &amp; Stops" color="c4e0f9" >
+			<entity schema="iwp" name="iwp_grease_data_table" />
+			<entity schema="iwp" name="iwp_list_of_grease" />
+			<entity schema="iwp" name="iwp_grease_traps" />
+			<entity schema="iwp" name="iwp_ikg_grease" />
+		</group>
+	</layout>
+</project>

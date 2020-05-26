@@ -1,0 +1,35 @@
+<div id="rest" style="width:300px;float:left;">
+            <table style="width: 100%;border:1px solid #bbb;">
+                <tr class="table_row">
+                <td class="table_label" id="line_type_id_label" style="font-size: 13px;border:1px solid red;text-align:center;">Preferred <img src="img/clock-12.png" align="bottom" width="12"><br>Time of Service<br><span class="mini">(M,W,Th - Before 7AM, etc)</span></td>
+                </tr>
+                <tr>
+                <td class="table_data" align="left" valign="top">
+                    <textarea name="time_of_service_note" id="tr_time_of_service_note_update" style="width: 100%;" >
+                    </textarea>
+                </td>
+                </tr>
+            </table>
+        </div>
+    
+    <div id="optional" style="width:300px;float:left;">
+        <table style="width: 200px;margin:auto;">
+        <tbody><tr class="table_row">
+        <td class="table_label" id="line_type_id_label" align="right" nowrap="" valign="top" style="font-size: 13px;">Name it</td>
+        <td class="table_data" align="left" valign="top" style="font-size: 13px;"><input name="trap_label" value="" id="tr_trap_label_update" size="20"></td>
+        </tr>
+        <tr class="table_row">
+        <td class="table_label" id="line_type_id_label" align="right" nowrap="" valign="top" style="font-size: 13px;">Description</td>
+        <td class="table_data" align="left" valign="top"><textarea name="trap_description" id="tr_description_update" rows="4" cols="16"></textarea></td>
+        </tr>
+        <tr class="table_row">
+        <td class="table_label" id="line_type_id_label" align="right" nowrap="" valign="top" style="font-size: 13px;">Add'l Price</td>
+        <td class="table_data" align="left" valign="top"><input name="price_additional" value="" id="tr_price_additional_update" size="5"></td>
+        </tr>
+        <tr class="table_row">
+        <td class="table_label" id="line_type_id_label" align="right" nowrap="" valign="top" style="font-size: 13px;">Add'l Price<br> Details</td>
+        <td class="table_data" align="left" valign="top"><textarea name="price_additional_info" id="tr_price_additional_info_update" rows="3" cols="16"></textarea></td>
+        </tr>
+        </tbody>
+        </table>
+    </div>

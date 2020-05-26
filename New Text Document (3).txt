@@ -1,0 +1,24 @@
+<table class="datatable" id="over_locations">
+                <tr><td colspan="2">Locations</td></tr>
+                <tr><td style="width: 50%;">Service</td><td>3512</td></tr>
+                <tr><td style="width: 50%;">not Service</td><td>3512</td></tr>
+                <tr><td style="width: 50%;">Both</td><td>3512</td></tr>
+                <tr><td style="width: 50%;">All</td><td>3512</td></tr>
+            </table>
+
+
+<table class="datatable" id="account" >
+                <tr><td colspan="2">Accounts</td></tr>
+                <tr><td style="width: 50%;">Own</td><td>3512</td></tr>
+                <tr><td style="width: 50%;">Originated</td><td>3512</td></tr>
+                <tr><td style="width: 50%;">Both</td><td>3512</td></tr>
+            </table>
+
+
+<table class="datatable" id="not_collected">
+                <tr><td colspan="2">Oil Uncollected</td></tr>
+                <tr><td style="width: 50%;">Service</td><td>3512</td></tr>
+                <tr><td style="width: 50%;">not Service</td><td>3512</td></tr>
+                <tr><td style="width: 50%;">Both</td><td>3512</td></tr>
+                <tr><td style="width: 50%;">All</td><td>3512</td></tr>
+            </table>

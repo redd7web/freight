@@ -1,0 +1,18 @@
+additional information 
+
+  how much oil
+  estimated monthly volumed 
+  container size 
+  number of containers
+  special notes (dispatch)
+  payment type
+  miu %
+  contract start date 
+  	end date 
+  ppg 
+  sharing 
+     yes/no (guest-host)
+  
+   
+
+
