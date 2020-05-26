@@ -1,0 +1,20 @@
+ $id = aname_to_number($line[9]);
+    
+    
+    $rec_fac = reverseTranslate($line[12]);    
+    $pickupdata = array(
+        "entry_number"=>$line[0],
+        "route_id"=>$line[2],
+        "inches_to_gallons"=>$line[7],
+        "fieldreport"=>$line[8],
+        "account_no"=>$id,
+        "recieving_facility"=>$rec_fac,
+        "completed"=>1,
+        "date_of_pickup"=>$line[6]
+    );
+    
+    $ikg_manifest_table = array(
+        
+    );
+    
+    $db->insert("iwp_data_table",$pickupdata);

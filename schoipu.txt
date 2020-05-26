@@ -1,0 +1,51 @@
+<?php
+
+
+
+
+
+if( count($full)>0 ){
+    $account = new Account();
+    foreach($full as $scheduled){
+                $cap = $account->barrel_cap($scheduled['account_no']);                
+                if($cap != 0){ 
+                    echo  "
+                    <tr>
+                        <td>
+                            <input type='checkbox' style='cursor:pointer;width:50px;height:50px;z-index:9999;' xlr='".$scheduled['account_no']."' rel='".$scheduled['schedule_id']."' type='checkbox' class='setThisRoute'  title='schedule id:$scheduled[schedule_id] | account id:".$scheduled['account_no']." '/>
+                        </td>
+                        <td>"; 
+                            echo code_red($scheduled['code_red']);                    
+                        echo "</td>
+                        <td>".statusColors($scheduled['route_status'],$scheduled['account_no'])."</td>";
+                        $tod = explode (" ",$scheduled['scheduled_start_date']);
+                        echo "
+                        <td>$scheduled[schedule_id]</td>
+                        <td>$tod[0]</td>
+                        <td>".account_NumtoName($scheduled['account_no'])."</td>
+                        <td>".$scheduled['city']."</td>
+                        <td>".$scheduled['state']."</td>
+                        <td>".$scheduled['zip']."</td>
+                        <td>".numberToFacility($account->singleField($scheduled['account_no'],"division"))."</td>
+                        <td>".$account->singleField($scheduled['account_no'],"pickup_frequency")."</td>";//freq 
+                        echo"<td>"; 
+                        if( $tod[0] != '0000-00-00'){
+                           echo date_different($tod[0],date("Y-m-d"));
+                        }    
+                         
+                        
+                        echo "</td>";//Days Since Pickup Went Past Overdue"
+                        echo "<td>" //Days Since Last Oil Pickup
+                          .date_different($account->date_of_last_pickup($scheduled['account_no']),date("Y-m-d")). "</td>";
+                        echo "<td>".$account->date_of_last_pickup($scheduled['account_no'])."</td>";//last pickup
+                        echo "<td>";                    
+                        echo  round( ($scheduled['estimated_volume']/  $cap   ) *100   ,2); //Estimated Percentage of Capacity Used (Gallons Estimated)
+                        echo "</td>";
+                        echo "<td>".$scheduled['estimated_volume']."</td>";//Estimated Oil On Site
+                        echo "<td>".$cap."</td>";//On Site Capacity in Gallons
+                        echo "<td>".round($scheduled['avg_gallons_per_Month'],2)."</td>";//Estimated Gallons Per Month
+                    echo "</tr>";
+                    }
+    }
+}
+?>

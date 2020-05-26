@@ -1,0 +1,48 @@
+US-1/US-2
+
+san diego
+
+
+/*
+
+$str = file_get_contents("accounts.txt");
+
+$str = str_replace("\t","|",$str);
+
+$str = str_replace("\r","~",$str);
+
+$a = explode("~",$str);
+//var_dump($a);
+
+?>
+<table style="width: 100%;">
+<tr>
+<?php
+
+$max = count($a);
+$header =explode("|",$a[0]);
+foreach($header as $head){
+    echo "<td style='padding:2px 2px 2px 2px;border:1px solid black;'>$head</td>";
+}
+
+?>
+
+</tr>
+<?php
+for($i = 1;$i<$max;$i++){
+    $buffx = explode("|",$a[$i]);
+    echo"<tr>";
+    $countx = 0;
+    $address ="";
+    $city="";
+    $state="";
+    foreach($buffx as $v){
+       
+        echo "<td>$v</td>";
+    }
+    echo"</tr>";
+}
+
+?>
+</table>
+*/

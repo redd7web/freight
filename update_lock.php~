@@ -1,0 +1,25 @@
+<?php
+include "protected/global.php";
+$person = new Person();
+$head ='From: account-creation@iwpusa.com' . "\r\n" .
+            'Reply-To: no-replyr@iwpusa.com' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion()."\r\n";
+            $head .= "MIME-Version: 1.0\r\n";
+            $head .= 'Content-Type: text/html; charset=ISO-8859-1\r\n';
+$account = new Account($_POST['account']);
+
+
+
+$db->query("UPDATE gt_accounts SET locked = $_POST[state] WHERE account_ID = $_POST[account]");
+
+switch($_POST['state']){
+    case 1:
+        $phrase = "locked";
+    break;
+    case 0:
+        $phrase = "unlocked";
+    break;
+}
+
+mail("KMickle@iwpusa.com,bgastelum@iwpusa.com, wkeifer@iwpusa.com, AParsons@iwpusa.com,GRuff@iwpusa.com,ABurkett@iwpusa.com","Account $account->name_plain locked","Account $account->name_plain $phrase by  $person->first_name $person->last_name @ ".date("Y-m-d H:i:s"));
+?>
