@@ -1,0 +1,90 @@
+
+$ikg = Array(
+    "ikg_manifest_route_number"=>trim($_POST['ikg_manifest_route_number']),
+    "tank1"=>trim($_POST['tank_1']),
+    "tank2"=>trim($_POST['tank_2']),
+    "time_start"=>trim($_POST['time_start']),
+    "start_mileage"=>trim($_POST['start_mileage']),
+    "scheduled_date"=>trim($_POST['sched_route_start']),
+    "truck"=>trim($_POST['vehicle']),
+    "first_stop"=>trim($_POST['first_stop']),
+    "first_stop_mileage"=>trim($_POST['first_stop_mileage']),
+    "completed_date"=>$_POST['completion_date'],
+    "license_plate"=>$_POST['lic_plate'],
+    "last_stop"=> $_POST['last_stop'],
+    "last_top_mileage"=>$_POST['last_stop_mileage'],    
+    "ikg_decal"=>$_POST['ikg_decal'],
+    "end_time"=>$_POST['end_time'],
+    "end_mileage"=>$_POST['end_mileage'],
+    "ikg_collected"=>$_POST['ikg_collected'],
+    "fuel"=>$_POST['fuel'],
+    "inventory_code"=>$_POST['inventory_code'],
+    "lot_no"=>$_POST['lot_no'],
+    "gross_weight"=>$_POST['gross_weight'],
+    "recieving_facility"=>$_POST['reciev_fac'],
+    "tare_weight"=>$_POST['tara_weight'],
+    "facility_address"=>$_POST['fac_address'],
+    "net_weight"=>$_POST['net_weight'],
+    "facility_rep"=>$_POST['fac_rep'],
+    "ikg_transporter"=>$_POST['ikg_transporter'],
+    "number_days_route"=>$_POST['mult_day_route'],
+    "driver"=>$_POST['drivers'],
+    "account_numbers"=>$_POST['accounts'],
+    "location"=>$_POST['location']        
+);
+
+
+var_dump($ikg);
+echo "status: ". $db->insert($dbprefix."_ikg_manifest_info",$ikg);
+
+
+$buffer2 = $db->where('ikg_manifest_route_number',$_POST['ikg_manifest_route_number'])->get($dbprefix.'_ikg_manifest_info',"route_id");
+
+
+
+$ikg2 = Array(
+    "status"=>$_POST['status'],
+    "ikg_manifest_route_number"=>$_POST['ikg_manifest_route_number'],
+    "facility"=>$_POST['reciev_fac'],
+    "created_date"=>date("Y-m-d"),
+    "created_by"=>$person->user_id,
+    "scheduled"=>$_POST['sched_route_start'],
+    "driver"=> $_POST['drivers'],   
+    "stops"=>$_POST['number_of_picksup'],
+    "inc"=>$_POST['number_of_picksup'],
+    "route_id"=>$buffer2[0]['route_id'],
+    "expected"=>$expected
+);
+
+
+echo $db->insert($dbprefix."_list_of_routes",$ikg2);
+
+$note_update = Array(
+    "route_id"=>$buffer2[0]['route_id']
+);
+
+
+
+$these_schedules = explode("|",$_POST['schedules']);
+
+array_pop($these_schedules);
+
+
+
+echo "<br/> scheds ";
+var_dump($these_schedules);
+
+$note2 =Array(
+    "route_id"=>$buffer2[0]['route_id']
+);
+
+foreach ($these_schedules as $value2){    
+    $buffer= array(
+        "route_id"=>$buffer2[0]['route_id'],
+        "route_status"=>$_POST['status'],
+        "driver"=>$_POST['drivers']
+    );
+   echo $db->where('schedule_id',$value2)->update($dbprefix."_scheduled_routes",$buffer);
+   $db->where('schedule_id',$value2)->update($dbprefix."_notes",$note2);   
+   
+}

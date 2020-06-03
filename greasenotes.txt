@@ -1,0 +1,51 @@
+  
+        <table>
+        <tr class="table_row">
+        <td class="table_label" align="right" nowrap="" valign="top">Frequency</td>
+        <td class="table_data" align="left" valign="top"><input name="frequency" value="90" id="tr_frequency_update" size="4"></td>
+        </tr>
+        <tr class="table_row">
+        <td class="table_label" id="volume_label" align="right" nowrap="" valign="top">Volume</td>
+        <td class="table_data" align="left" valign="top"><input name="volume" value="" id="tr_volume_update" size="5"/></td>
+        </tr>
+        <tr class="table_row">
+        <td class="table_label" id="" align="right" nowrap="" valign="top">Base Rate</td>
+        <td class="table_data" align="left" valign="top"><input name="price_flat" value="" id="tr_price_flat_update" size="5"></td>
+        </tr>
+        <tr class="table_row">
+        <td class="table_label" id="price_per_gallon_label" align="right" nowrap="" valign="top">Price Per Gal</td>
+        <td class="table_data" align="left" valign="top"><input name="price_per_gallon" value="" id="tr_price_per_gallon_update" size="5"></td>
+        </tr>
+        <tr><td>Fire</td><td><input type="checkbox" value="1" name="fire" id="fire"/></td></tr>
+        </tbody></table>
+        
+
+<table  style="width:50%;float:left;">
+        <tbody><tr class="table_row">
+        <td class="table_label" id="stairs_to_trap_label" align="right" nowrap="" valign="top">Stairs</td>
+        <td class="table_data" align="left" valign="top"><input id="tr_stairs_update" name="tr_stairs_update" class="display_field" type="checkbox">
+        </td>
+        </tr>
+        
+     
+        <tr class="table_row">
+        <td class="table_label" id="trap_suction_device_id_label" align="right" nowrap="" valign="top">Suction Device</td>
+        <td class="table_data" align="left" valign="top"><select name="tr_device_id_update" id="tr_device_id_update"><option value="">--</option>
+        <option value="10">Hose</option>
+        
+        <option value="20">R2D2</option>
+        </select></td>
+        </tr>
+     
+        <tr class="table_row">
+        <td  class="table_label" id="hose_length_label" align="right" nowrap="" valign="top">Hose Length</td>
+        <td class="table_data" align="left" valign="top"><input name="hose_length" value="" id="tr_hose_length_update" size="5"></td>
+        </tr>        </tbody></table>
+
+
+
+,"time_of_service"=>$_POST['time_of_service_note']
+           ,"addt_price"=>$_POST['price_additional']
+           ,"addt_info"=>trim($_POST['price_additional_info'])
+           ,"fire"=>$fire
+           ,"service_date"=>$_POST['dos']

@@ -1,0 +1,19 @@
+ accounts: <?php echo "'"; 
+            if(!isset($_POST['from_routed_oil_pickups'])){
+                echo $_POST['accounts_checked'];
+            }
+            else {
+                echo $ikg_info->acount_numbers_full_string;
+            }
+            echo"'"; ?>,
+            schedules: <?php 
+            if(!isset($_POST['from_routed_oil_pickups'])){
+                echo "'".$_POST['schecheduled_ids']."'";
+            }
+            else {
+                 foreach ($ikg_info->scheduled_routes as $ekc ){
+                 echo "$ekc[schedule_id]|";
+                 }
+            }
+            
+            ?>,
