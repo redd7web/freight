@@ -1,4 +1,4 @@
-<?php if(isset($_SESSION['sludge_id'])){ ?>
+<?php if(isset($_SESSION['freight_id'])){ ?>
 <ul class="dropdown" style="margin-left: -24px;">
             <?php if($person->isFriendly() == false ){ ?>
                 <li>Management
@@ -81,7 +81,7 @@
                         <?php } ?>
                         <li>
                         <?php 
-                             if(count($_SESSION['sludge_history'])>0){
+                             if(count($_SESSION['freight_history'])>0){
                                 echo "<a href='#'>History</a>";   
                              } else {
                                 echo "History";
@@ -90,8 +90,8 @@
                         
                            <ul class="sub_menu">
                             <?php 
-                            if(count($_SESSION['sludge_history'])>0){
-                                foreach ($_SESSION['sludge_history'] as $places){
+                            if(count($_SESSION['freight_history'])>0){
+                                foreach ($_SESSION['freight_history'] as $places){
                                     echo "<li><a href='$places[url]'>$places[name]</a></li>";
                                 }
                             } else {
@@ -144,14 +144,15 @@
                                 </ul>
                             </li>
                             --!>
-                             <li><a href="scheduling.php">Confined Space</a>
+                             <li><a href="scheduling.php">Freight</a>
                                 <ul>
-                                    <li><a href="scheduling.php?task=schoipu">Scheduled Space Pickups</a></li>                            
-                                    <li><a href="scheduling.php?task=rop">Routed Space Pickups</a></li>
-                                    <li><a href="scheduling.php?task=cop">Completed Space Pickups</a></li>
+                                    <li><a href="scheduling.php?task=schoipu">Scheduled Freight Pickups</a></li>                            
+                                    <li><a href="scheduling.php?task=rop">Routed Freight Pickups</a></li>
+                                    <li><a href="scheduling.php?task=cop">Completed Freight Pickups</a></li>
                                 </ul>
                             </li>
-                            <li><a href="scheduling.php">Sludges</a>
+                            
+                            <!--<li><a href="scheduling.php">Sludges</a>
                                 <ul>
                                      <li><a href="scheduling.php?task=sgt">Scheduled Sludge</a></li>
                                     <li><a href="scheduling.php?task=rgt">Routed Sludge</a></li>
@@ -164,7 +165,7 @@
                                     <li><a href="scheduling.php?task=ruc">Routed Mainline</a></li>
                                     <li><a href="scheduling.php?task=cuc">Completed Mainline</a></li>
                                 </ul>
-                            </li>
+                            </li>--!>
                             <?php if(!$person->isCoWest()){ ?>
                             <!--<li><a href="scheduling.php?task=shifts">Shifts</a></li>                    
                             <li><a href="scheduling.php?task=pickexp">Pickups Export</a></li>-->
@@ -172,9 +173,9 @@
                        
                     </ul>
                 </li>    
-                <li>
+                <!--<li>
                     <a href="operator.php" target="_blank">Operator</a>
-                </li>
+                </li>--!>
                 <!--<li>Sales
                     <ul class="sub_menu">
                         <li>My Leads</li>

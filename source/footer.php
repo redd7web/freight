@@ -4,14 +4,14 @@
 <?php 
 
 
-if(isset($_SESSION['sludge_id'])){ 
+if(isset($_SESSION['freight_id'])){ 
    
     $countf =0;
-     $followx = $db->query("SELECT DISTINCT ( issue_no ), message,message_date FROM sludge_issue_notes WHERE created_by =$person->user_id GROUP BY issue_no");                    
+     $followx = $db->query("SELECT DISTINCT ( issue_no ), message,message_date FROM freight_issue_notes WHERE created_by =$person->user_id GROUP BY issue_no");                    
     if(count($followx)>0){
         foreach($followx as $co){
             
-            $extra = $db->query("SELECT * FROM sludge_issues WHERE issue_no = $co[issue_no] AND issue_status IN('active','Active')");
+            $extra = $db->query("SELECT * FROM freight_issues WHERE issue_no = $co[issue_no] AND issue_status IN('active','Active')");
             if(count($extra)>0){
                 $countf++;   
             }
@@ -42,10 +42,10 @@ if(isset($_SESSION['sludge_id'])){
                     <table style="width: 100%;">
                     <tr><td>Main Thread</td><td style="padding: 0px 0px 0px 0px;">Account </td><td>Message</td><td>Message Date</td></tr>
                     <?php 
-                    $follow = $db->query("SELECT DISTINCT ( issue_no ), message,message_date FROM sludge_issue_notes WHERE created_by =$person->user_id GROUP BY issue_no");                    
+                    $follow = $db->query("SELECT DISTINCT ( issue_no ), message,message_date FROM freight_issue_notes WHERE created_by =$person->user_id GROUP BY issue_no");                    
                     if(count($follow)>0){
                         foreach($follow as $co){                            
-                            $extrax = $db->query("SELECT * FROM sludge_issues WHERE issue_no = $co[issue_no] AND issue_status IN('active','Active')");
+                            $extrax = $db->query("SELECT * FROM freight_issues WHERE issue_no = $co[issue_no] AND issue_status IN('active','Active')");
                             if(count($extrax)>0){
                                 echo "<tr><td><a href='viewIssues.php?id=$co[issue_no]' rel='shadowbox;width=700;'> <img src='img/table_edit.png'/></a></td><td>".account_NumtoName($extrax[0]['account_no'])."</td><td>$co[message]</td><td>$co[message_date]</td></tr>";  
                             }

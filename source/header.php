@@ -5,7 +5,7 @@
     <div id="alwaysmiddle">
         <div id="leftx" style="width:59.5%;height:90px;background:transparent;float:left;">
         <div id="quicksearch">
-        <?php if(isset($_SESSION['sludge_id'])){ ?>
+        <?php if(isset($_SESSION['freight_id'])){ ?>
             <div class="mail">
             <a href="message.php<?php if(isset($_GET['id'])){ echo "?account=".$_GET['id'];} ?>" rel="shadowbox;width=500;height=500"><img src="img/msg.jpg" /></a>
             </div>
@@ -37,7 +37,9 @@
             <div id="name" style="width: auto;min-width:100px;font-size:11px;font-family:tahoma;text-align:center;float:left;margin-right:2px;color:rgb(14, 41, 146);font-weight:bold;"> <?php $person = new Person(); echo $person->login_name;?>, is logged on
             </div>
             
-            <div id="logout" style=""></div>
+            <div id="logout" style="">
+                <a href="logout.php"><img src="img/logout.jpg"/></a>
+            </div>
             <?php 
             if($person->isCoWest()){
             ?>
@@ -103,11 +105,11 @@
         padding:5px 5px 5px 5px;
     }
     </style>
-    <?php if( !isset($_SESSION['sludge_id'])){ ?>
+    <?php if( !isset($_SESSION['freight_id'])){ ?>
     <form action="protected/biologin.php" method="post" id="form_one">
     <table style="margin: 0 auto;width:400px;height:100px;font-size:18px;background:#845430">
-        <tr><td style="vertical-align: middle;text-align:left;border:0px solid #bbb;"><input name="gtuser" type="text" placeholder="Username" style=" "/></td></tr><tr><td style="vertical-align:middle;border:0px solid #bbb;">
-        <input name="gtpw" type="password" placeholder="Password" style="float:left; "/><input type="submit" name="gtsub" value="Submit" style="float:left;margin-left:5px;"/></td></tr>
+        <tr><td style="vertical-align: middle;text-align:left;border:0px solid #bbb;"><input name="freightuser" type="text" placeholder="Username" style=" "/></td></tr><tr><td style="vertical-align:middle;border:0px solid #bbb;">
+        <input name="freightpw" type="password" placeholder="Password" style="float:left; "/><input type="submit" name="gtsub" value="Submit" style="float:left;margin-left:5px;"/></td></tr>
     </table>
     <input type="text" name="previous" id="previous" value="<?php echo $_SERVER['HTTP_REFERER']; ?>" readonly=""/>
     </form>
@@ -134,7 +136,7 @@
                    <select name="author">
                    <option></option>
                    <?php
-                         $axix = $db->query("SELECT user_id,first,last FROM sludge_users");
+                         $axix = $db->query("SELECT user_id,first,last FROM freight_users");
                          if(count($axix)>0){
                             foreach($axix as $acox){
                                 $compare ="";
@@ -151,7 +153,7 @@
                    <td><select name="account">
                    <option></option>
                    <?php
-                         $ax = $db->query("SELECT account_ID,name FROM sludge_accounts");
+                         $ax = $db->query("SELECT account_ID,name FROM freight_accounts");
                          if(count($ax)>0){
                             foreach($ax as $aco){
                                 $compare ="";
@@ -313,7 +315,7 @@
                     <td>
                     <select name="accounts"><option></option>
                     <?php 
-                    $kl = $db->query("SELECT name,account_ID FROM sludge_accounts WHERE status ='active'");
+                    $kl = $db->query("SELECT name,account_ID FROM freight_accounts WHERE status ='active'");
                     if(count($kl)>0){
                         
                         foreach($kl as $lk){
@@ -472,23 +474,23 @@
                     break;
                 case "accounts":    
                 
-                    $fr1 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =201");
-                    $fr2 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =202");
-                    $fr3 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =203");
-                    $fr4 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =204");
-                    $fr5 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =205");
-                    $fr6 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =206");
-                    $fr7 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =207");
-                    $fr8 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =208");
-                    $fr9 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =209");
-                    $fr10 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =210");
-                    $fr11 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =211");
+                    $fr1 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =201");
+                    $fr2 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =202");
+                    $fr3 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =203");
+                    $fr4 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =204");
+                    $fr5 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =205");
+                    $fr6 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =206");
+                    $fr7 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =207");
+                    $fr8 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =208");
+                    $fr9 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =209");
+                    $fr10 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =210");
+                    $fr11 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =211");
                     
-                    $tmp1 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =212");
-                    $tmp2 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =213");
-                    $tmp3 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =214");
-                    $tmp4 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =215");
-                    $tmp5 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =216");
+                    $tmp1 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =212");
+                    $tmp2 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =213");
+                    $tmp3 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =214");
+                    $tmp4 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =215");
+                    $tmp5 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =216");
                                
                    ?>
                    <style type="text/css">
@@ -1774,10 +1776,10 @@ $("input#to").datepicker({dateFormat: "yy-mm-dd",changeMonth: true, changeYear: 
                 case "affil":
                     ?>
                     <form action="management.php?task=affil" id="exp_form" name="exp_form" method="post">
-                    <input type="hidden" value="export_sludge_oil_breakout_per_route" name="task"  value="<?php if(isset($_POST['task'])){ echo "$_POST[task]"; } ?>" />
+                    <input type="hidden" value="export_freight_oil_breakout_per_route" name="task"  value="<?php if(isset($_POST['task'])){ echo "$_POST[task]"; } ?>" />
                     <input type="hidden" value="yes" name="update_search" value="<?php if(isset($_POST['update_search'])){ echo "$_POST[update_search]"; } ?>" />
                     <input type="hidden" value="" name="export_set" value="<?php if(isset($_POST['export_set'])){ echo "$_POST[export_set]"; } ?>"  /> 
-                    <input type="hidden" value="sludge_obr" name="event"  value="<?php if(isset($_POST['event'])){ echo "$_POST[event]"; } ?>"/>
+                    <input type="hidden" value="freight_obr" name="event"  value="<?php if(isset($_POST['event'])){ echo "$_POST[event]"; } ?>"/>
                     
                     <table border="0" align="center" cellpadding="1" style="font-size:smaller;"><tbody><tr>
                     <td> 
@@ -2688,23 +2690,23 @@ Start Date&nbsp;
                 case "mini":
                 break;
                 case "sgt":
-                    $fr1 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =201");
-                    $fr2 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =202");
-                    $fr3 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =203");
-                    $fr4 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =204");
-                    $fr5 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =205");
-                    $fr6 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =206");
-                    $fr7 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =207");
-                    $fr8 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =208");
-                    $fr9 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =209");
-                    $fr10 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =210");
-                    $fr11 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =211");
+                    $fr1 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =201");
+                    $fr2 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =202");
+                    $fr3 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =203");
+                    $fr4 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =204");
+                    $fr5 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =205");
+                    $fr6 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =206");
+                    $fr7 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =207");
+                    $fr8 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =208");
+                    $fr9 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =209");
+                    $fr10 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =210");
+                    $fr11 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =211");
                     
-                    $tmp1 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =212");
-                    $tmp2 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =213");
-                    $tmp3 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =214");
-                    $tmp4 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =215");
-                    $tmp5 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =216");
+                    $tmp1 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =212");
+                    $tmp2 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =213");
+                    $tmp3 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =214");
+                    $tmp4 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =215");
+                    $tmp5 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =216");
                     
                     ?>
                     <style>
