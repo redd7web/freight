@@ -1,0 +1,452 @@
+<?php
+error_reporting(E_WARNING | E_PARSE | E_NOTICE);
+$data_table = $dbprefix."_data_table";
+$account_table = $dbprefix."_accounts";
+
+function ranged_TotalGallons($account_numberx, $date, $now){
+    global $dbprefix,$db;
+    $data_table = $dbprefix."_data_table";  
+    if(strlen($date)==0){
+        $date = date("Y-m-01");    
+    }
+    
+    if(strlen($now)== 0 ){
+        $now = date("Y-m-d");    
+    }
+     
+    
+    $total = 0; 
+    //echo "query:"." "."SELECT SUM(inches_to_gallons) as total_g FROM $data_table WHERE account_no = $account_number && (date_of_pickup>='$date' && date_of_pickup<= '$now' )";
+    
+    
+    foreach($account_numberx as $account_number){
+        $pickups = $db->query("SELECT SUM(inches_to_gallons) as total_g FROM $data_table WHERE account_no = $account_number[account_ID] && (date_of_pickup>='$date' && date_of_pickup<= '$now' )");
+        if($pickups[0]['total_g'] != NULL){
+            $total = $total + $pickups[0]['total_g'];    
+        }
+    }
+    
+    return $total;
+}
+
+
+function ranged_get_pickups($account_numberx, $date, $now){
+    global $dbprefix;
+    global $db;
+    $total = 0;    
+    if(strlen($date)==0){
+        $date = date("Y-m-01");    
+    }
+    
+    if(strlen($now)== 0 ){
+        $now = date("Y-m-d");    
+    }
+    $data_table = $dbprefix."_data_table";
+    
+    
+    
+    foreach($account_numberx as $account_number){
+        $pickups = $db->query("SELECT COUNT(account_no) as pickups_r FROM $data_table WHERE account_no= $account_number[account_ID] && ( date_of_pickup>='$date' && date_of_pickup<= '$now')");
+    
+         if(count($pickups)>0){
+            $total = $total + $pickups[0]['pickups_r'];
+         }    
+    }
+    return $total;
+}
+
+function ranged_gpp($account_numberx, $date, $now){
+    global $dbprefix;
+    global $db;
+    $total = 0;
+    $data_table = $dbprefix."_data_table";
+    if(strlen($date)==0){
+        $date = date("Y-m-01");    
+    }
+    
+    if(strlen($now)== 0 ){
+        $now = date("Y-m-d");    
+    }
+
+    foreach($account_numberx as $account_number){
+        $pickups = $db->query("SELECT SUM(inches_to_gallons) as total_g, COUNT(inches_to_gallons) as num_picks FROM $data_table WHERE account_no = $account_number[account_ID] && (date_of_pickup>='$date' && date_of_pickup<= '$now' )");
+    //$pickups = $db->where("account_no",$id)->get($dbprefix."_data_table","inches_to_gallons");
+         $gpp = 0;
+         if($pickups[0]['num_picks'] !=0){
+            $gpp = $pickups[0]['total_g']/$pickups[0]['num_picks'];
+         }
+         $total = $total + $gpp;
+    }
+    
+    return $total;
+   
+}
+
+
+
+function iranged_TotalGallons($account_number, $date, $now){
+    global $dbprefix,$db;
+    $data_table = $dbprefix."_data_table";  
+    if(strlen($date)==0){
+        $date = date("Y-m-01");    
+    }
+    
+    if(strlen($now)== 0 ){
+        $now = date("Y-m-d");    
+    }
+     
+    
+    $total = 0; 
+    //echo "query:"." "."SELECT SUM(inches_to_gallons) as total_g FROM $data_table WHERE account_no = $account_number && (date_of_pickup>='$date' && date_of_pickup<= '$now' )";
+    
+    
+  
+        $pickups = $db->query("SELECT SUM(inches_to_gallons) as total_g FROM $data_table WHERE account_no = $account_number && (date_of_pickup>='$date' && date_of_pickup<= '$now' )");
+        if($pickups[0]['total_g'] != NULL){
+            $total = $total + $pickups[0]['total_g'];    
+        }
+    
+    
+    return $total;
+}
+
+
+function iranged_get_pickups($account_number, $date, $now){
+    global $dbprefix;
+    global $db;
+    $total = 0;    
+    if(strlen($date)==0){
+        $date = date("Y-m-01");    
+    }
+    
+    if(strlen($now)== 0 ){
+        $now = date("Y-m-d");    
+    }
+    $data_table = $dbprefix."_data_table";
+    
+    
+    
+    
+    $pickups = $db->query("SELECT COUNT(account_no) as pickups_r FROM $data_table WHERE account_no= $account_number && ( date_of_pickup>='$date' && date_of_pickup<= '$now')");
+
+     if(count($pickups)>0){
+        $total = $total + $pickups[0]['pickups_r'];
+     }    
+    
+    return $total;
+}
+
+function iranged_gpp($account_number, $date, $now){
+    global $dbprefix;
+    global $db;
+    $total = 0;
+    $data_table = $dbprefix."_data_table";
+    if(strlen($date)==0){
+        $date = date("Y-m-01");    
+    }
+    
+    if(strlen($now)== 0 ){
+        $now = date("Y-m-d");    
+    }
+
+     $pickups = $db->query("SELECT SUM(inches_to_gallons) as total_g, COUNT(inches_to_gallons) as num_picks FROM $data_table WHERE account_no = $account_number && (date_of_pickup>='$date' && date_of_pickup<= '$now' )");
+    //$pickups = $db->where("account_no",$id)->get($dbprefix."_data_table","inches_to_gallons");
+     $gpp = 0;
+     if($pickups[0]['num_picks'] !=0){
+        $gpp = $pickups[0]['total_g']/$pickups[0]['num_picks'];
+     }
+     $total = $total + $gpp;
+     
+    return $total;
+   
+}
+
+
+
+if(isset($_POST['search_now'])){
+   $last ="";
+   $distinct = "account_ID";
+   $names ="";
+   foreach($_POST as $name=>$value){
+        switch($name){
+            case "account_rep":
+                if(strlen($value)>0){
+                    $arrFields[]= " re_assigned_sales_person = $value";
+                    $names = " re_assigned_sales_person = $value";
+                } 
+                break; 
+            case "salesrep":
+                if(strlen($value)>0){
+                    $arrFields[]= " original_sales_person = $value";
+                    $names .= " original_sales_person = $value";
+                }
+                break;
+        }
+   } 
+   
+   
+   $account_table = $dbprefix."_accounts";
+   
+   if(!empty($arrFields)){
+    
+    $append = " AND ".implode(" AND ",$arrFields).$last;
+   }
+   else {
+    $append ="";
+   }
+   $format = "SELECT $distinct FROM  $account_table WHERE 1 " .$append;
+   //echo $format."<br/>"; 
+   $request = $db->query($format);
+}
+else {
+    
+    $request = $db->query("SELECT account_no,COUNT(*) as count,SUM(inches_to_gallons) AS gals FROM freight_data_table GROUP BY account_no ORDER BY count DESC;");
+}
+?>
+<style type="text/css">
+.tableNavigation {
+    width:1000px;
+    text-align:center;
+    margin:auto;
+}
+.tableNavigation ul {
+    display:inline;
+    width:1000px;
+}
+.tableNavigation ul li {
+    display:inline;
+    margin-right:5px;
+}
+
+td{
+    background:transparent;
+    border:0px solid #bbb;  
+    padding:0px 0px 0px 0px;  
+}
+
+tr.even{
+    background:-moz-linear-gradient(center top , #F7F7F9, #E5E5E7);
+}
+
+tr.odd{
+    background:transparent;
+}
+.setThisRoute{ 
+    z-index:9999;
+}
+</style>
+<script>
+
+$(document).ready(function(){
+   $('#myTable').dataTable({
+        "lengthMenu": [ [10, 25, 50,100,150, -1], [10, 25, 50,100,150, "All"] ]
+   }); 
+});
+</script> 
+        
+<table  style="width: 100%;margin:auto;margin-top:10px;margin-bottom:10px;"><tr><td style="height: 10px;;">&nbsp;</td></tr><tr><td style="text-align: center;">
+<?php
+
+
+if(isset($_POST['search_now'])){
+    if(isset($_POST['to'])){
+        $date[] = " date_of_pickup <= '".$_POST['to']."'";
+    }
+    
+    if( isset($_POST['from']) ) { 
+        $date[] = " date_of_pickup  >= '".$_POST['from']."'";
+    }
+    
+    $restrict = " WHERE ". implode(" AND ", $date);
+} else { 
+    
+    $cur_date = date("m");
+    $cur_year = date("Y");   
+    $restrict = " WHERE MONTH(date_of_pickup) = '$cur_date' && YEAR(date_of_pickup) = '$cur_year'";
+}
+
+ $allxx = "SELECT SUM(inches_to_gallons) as bigbucket, COUNT(inches_to_gallons) as num FROM $data_table". $restrict;
+ //echo $allxx."<br/>";
+ $all = $db->query($allxx);
+if(count($all)>0){
+    foreach($all as $answer){
+        echo "<span style='font-weight:bold;font-size:24px;'>Total Gallons :".round($answer['bigbucket'],2)."</span><br/><br/>";
+        echo "<span style='font-weight:bold;font-size:24px;'>Total Pickups :".$answer['num']."</span>";
+    }
+}
+
+  
+    
+
+?>
+</td></tr></table>        
+        
+<table style="width: 100%;margin:auto;" id="myTable" >
+
+
+<?php $end=""; if( isset($_POST['search_now'])){ ?>   
+     <thead>
+     <tr style="background:url(img/biotanestrip.jpg) repeat-x left top;background-size:contain;">
+     <?php
+        if(isset($_POST['account_rep']) && strlen($_POST['account_rep']) !=0){ 
+            echo "<td  class='cell_label'>Account Rep</td>";
+            $search[] = " account_rep =".$_POST['account_rep'];
+        }
+        
+        if(isset($_POST['salesrep'])  && strlen($_POST['salesrep']) !=0 ){
+            echo "<td  class='cell_label'>Original Account Rep</td>";
+            $search[]  = " original_sales_person = ".$_POST['salesrep'];
+        }
+        ?>
+        <td  class='cell_label'>Gallons</td>
+        <td  class='cell_label'>Pickups</td>
+        <td  class='cell_label'>GPP</td>
+        <?php
+        if(isset($_POST['my_group'])  && strlen($_POST['my_group'])>0 ){ 
+            echo "<td  class='cell_label'>$_POST[my_group]</td>";
+           
+        }
+     ?>
+     </tr>
+     </thead> 
+     <tbody>
+     
+     <?php 
+        
+       
+        
+        if(!empty($search)){
+            $mid = " AND ".implode(" AND ", $search );
+        }
+        else {
+            $mid ="";
+        }
+        
+
+         switch($_POST['my_group']){
+                case "division":
+                    
+                
+                    $queryz ="SELECT DISTINCT division FROM $account_table WHERE 1 ".$mid;
+                    $query = $db->query($queryz);
+                    if(count($query)>0){
+                        foreach($query as $division){
+                             if(isset($_POST['account_rep']) && strlen($_POST['account_rep']) !=0){  
+                                echo "<td>".uNumToName($_POST['account_rep'])."</td>";
+                             }
+                                
+                             if(isset($_POST['salesrep']) && strlen($_POST['salesrep']) !=0){  
+                                echo "<td>".uNumToName($_POST['salesrep'])."</td>";
+                             }
+                                
+                            echo "<td>";
+                            $next_query = $db->query("SELECT account_ID FROM $account_table WHERE division =$division[division]" );
+                            if(count($next_query)>0){
+                                
+                                echo ranged_TotalGallons($next_query,$_POST['from'],$_POST['to']);
+                            }
+                            echo "</td>";
+                            
+                            echo "<td>";
+                            if(count($next_query)>0){
+                                
+                                echo ranged_get_pickups($next_query,$_POST['from'],$_POST['to']);
+                            }
+                            echo "</td>";
+                            
+                            echo "<td>";
+                            if(count($next_query)>0){
+                                
+                                echo ranged_gpp($next_query,$_POST['from'],$_POST['to']);
+                            }    
+                            echo "</td>";
+                            
+                            echo "<td>". numberToFacility($division['division'])."</td>";
+                        }
+                    }
+                    
+                    break;
+               
+                default:
+                    if(count($request)>0){
+                        foreach($request as $summary){
+                             if(isset($_POST['account_rep']) && strlen($_POST['account_rep']) !=0){  
+                                echo "<td>".uNumToName($_POST['account_rep'])."</td>";
+                             }
+                                
+                             if(isset($_POST['salesrep']) && strlen($_POST['salesrep']) !=0){  
+                                echo "<td>".uNumToName($_POST['salesrep'])."</td>";
+                             }
+                             echo "<td>".iranged_get_pickups($summary['account_ID'],$_POST['from'],$_POST['to'])."</td>";
+                             echo "<td>".iranged_TotalGallons($summary['account_ID'],$_POST['from'],$_POST['to'])."</td>";
+                             echo "<td>".iranged_gpp($summary['account_ID'],$_POST['from'],$_POST['to'])."</td>";
+                             
+                        }
+                    }
+                    break;
+            }
+        
+     ?>         
+     </tbody>
+     
+     <?php   
+} else
+{?>
+<thead>
+<tr style="background:url(img/biotanestrip.jpg) repeat-x left top;background-size:contain;">
+<th class="cell_label">Act ID</th>
+
+<th class="cell_label">Acct Name</th>
+
+
+<th class="cell_label">Loc Address</th>
+
+<th class="cell_label">City</th>
+
+<th class="cell_label">State</th>
+
+<th class="cell_label">Previous Provider</th>
+
+<th class="cell_label">Pickups</th>
+
+<th class="cell_label">Gallons</th>
+
+<th class="cell_label"><span title="Average Gallons per Pickup">GPP</span></th>
+
+<th class="cell_label">Facility</th>
+
+</tr>
+</thead>
+
+<tbody>
+<?php 
+
+if(count($request)>0){
+$account  = new Account();
+    foreach($request as $summary){
+        echo"<tr>";
+            echo "<td>$summary[account_no]</td>";
+            
+            echo "<td>".$account->formatted_Name($summary['account_no'])."</td>";           
+            echo "<td>".$account->singleField($summary['account_no'],"address")."</td>";
+            echo "<td>".$account->singleField($summary['account_no'],"city")."</td>";
+            echo "<td>".$account->singleField($summary['account_no'],"state")."</td>";
+            echo "<td>".$account->singleField($summary['account_no'],"previous_provider")."</td>";
+            echo "<td>".$summary['count']."</td>";
+            echo "<td>".$summary['gals']."</td>";
+            if ($summary['gals'] !=0 ){
+                $gpp = $summary['gals']/$summary['count'];
+            } else {
+                $gpp = 0;
+            }
+            echo "<td>".$gpp."</td>";
+            echo "<td>".$account->facility_name($summary['account_ID'])."</td>";
+        echo "</tr>";
+    }
+}    
+
+?>
+</tbody>
+<?php } ?>
+
+</table>

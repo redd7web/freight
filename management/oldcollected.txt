@@ -1,0 +1,40 @@
+function total_gallons($facnum, $criteria = ""){
+    global $dbprefix;
+    
+    $schedule_table = $dbprefix."_scheduled_routes";
+    $data_table = $dbprefix."_data_table";
+    $account_table = $dbprefix."_accounts";
+    $total = 0;
+    global $db;
+    //$ask2 = "SELECT $schedule_table.route_status,$schedule_table.code_red ,$schedule_table.schedule_id,$schedule_table.route_id,$account_table.state_date,$account_table.expires,$account_table.account_ID,$data_table.inches_to_gallons,$data_table.schedule_id,$data_table.route_id FROM $schedule_table INNER JOIN $account_table ON $schedule_table.account_no = $account_table.account_ID INNER JOIN $data_table ON $schedule_table.account_no = $data_table.account_no && $schedule_table.schedule_id = $data_table.schedule_id && $schedule_table.route_id = $data_table.route_id  WHERE $data_table.schedule_id = $schedule_table.schedule_id && $data_table.route_id = $schedule_table.route_id && $schedule_table.route_status='completed' && $schedule_table.code_red=1 && $schedule_table.facility_origin=$facnum ".$criteria;
+    $ask1 = "SELECT freight_scheduled_routes.route_status, freight_scheduled_routes.code_red, freight_scheduled_routes.facility_origin, freight_scheduled_routes.schedule_id, freight_scheduled_routes.account_no, freight_scheduled_routes.route_id, freight_accounts.state_date, freight_accounts.expires, freight_accounts.account_ID, freight_data_table.inches_to_gallons, freight_data_table.route_id,freight_accounts.account_rep FROM freight_scheduled_routes INNER JOIN freight_accounts ON freight_scheduled_routes.account_no = freight_accounts.account_ID INNER JOIN freight_data_table ON freight_scheduled_routes.route_id = freight_data_table.route_id INNER JOIN freight_accounts ON freight_accounts.account_ID = freight_scheduled_routes.account_no WHERE freight_scheduled_routes.facility_origin =$facnum AND freight_scheduled_routes.code_red =1 AND freight_scheduled_routes.route_status = 'completed'".$criteria;
+     $kl = $db->query($ask1);  
+     
+     if(count($kl)>0){
+        foreach($kl as $stops){
+            $total = $total + $stops['inches_to_gallons'];
+        }
+     }
+                       //echo $ask2."<br/>";
+    return $total;
+}
+
+
+function total_gall_rep($user,$criteria = ""){
+    global $dbprefix;
+    
+    $schedule_table = $dbprefix."_scheduled_routes";
+    $data_table = $dbprefix."_data_table";
+    $account_table = $dbprefix."_accounts";
+    $total = 0;
+    global $db;
+    
+    $all = $db->query("SELECT freight_scheduled_routes.route_status, freight_scheduled_routes.code_red, freight_scheduled_routes.facility_origin, freight_scheduled_routes.schedule_id, freight_scheduled_routes.account_no, freight_scheduled_routes.route_id, freight_accounts.state_date, freight_accounts.expires, freight_accounts.account_ID, freight_data_table.inches_to_gallons, freight_data_table.route_id,freight_accounts.account_rep FROM freight_scheduled_routes INNER JOIN freight_accounts ON freight_scheduled_routes.account_no = freight_accounts.account_ID INNER JOIN freight_data_table ON freight_scheduled_routes.route_id = freight_data_table.route_id
+WHERE freight_accounts.account_rep = $user AND freight_scheduled_routes.route_status = 'completed' AND freight_scheduled_routes.code_red =1 ".$criteria);
+    if(count($all)>0){
+        foreach($all as $totl){
+            $total = $totl['inches_to_gallons'] + $total;
+        }
+    }
+    return $total;
+}
