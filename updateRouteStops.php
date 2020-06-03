@@ -3,13 +3,13 @@ include "protected/global.php";
 ini_set("display_errors",1);
 switch($_POST['type']){
     case "oil":
-        $table = "sludge_ikg_manifest_info";
+        $table = "freight_ikg_manifest_info";
     break;
     case "grease":
-        $table="sludge_ikg_grease";
+        $table="freight_ikg_grease";
     break;
     case "util":
-        $table="sludge_ikg_utility";
+        $table="freight_ikg_utility";
     break;
 }
 

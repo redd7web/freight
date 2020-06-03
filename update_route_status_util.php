@@ -17,9 +17,9 @@ $b3 = array(
 
 $db->where('route_id',$_POST['route_id'])->update($dbprefix."_list_of_utility",$buffer);
 $db->where('route_id',$_POST['route_id'])->update($dbprefix."_ikg_utility",$b3);
-$db->where('route_status','completed')->where('rout_no',$_POST['route_id'])->update('sludge_utility',$b3);
+$db->where('route_status','completed')->where('rout_no',$_POST['route_id'])->update('freight_utility',$b3);
 
-$po = $db->query("UPDATE sludge_utility SET rout_no = null,route_status='scheduled' WHERE route_status IN('scheduled','enroute') AND rout_no=$_POST[route_id]");
+$po = $db->query("UPDATE freight_utility SET rout_no = null,route_status='scheduled' WHERE route_status IN('scheduled','enroute') AND rout_no=$_POST[route_id]");
 
 
 echo "debug<br/>";

@@ -4,10 +4,10 @@ include "protected/global.php";// from enter util data page
 
 $co =0;
 $acnts ="";
-$util = $db->query("SELECT schedule_id,account_no FROM sludge_utility_data_table WHERE route_id = $_POST[route_id]");
+$util = $db->query("SELECT schedule_id,account_no FROM freight_utility_data_table WHERE route_id = $_POST[route_id]");
 if(count($util)>0){//stops in data table mark complete
     foreach($util as $stops){
-        $db->query("UPDATE sludge_utility SET ='completed' WHERE utility_sched_id =$stops[schedule_id]");
+        $db->query("UPDATE freight_utility SET ='completed' WHERE utility_sched_id =$stops[schedule_id]");
         $acnts .= $stops['account_no']."|";
         $co++;
     }
@@ -27,7 +27,7 @@ $db->where('route_id',$_POST['route_id'])->update($dbprefix."_list_of_utility",$
 $db->where('route_id',$_POST['route_id'])->update($dbprefix."_ikg_utility",$b3);
 
 //****************************************return uncompleted stops to pool*************************************/
-$db->query("UPDATE sludge_utility SET route_status='scheduled',rout_no=null WHERE route_status IN('enroute','scheduled')");
+$db->query("UPDATE freight_utility SET route_status='scheduled',rout_no=null WHERE route_status IN('enroute','scheduled')");
 //****************************************return uncompleted stops to pool*************************************/
 
 

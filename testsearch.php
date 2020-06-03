@@ -9,7 +9,7 @@ $ratex = array();
 $occurred_once = array();
 function get_index(){
     global $db;
-    $xo =  $db->query("SELECT date,percentage FROM sludge_jacobsen ORDER BY DATE DESC LIMIT 0,1 ");
+    $xo =  $db->query("SELECT date,percentage FROM freight_jacobsen ORDER BY DATE DESC LIMIT 0,1 ");
     
     if(count($xo)>0){
         return $xo;
@@ -19,7 +19,7 @@ function get_index(){
 }
 
 
-$uo = $db->query("SELECT sludge_data_table.entry_number,sludge_data_table.account_no,sludge_data_table.date_of_pickup,sludge_data_table.schedule_id,sludge_data_table.sum, (sludge_data_table.sum - (sludge_data_table.sum * sludge_accounts.miu) ) as adj,sludge_data_table.route_id, sludge_accounts.name,sludge_accounts.payment_method, sludge_accounts.miu,sludge_accounts.index_percentage,sludge_accounts.ppg_jacobsen_percentage,sludge_accounts.price_per_gallon,sludge_accounts.account_ID,sludge_accounts.payment_method as pm_two FROM sludge_data_table LEFT JOIN sludge_accounts ON sludge_accounts.account_ID = sludge_data_table.account_no WHERE sludge_data_table.account_no IS NOT NULL AND sludge_data_table.payment_method IN ('Per Gallon') ORDER BY  sludge_accounts.account_ID ASC ,date_of_pickup ASC ");
+$uo = $db->query("SELECT freight_data_table.entry_number,freight_data_table.account_no,freight_data_table.date_of_pickup,freight_data_table.schedule_id,freight_data_table.sum, (freight_data_table.sum - (freight_data_table.sum * freight_accounts.miu) ) as adj,freight_data_table.route_id, freight_accounts.name,freight_accounts.payment_method, freight_accounts.miu,freight_accounts.index_percentage,freight_accounts.ppg_jacobsen_percentage,freight_accounts.price_per_gallon,freight_accounts.account_ID,freight_accounts.payment_method as pm_two FROM freight_data_table LEFT JOIN freight_accounts ON freight_accounts.account_ID = freight_data_table.account_no WHERE freight_data_table.account_no IS NOT NULL AND freight_data_table.payment_method IN ('Per Gallon') ORDER BY  freight_accounts.account_ID ASC ,date_of_pickup ASC ");
 $ko =get_index();
 if(count($uo)>0){
     foreach($uo as $stops){
@@ -66,7 +66,7 @@ if(count($uo)>0){
             case "O.T.P. Per Gallon": case "O.T.P. PG":
                 $ppg = $stops['price_per_gallon'] *$stops['adj'];
                 if(!in_array($stops['account_ID'],$paidx)){
-                    $db->query("UPDATE sludge_accounts SET paid = 1 WHERE account_ID = $stops[account_ID]");
+                    $db->query("UPDATE freight_accounts SET paid = 1 WHERE account_ID = $stops[account_ID]");
                     $paidx[]=$stops['account_ID'];
                      $one_time = $stops['ppg_jacobsen_percentage']; 
                     $paid = $ppg + $stops['ppg_jacobsen_percentage'];
@@ -122,8 +122,8 @@ if(count($uo)>0){
         
         $indice = $ko[0]['percentage'];
         
-        echo "<br/><br/>Name: $stops[name] <br/>Date of pickup: $stops[date_of_pickup] <br/>Payment Method: $stops[payment_method]<br/>Gallons retrieved: $stops[sum]<br/>Adju Gallons: $stops[adj]<br/>MIU: $stops[miu] <br/>PPG: $ppg <br/>Paid: $paid<br/>Rate: $rate <br/>Index at pickup:$indice<br/> UPDATE sludge_data_table SET rate=$rate,	ppg= $ppg,index_at_pickup = $indice, temp_miu = $miu,paid = $paid,payment_method='$stops[pm_two]' WHERE route_id= $stops[route_id] AND account_no = $stops[account_ID] AND schedule_id =$stops[schedule_id] <br/><br/>------- ";
-        $db->query("UPDATE sludge_data_table SET rate=$rate,	ppg= $ppg,index_at_pickup = $indice, temp_miu = $miu,paid = $paid,payment_method='$stops[pm_two]' WHERE entry_number = $stops[entry_number]");
+        echo "<br/><br/>Name: $stops[name] <br/>Date of pickup: $stops[date_of_pickup] <br/>Payment Method: $stops[payment_method]<br/>Gallons retrieved: $stops[sum]<br/>Adju Gallons: $stops[adj]<br/>MIU: $stops[miu] <br/>PPG: $ppg <br/>Paid: $paid<br/>Rate: $rate <br/>Index at pickup:$indice<br/> UPDATE freight_data_table SET rate=$rate,	ppg= $ppg,index_at_pickup = $indice, temp_miu = $miu,paid = $paid,payment_method='$stops[pm_two]' WHERE route_id= $stops[route_id] AND account_no = $stops[account_ID] AND schedule_id =$stops[schedule_id] <br/><br/>------- ";
+        $db->query("UPDATE freight_data_table SET rate=$rate,	ppg= $ppg,index_at_pickup = $indice, temp_miu = $miu,paid = $paid,payment_method='$stops[pm_two]' WHERE entry_number = $stops[entry_number]");
     }
 }
 

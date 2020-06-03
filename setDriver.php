@@ -6,7 +6,7 @@ if(isset($_POST['setdriver'])) {
         "driver"=>$_POST['drivers']
     );
     
-    $db->where('schedule_id',$_GET['sched_id'])->update("sludge_scheduled_routes",$jh);
+    $db->where('schedule_id',$_GET['sched_id'])->update("freight_scheduled_routes",$jh);
 }
 
 

@@ -10,7 +10,7 @@ function user_id($name){
     
    
         $first_last = explode(" ",$name);
-        $k = $db->query("SELECT user_id FROM sludge_users WHERE first like '%$first_last[0]%' AND last like '%$first_last[1]%'");
+        $k = $db->query("SELECT user_id FROM freight_users WHERE first like '%$first_last[0]%' AND last like '%$first_last[1]%'");
         
         if(count($k)>0){
             return $k[0]['user_id'];

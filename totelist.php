@@ -18,11 +18,11 @@ $account = new Account($_POST['id']);
                 <tr><td colspan="3">
                <div id="containment" style="width: 390px;height:100px;overflow-y:scroll;background:transparent;overflow-x:hidden;border:1px dotted black;">
                <?php 
-                     //$holders = $db->query("SELECT entry,container,account_no FROM sludge_containers WHERE account_no=$account->acount_id");
+                     //$holders = $db->query("SELECT entry,container,account_no FROM freight_containers WHERE account_no=$account->acount_id");
                    //where("delivery_date",)->where("account_no",$account->acount_id)->get($dbprefix."_containers","entry,container,account_no");
                    if(count($account->barrel_info)>0){
                         foreach($account->barrel_info as $totes){
-                            $check = $db->query("SELECT * FROM sludge_utility WHERE account_no = $account->acount_id AND container_label= $totes[container_id] AND type_of_service =3 AND date_of_service ='0000-00-00'");
+                            $check = $db->query("SELECT * FROM freight_utility WHERE account_no = $account->acount_id AND container_label= $totes[container_id] AND type_of_service =3 AND date_of_service ='0000-00-00'");
                             
                             if(count($check)>0){
                                 $stat = " (delivery pending)";

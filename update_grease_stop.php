@@ -18,7 +18,7 @@ $grease_pack = array(
     "addt_info"=>$_POST['addt']
 );
 
-$db->where("grease_no",$_POST['grease_no'])->update("sludge_grease_traps",$grease_pack);
+$db->where("grease_no",$_POST['grease_no'])->update("freight_grease_traps",$grease_pack);
 
 
 ?>

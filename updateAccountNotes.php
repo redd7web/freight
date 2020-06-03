@@ -7,9 +7,9 @@ $data = array(
     "notes"=>trim($buffer)
 );
 
-$db->where("account_ID",$_POST['account_no'])->update("sludge_accounts",$data);
+$db->where("account_ID",$_POST['account_no'])->update("freight_accounts",$data);
 
-$newvalue = $db->where("account_ID",$_POST['account_no'])->get("sludge_accounts","notes");
+$newvalue = $db->where("account_ID",$_POST['account_no'])->get("freight_accounts","notes");
 
 echo $newvalue[0]['notes'];
 

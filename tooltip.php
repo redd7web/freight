@@ -13,7 +13,7 @@ $account = new Account($_GET['account_no']);
 
 if(isset($_POST['deletethis'])){
     echo "sched: ".$_POST['entry_number'];
-    $db->query("DELETE FROM sludge_notes WHERE schedule_id = $_POST[entry_number]");
+    $db->query("DELETE FROM freight_notes WHERE schedule_id = $_POST[entry_number]");
     $a_info = new Account();    
     
     
@@ -55,8 +55,8 @@ if(isset($_POST['deletethis'])){
 if(isset($_POST['upnotes'])){
         
         echo "schedule_id ".$_POST['sched_id']."<br/>";
-        echo "SELECT route_id FROM sludge_scheduled_routes WHERE schedule_id = $_POST[sched_id]<br/>";
-        $check_route = $db->query("SELECT route_id FROM sludge_scheduled_routes WHERE schedule_id = $_POST[sched_id]");
+        echo "SELECT route_id FROM freight_scheduled_routes WHERE schedule_id = $_POST[sched_id]<br/>";
+        $check_route = $db->query("SELECT route_id FROM freight_scheduled_routes WHERE schedule_id = $_POST[sched_id]");
         
         if(count($check_route)>0 || $check_route[0]['route_status'] != NULL){
             $route = $check_route[0]['route_id'];
@@ -64,13 +64,13 @@ if(isset($_POST['upnotes'])){
             $route  = 0;    
         }
         
-        $k = $db->query("SELECT * FROM sludge_notes WHERE schedule_id = $_POST[sched_id]");//updating or inserting new?
+        $k = $db->query("SELECT * FROM freight_notes WHERE schedule_id = $_POST[sched_id]");//updating or inserting new?
         if(count($k)>0){
             $update_note = array(
                 "notes"=>$_POST['notes']."|".$_POST['instruct'],
                 "date"=>date("Y-m-d H:i:s")
             );
-            echo "<br/>status: ".$db->where("schedule_id",$_POST['sched_id'])->where("account_no",$_POST['account_no'])->update("sludge_notes",$update_note);    
+            echo "<br/>status: ".$db->where("schedule_id",$_POST['sched_id'])->where("account_no",$_POST['account_no'])->update("freight_notes",$update_note);    
         } else {
            
             $update_note = array(
@@ -85,7 +85,7 @@ if(isset($_POST['upnotes'])){
             );
             
             var_dump($update_note);
-            echo "<br/>status: ". $db->insert("sludge_notes",$update_note);
+            echo "<br/>status: ". $db->insert("freight_notes",$update_note);
             
         }
 }
@@ -127,7 +127,7 @@ body{
 <h3 style="width: 210px;margin:auto;">
     <?php 
            if(count($account->schedule)>0){
-                $poi = $db->query("SELECT * FROM sludge_data_table WHERE schedule_id = ".$account->schedule['schedule_id']);
+                $poi = $db->query("SELECT * FROM freight_data_table WHERE schedule_id = ".$account->schedule['schedule_id']);
                 if(count($poi)>0){
                     echo "Pickup ID: ".$poi[0]['entry_number'];
                 }

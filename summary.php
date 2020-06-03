@@ -1,7 +1,7 @@
 <?php
 include "protected/global.php";
 ini_set("display_errors",1);
-$person = new Person($_SESSION['sludge_id']);
+$person = new Person($_SESSION['freight_id']);
 if(isset($_POST['search_upc'])){
     if($_POST['facility'] !="ignore"){
         $facility = "$_POST[facility]";
@@ -24,13 +24,13 @@ function show_facility_year_month($month,$year,$facility){
     global $db;    
     $output[] ="";
     $line1= "";
-    $hc = $db->query("SELECT SUM(sludge_accounts.grease_volume) as vol_at_pickup, IFNULL( COUNT( sludge_grease_traps.grease_no ) , 0 )  as active FROM sludge_accounts LEFT JOIN sludge_grease_traps ON sludge_accounts.account_ID = sludge_grease_traps.account_no WHERE MONTH(sludge_grease_traps.service_date)='$month' AND YEAR( sludge_grease_traps.service_date) ='$year' AND division IN($facility) AND sludge_grease_traps.route_status IN('scheduled','enroute')");
+    $hc = $db->query("SELECT SUM(freight_accounts.grease_volume) as vol_at_pickup, IFNULL( COUNT( freight_grease_traps.grease_no ) , 0 )  as active FROM freight_accounts LEFT JOIN freight_grease_traps ON freight_accounts.account_ID = freight_grease_traps.account_no WHERE MONTH(freight_grease_traps.service_date)='$month' AND YEAR( freight_grease_traps.service_date) ='$year' AND division IN($facility) AND freight_grease_traps.route_status IN('scheduled','enroute')");
     $total = 0;
     if(count($hc)>0){
         $line1 .= "Stops enroute /scheduled ".$hc[0]['vol_at_pickup']." | ".$hc[0]['active']." stops<br/>";
         $total += $hc[0]['vol_at_pickup'];
     }
-    $com = $db->query("SELECT SUM(sludge_accounts.grease_volume) as all_pickedup, IFNULL( COUNT( sludge_grease_traps.grease_no ) , 0 )  as picked_up FROM sludge_accounts LEFT JOIN sludge_grease_traps ON sludge_accounts.account_ID = sludge_grease_traps.account_no WHERE MONTH(sludge_grease_traps.service_date)='$month' AND YEAR( sludge_grease_traps.service_date) ='$year' AND division IN($facility) AND sludge_grease_traps.route_status IN('completed')");
+    $com = $db->query("SELECT SUM(freight_accounts.grease_volume) as all_pickedup, IFNULL( COUNT( freight_grease_traps.grease_no ) , 0 )  as picked_up FROM freight_accounts LEFT JOIN freight_grease_traps ON freight_accounts.account_ID = freight_grease_traps.account_no WHERE MONTH(freight_grease_traps.service_date)='$month' AND YEAR( freight_grease_traps.service_date) ='$year' AND division IN($facility) AND freight_grease_traps.route_status IN('completed')");
     if(count($com)>0){
         $total +=$com[0]['all_pickedup'];
         $line1 .= "Current gallons collected: ".$com[0]['all_pickedup']." | ".$com[0]['picked_up']." stops<br/>Total:$total";
@@ -57,7 +57,7 @@ $plus_five = date("M Y m", strtotime("+5 month", $this_month)) . '<br/>';
 $h5 = explode(" ",$plus_five);
 $plus_six = date("M Y m", strtotime("+6 month", $this_month)) . '<br/>';
 $h6 = explode(" ",$plus_six);
-if(  ( isset($_SESSION['sludge_id']) && in_array($person->facility ,$check_uc) && $person->isFacilityManager() ) || ( isset($_SESSION['sludge_id']) && (  $person->user_id ==149 || $person->user_id ==137 || $person->user_id == 138  ) ) ) {
+if(  ( isset($_SESSION['freight_id']) && in_array($person->facility ,$check_uc) && $person->isFacilityManager() ) || ( isset($_SESSION['freight_id']) && (  $person->user_id ==149 || $person->user_id ==137 || $person->user_id == 138  ) ) ) {
 ?>
 <!doctype html>
 <html lang="en">

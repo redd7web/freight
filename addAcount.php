@@ -44,7 +44,7 @@ input[type=text]{
         <option value="">--</option>
         <?php
         //list of salespersons 
-             $sales_reps = $db->query("SELECT user_id FROM `sludge_users` WHERE roles like '%representative%' order by first");
+             $sales_reps = $db->query("SELECT user_id FROM `freight_users` WHERE roles like '%representative%' order by first");
               if(count($sales_reps) >0){
                 foreach($sales_reps as $value){
                     $sales_guy = new Person($value['user_id']);
@@ -472,14 +472,7 @@ input[type=text]{
 
             </select>
     </div>
-         <div class="field">
-        <label for="account_type">Type of Account</label>&nbsp;<br />(Please choose oil or grease)
-    </div>
-    
-     <div class="field">
-        <label for="competitors"><input checked="checked"  type="checkbox" name="type2" value="1" />&nbsp;Grease Trap</label>
-    </div>
-    
+        
         <div style="clear: both;"></div>
     </div>
     

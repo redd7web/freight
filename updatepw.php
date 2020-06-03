@@ -4,7 +4,7 @@ error_reporting(1);
 $person = new Person();
 if(isset($_POST['chpw'])){
    //echo $person->user_id."<br/>";
-    $hashed =  crypt("Pass123",'$105Biotane');
+    $hashed =  crypt($_POST['kh'],'$105Biotane');
 
     $package = array(
         "password"=>$hashed
@@ -16,7 +16,7 @@ if(isset($_POST['chpw'])){
         $id = $person->user_id;
     }
     
-    if($db->where("user_id",$id)->update("sludge_users",$package)){
+    if($db->where("user_id",$id)->update("freight_users",$package)){
         echo "<span style='color:green;'>Password Changed successfully!</span><br/>";
     }
 }
@@ -25,7 +25,7 @@ if(isset($_POST['chpw'])){
 
 <div style="width: 200px;height:100px;margin:auto;margin-top:10px;">
 <form action="updatepw.php" method="post">
-<input type="text" name="kh"  placeholder="enter new password here"/><br />
+<input type="text" name="kh"  placeholder="enter new password here" maxlength="8"/><br />
 <input type="submit" name="chpw" value="Change Now" />
 </form>
 </div>

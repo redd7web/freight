@@ -13,7 +13,7 @@ function date_dif($beg,$lat){
 }
 
 $count =1;
-$accounts_pickedup = $db->query("SELECT account_ID,estimated_volume,pickup_frequency,created FROM sludge_accounts WHERE status in ('active','new') AND account_ID = 40708");
+$accounts_pickedup = $db->query("SELECT account_ID,estimated_volume,pickup_frequency,created FROM freight_accounts WHERE status in ('active','new') AND account_ID = 40708");
 
 $atr = new Account();
 
@@ -23,7 +23,7 @@ if(count($accounts_pickedup)>0){
     foreach($accounts_pickedup as $nos){
        $total = 0;
        echo  "<br/><br/>$count ".account_NumToName($nos['account_ID'])."<br/>";
-       $how_many_picks = $db->query("SELECT date_of_pickup,inches_to_gallons  FROM sludge_data_table WHERE account_no =$nos[account_ID]  ORDER BY date_of_pickup DESC");
+       $how_many_picks = $db->query("SELECT date_of_pickup,inches_to_gallons  FROM freight_data_table WHERE account_no =$nos[account_ID]  ORDER BY date_of_pickup DESC");
        //echo "fault after..<br/>";
        
        
@@ -31,7 +31,7 @@ if(count($accounts_pickedup)>0){
        /**/
        if(count($how_many_picks)>3) {     
             echo "Has 4 or more pickups<br/>";
-            $check = $db->query("SELECT date_of_pickup,inches_to_gallons FROM sludge_data_table WHERE account_no =$nos[account_ID]  ORDER BY date_of_pickup DESC LIMIT 0,4");
+            $check = $db->query("SELECT date_of_pickup,inches_to_gallons FROM freight_data_table WHERE account_no =$nos[account_ID]  ORDER BY date_of_pickup DESC LIMIT 0,4");
             $for_this  = 0;
             foreach($check as $pus){
                 echo $pus['date_of_pickup']." $pus[inches_to_gallons]"."<br/>";
@@ -41,7 +41,7 @@ if(count($accounts_pickedup)>0){
             echo "total of last 4 pickups: ".$for_this."<br/>";
             $ticks = round($for_this,2) / date_different($check[3]['date_of_pickup'],$check[0]['date_of_pickup'])."<br/>";
             echo "ticks per day: ".$ticks."<br/>";
-            $next_sched = $db->query("SELECT schedule_id, scheduled_start_date FROM sludge_scheduled_routes WHERE account_no =$nos[account_ID] AND route_status IN ('scheduled', 'enroute') ORDER BY scheduled_start_date DESC ");
+            $next_sched = $db->query("SELECT schedule_id, scheduled_start_date FROM freight_scheduled_routes WHERE account_no =$nos[account_ID] AND route_status IN ('scheduled', 'enroute') ORDER BY scheduled_start_date DESC ");
             echo "next scheduled pickup ". $next_sched[0]['scheduled_start_date']."<br/>";
              echo "difference between todys date and last pickup: ". date_different($check[0]['date_of_pickup'],date("Y-m-d"))."<br/>";
              
@@ -57,7 +57,7 @@ if(count($accounts_pickedup)>0){
        }
        else if( count($how_many_picks)<4 && count($how_many_picks)>0 ){
         
-            $latest = $db->query("SELECT DISTINCT(date_of_pickup) FROM sludge_data_table WHERE account_no =$nos[account_ID] ORDER BY date_of_pickup DESC LIMIT 0,1");
+            $latest = $db->query("SELECT DISTINCT(date_of_pickup) FROM freight_data_table WHERE account_no =$nos[account_ID] ORDER BY date_of_pickup DESC LIMIT 0,1");
             
             echo "Has less  than 4 pickups but more than 0<br/>";
             echo " last: ".$latest[0]['date_of_pickup']."<br/>";

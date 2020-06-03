@@ -5,7 +5,7 @@ include "source/css.php";
 
 $account = new Account($_GET['account_no']);
 
-$check_grease_ = $db->query("SELECT * FROM sludge_grease_traps WHERE account_no = $account->acount_id AND route_status !='completed' ORDER BY date DESC");
+$check_grease_ = $db->query("SELECT * FROM freight_grease_traps WHERE account_no = $account->acount_id AND route_status !='completed' ORDER BY date DESC");
 ?>
 
 <div id="debug"></div>
@@ -64,7 +64,7 @@ $check_grease_ = $db->query("SELECT * FROM sludge_grease_traps WHERE account_no 
                         <tr><td>Create New</td><td  style="text-align: left;"><input type="radio" value="2" name="sched_type" class="sched_type"/></td></tr>
                         <tr><td>Add to Existing</td><td style="text-align: left;"><input type="radio" value="3" name="sched_type" class="sched_type"/>
                             <?php 
-                            $ko = $db->query("SELECT ikg_manifest_route_number,route_id,driver FROM sludge_list_of_grease WHERE status='enroute' ORDER BY created_date DESC");
+                            $ko = $db->query("SELECT ikg_manifest_route_number,route_id,driver FROM freight_list_of_grease WHERE status='enroute' ORDER BY created_date DESC");
                             echo "<select id='grease_routes' name='grease_routes'><option>--</option>";
                             if(count($ko)>0){
                                 foreach($ko as $ok){

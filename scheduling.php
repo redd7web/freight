@@ -104,7 +104,7 @@ if(isset($_GET['task'])){
       <div class="view-content">
         
     <?php
-     if(isset($_SESSION['sludge_id'])){
+     if(isset($_SESSION['freight_id'])){
     
         if(isset($_GET['task'])){
             switch($_GET['task']){

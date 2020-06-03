@@ -112,7 +112,7 @@ if(isset($_POST['searched'])){
     include "source/css.php";
     function listx(){
         global $db;
-        $k = $db->get("sludge_users","user_id,first,last");
+        $k = $db->get("freight_users","user_id,first,last");
         foreach($k as $user){
          echo "<option value='$user[user_id]'>$user[last], $user[first]</option>";   
         }

@@ -60,7 +60,7 @@ switch($_POST['type']){
         echo "</pre>";
         
         
-        $db->query("INSERT INTO sludge_private VALUES (0,$_POST[user_id],$person->user_id,'$_POST[mesg]','$dd','active')");
+        $db->query("INSERT INTO freight_private VALUES (0,$_POST[user_id],$person->user_id,'$_POST[mesg]','$dd','active')");
         $track = array(
             "date"=>date("Y-m-d H:i:s"),
             "user"=>$person->user_id,

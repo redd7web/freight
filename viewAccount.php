@@ -48,7 +48,7 @@ $person = new Person();
 <body>
 <?php include "source/header.php"; 
 
-if(isset($_SESSION['sludge_id'])){
+if(isset($_SESSION['freight_id'])){
     $account = new Account($_GET['id']);
     if(isset($_POST['submitxy'])){
         $d = date("Y-m-d H:i:s");
@@ -59,7 +59,7 @@ if(isset($_SESSION['sludge_id'])){
             "author"=>$person->user_id                                
         );
         print_r($package);
-        $db->insert("sludge_account_notes",$package);
+        $db->insert("freight_account_notes",$package);
     }
     
     
@@ -79,7 +79,7 @@ if(isset($_SESSION['sludge_id'])){
                 "note"=>$_POST['file_note'],
                 "file"=>"$account->acount_id/sound_files/".str_replace(" ","_",basename($_FILES["file_sound"]["name"]))
             );
-            $db->insert("sludge_sound_files",$sound_package);
+            $db->insert("freight_sound_files",$sound_package);
           echo "File Moved";
            
         }
@@ -88,30 +88,30 @@ if(isset($_SESSION['sludge_id'])){
     /*
     $actual_link = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     if($_SERVER['HTTP_REFERER'] != $actual_link && !in_assoc($actual_link,$_SESSION['history']) ){
-          $_SESSION['sludge_page_counter']++;  
-        if($_SESSION['sludge_page_counter']<5){
-            $_SESSION['sludge_history'][] = array(
+          $_SESSION['freight_page_counter']++;  
+        if($_SESSION['freight_page_counter']<5){
+            $_SESSION['freight_history'][] = array(
                 "url"=>$actual_link,
                 "name"=>$account->name_plain
             );
         } else {
-            if( $_SESSION['sludge_page_counter']%4 == 1  ){
-                $_SESSION['sludge_history'][0] = array(
+            if( $_SESSION['freight_page_counter']%4 == 1  ){
+                $_SESSION['freight_history'][0] = array(
                     "url"=>$actual_link,
                     "name"=>$account->name_plain
                 );
-            } else if( $_SESSION['sludge_page_counter']%4 == 2  ){
-                $_SESSION['sludge_history'][1] = array(
+            } else if( $_SESSION['freight_page_counter']%4 == 2  ){
+                $_SESSION['freight_history'][1] = array(
                         "url"=>$actual_link,
                         "name"=>$account->name_plain
                 );
-            } else if( $_SESSION['sludge_page_counter']%4 == 3  ){
-                $_SESSION['sludge_history'][2] = array(
+            } else if( $_SESSION['freight_page_counter']%4 == 3  ){
+                $_SESSION['freight_history'][2] = array(
                         "url"=>$actual_link,
                         "name"=>$account->name_plain
                 );
-            } else if( $_SESSION['sludge_page_counter']%4 == 0  ){
-                $_SESSION['sludge_history'][3] = array(
+            } else if( $_SESSION['freight_page_counter']%4 == 0  ){
+                $_SESSION['freight_history'][3] = array(
                         "url"=>$actual_link,
                         "name"=>$account->name_plain
                 );
@@ -121,7 +121,7 @@ if(isset($_SESSION['sludge_id'])){
      */
     
     $person = new Person();
-    //$value = $db->where("account_no",$account->acount_id)->get("sludge_containers");
+    //$value = $db->where("account_no",$account->acount_id)->get("freight_containers");
     //echo "<br/>".$account->acount_id;
 
 
@@ -169,7 +169,7 @@ if(isset($_SESSION['sludge_id'])){
 <script>
   $(window).load(function() { 
         <?php
-         $hhh = $db->query("SELECT account_no FROM sludge_utility WHERE account_no = $account->acount_id");
+         $hhh = $db->query("SELECT account_no FROM freight_utility WHERE account_no = $account->acount_id");
          if( ( isset($_GET['sched_util'])  && strtolower($account->status) == "new" && count($hhh) == 0 ) || ( strtolower($account->status) == "new" && count($hhh) == 0 )   )
             {//coming from account creation or account is new and no barrels exist
         ?>        

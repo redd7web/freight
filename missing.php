@@ -10,7 +10,7 @@ function user_id($name){
     
    
         $first_last = explode(" ",$name);
-        $k = $db->query("SELECT user_id FROM sludge_users WHERE first like '%$first_last[0]%' AND last like '%$first_last[1]%'");
+        $k = $db->query("SELECT user_id FROM freight_users WHERE first like '%$first_last[0]%' AND last like '%$first_last[1]%'");
         
         if(count($k)>0){
             return $k[0]['user_id'];
@@ -31,7 +31,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
           $new_address1 = explode("'",$data[10]);
         $new_address2 = explode ("'",$data[16]);
         
-        $check = $db->query("SELECT name FROM sludge_accounts WHERE name like '%$new_name[0]%' || address like '%$new_address1[0]%' || address like '%$new_address2[0]%' ");
+        $check = $db->query("SELECT name FROM freight_accounts WHERE name like '%$new_name[0]%' || address like '%$new_address1[0]%' || address like '%$new_address2[0]%' ");
 
       if(count($check)>0){  
         
@@ -91,10 +91,10 @@ if(($handle = fopen($file,"r"))!==FALSE){
         echo "Name: ".$data[1]." in system original rep: $orig | current: $res<br/><br/>";
         $bil_ad = htmlentities($data[10]);
         $bil_ad = str_replace("'","&#39;","$bil_ad");
-        echo "UPDATE sludge_accounts set created = '$created',state_date= '$state',expires = '$expires',price_per_gallon= $data[6],payment_method = '$method', index_percentage = $index, billing_address = '$bil_ad',billing_city = '$data[13]', billing_state ='$data[14]', billing_zip=$b_zip, original_sales_person = $orig, re_assigned_sales_person = $res, account_rep = $res WHERE name like '%$new_name[0]%' || address like '%$new_address1[0]%' || address like '%$new_address2[0]%' ";
+        echo "UPDATE freight_accounts set created = '$created',state_date= '$state',expires = '$expires',price_per_gallon= $data[6],payment_method = '$method', index_percentage = $index, billing_address = '$bil_ad',billing_city = '$data[13]', billing_state ='$data[14]', billing_zip=$b_zip, original_sales_person = $orig, re_assigned_sales_person = $res, account_rep = $res WHERE name like '%$new_name[0]%' || address like '%$new_address1[0]%' || address like '%$new_address2[0]%' ";
             
             
-            $db->query("UPDATE sludge_accounts set created = '$created',state_date= '$state',expires = '$expires',price_per_gallon= $data[6],payment_method = '$method', index_percentage = $index, billing_address = '$bil_ad',billing_city = '$data[13]', billing_state ='$data[14]', billing_zip=$b_zip, original_sales_person = $orig, re_assigned_sales_person = $res, account_rep = $res WHERE name like '%$new_name[0]%' || address like '%$new_address1[0]%' || address like '%$new_address2[0]%' ");
+            $db->query("UPDATE freight_accounts set created = '$created',state_date= '$state',expires = '$expires',price_per_gallon= $data[6],payment_method = '$method', index_percentage = $index, billing_address = '$bil_ad',billing_city = '$data[13]', billing_state ='$data[14]', billing_zip=$b_zip, original_sales_person = $orig, re_assigned_sales_person = $res, account_rep = $res WHERE name like '%$new_name[0]%' || address like '%$new_address1[0]%' || address like '%$new_address2[0]%' ");
         
         
       }  else {

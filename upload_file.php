@@ -1,6 +1,6 @@
 <?php
 include "protected/global.php";
-$account_table = "sludge_accounts";
+$account_table = "freight_accounts";
 //ini_set("display_errors",1);
 
 function is_dir_empty($dir) {
@@ -53,19 +53,19 @@ body{
 if(isset($_GET['path'])){
     switch($_GET['mode']){
         case 1:
-            if($db->query("UPDATE sludge_accounts SET contract =NULL WHERE account_ID=$_GET[account]")){
+            if($db->query("UPDATE freight_accounts SET contract =NULL WHERE account_ID=$_GET[account]")){
                 echo "File deleted";
             }
             break;
         case 2:
-            if($db->query("UPDATE sludge_accounts SET good_cleaning_practice_poster =NULL WHERE account_ID=$_GET[account]")){
+            if($db->query("UPDATE freight_accounts SET good_cleaning_practice_poster =NULL WHERE account_ID=$_GET[account]")){
                 echo "File deleted";
             }
             break;
         case 3:
             break;
         case 5:
-            if($db->query("UPDATE sludge_accounts SET cancel_letter = NULL WHERE account_ID = $_GET[account]")){
+            if($db->query("UPDATE freight_accounts SET cancel_letter = NULL WHERE account_ID = $_GET[account]")){
                 echo "File deleted";
             }
             break;
@@ -309,7 +309,7 @@ if(isset($_POST['upload'])){
                 mkdir("$_POST[account]/cancel/", 0777, true);
             }
             if(move_uploaded_file($_FILES["file"]["tmp_name"], "$_POST[account]/cancel/" . $newfilename)){
-                $db->query("UPDATE sludge_accounts SET cancel_letter ='$_POST[account]/cancel/$newfilename' WHERE account_ID=$_POST[account]");
+                $db->query("UPDATE freight_accounts SET cancel_letter ='$_POST[account]/cancel/$newfilename' WHERE account_ID=$_POST[account]");
                 echo "Cancellation Request Uploaded<br/>";    
             }
             

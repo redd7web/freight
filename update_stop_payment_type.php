@@ -14,14 +14,14 @@ $c ="";
 
     switch($_POST['payment_method']){
         case "No Pay":
-            $db->query("UPDATE sludge_accounts SET grease_ppg = 0 WHERE account_ID =$_POST[account]");
-            //echo "UPDATE sludge_grease_traps SET price_per_gallon = 0,payment_method = '$_POST[payment_method]' $c";
-            $db->query("UPDATE sludge_grease_traps SET price_per_gallon = 0,payment_method = '$_POST[payment_method]' $c");
+            $db->query("UPDATE freight_accounts SET grease_ppg = 0 WHERE account_ID =$_POST[account]");
+            //echo "UPDATE freight_grease_traps SET price_per_gallon = 0,payment_method = '$_POST[payment_method]' $c";
+            $db->query("UPDATE freight_grease_traps SET price_per_gallon = 0,payment_method = '$_POST[payment_method]' $c");
         break;
         default:
-            //echo "UPDATE sludge_grease_traps SET price_per_gallon = $_POST[amount],payment_method = '$_POST[payment_method]' $c";
-            $db->query("UPDATE sludge_accounts SET grease_ppg = $_POST[amount] WHERE account_ID =$_POST[account]");
-            $db->query("UPDATE sludge_grease_traps SET price_per_gallon = $_POST[amount],payment_method = '$_POST[payment_method]' $c");
+            //echo "UPDATE freight_grease_traps SET price_per_gallon = $_POST[amount],payment_method = '$_POST[payment_method]' $c";
+            $db->query("UPDATE freight_accounts SET grease_ppg = $_POST[amount] WHERE account_ID =$_POST[account]");
+            $db->query("UPDATE freight_grease_traps SET price_per_gallon = $_POST[amount],payment_method = '$_POST[payment_method]' $c");
         break;
     }
 

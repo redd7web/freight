@@ -11,7 +11,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
       $rep_id = 0;
       if(strlen($data[11])> 0 && $data[11] !=NULL){
           $last_first = explode(" ",$data[11]);
-          $spec1 = $db->query("SELECT user_id FROM sludge_users WHERE last LIKE '%".$last_first[1]."%'");
+          $spec1 = $db->query("SELECT user_id FROM freight_users WHERE last LIKE '%".$last_first[1]."%'");
           if(count($spec1)>0){
             $rep_id = $spec1[0]['user_id'];
           }  
@@ -21,9 +21,9 @@ if(($handle = fopen($file,"r"))!==FALSE){
       $num = 0;
       if(strlen($data[10]) >0 && $data[10] !=NULL){
           $first_last = explode(" ",$data[10]);
-          $query = "SELECT user_id FROM sludge_users WHERE last LIKE '%".$first_last[1]."%";
+          $query = "SELECT user_id FROM freight_users WHERE last LIKE '%".$first_last[1]."%";
           //echo $query;
-          $spec = $db->query("SELECT user_id FROM sludge_users WHERE last LIKE '%".$first_last[1]."%'");
+          $spec = $db->query("SELECT user_id FROM freight_users WHERE last LIKE '%".$first_last[1]."%'");
           if(count($spec)>0){
             $num = $spec[0]['user_id'];
           }
@@ -44,15 +44,15 @@ if(($handle = fopen($file,"r"))!==FALSE){
       }
       //***********************************************
       
-       $kj = $db->where("ikg_manifest_route_number",$title)->get("sludge_ikg_manifest_info");
+       $kj = $db->where("ikg_manifest_route_number",$title)->get("freight_ikg_manifest_info");
        
        
        if(count($kj)>0){
             $ikg_append = array(
                 "account_numbers"=>$kj[0]['account_numbers'].$data[1]."|"
             );
-           $db->where("route_id",$kj[0]['route_id'])->update("sludge_ikg_manifest_info",$ikg_append);
-           $db->query("UPDATE sludge_list_of_routes set stops = stops+1 WHERE route_id = ".$kj[0]['route_id']);// update the amount of stops
+           $db->where("route_id",$kj[0]['route_id'])->update("freight_ikg_manifest_info",$ikg_append);
+           $db->query("UPDATE freight_list_of_routes set stops = stops+1 WHERE route_id = ".$kj[0]['route_id']);// update the amount of stops
        } else {
             //create route manifest
             if(strlen($data[2])>0 || $data[2] != NULL){
@@ -65,7 +65,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
                     "collected"=>"Yellow Grease",
                     "account_numbers"=>$data[1]
                );
-               $db->insert("sludge_ikg_manifest_info",$ikg);
+               $db->insert("freight_ikg_manifest_info",$ikg);
                $rid = $data[2]; 
            } else {            
                 //auto generate id if not listed
@@ -77,7 +77,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
                     "collected"=>"Yellow Grease",
                     "account_numbers"=>$data[1]
                 );
-               $db->insert("sludge_ikg_manifest_info",$ikg);
+               $db->insert("freight_ikg_manifest_info",$ikg);
                $rid = getInsertId();
            }
            //************************
@@ -93,7 +93,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
                 "status"=>"completed"
            );
            
-           $db->insert("sludge_list_of_routes",$list_of_routes);
+           $db->insert("freight_list_of_routes",$list_of_routes);
            
        }
        
@@ -110,7 +110,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
             "date_created"=>$data[6],
             "route_status"=>"completed"
        );       
-       $db->insert("sludge_scheduled_routes",$sched_package);
+       $db->insert("freight_scheduled_routes",$sched_package);
        //*****************************************
        
        $data_table = array(
@@ -122,7 +122,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
             "fieldreport"=>$data[8],
             "date_of_pickup"=>$data[6]
        );
-       $db->insert("sludge_data_table",$data_table);
+       $db->insert("freight_data_table",$data_table);
     }
 }
 

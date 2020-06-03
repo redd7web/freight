@@ -18,7 +18,7 @@ function is_dir_empty($dir) {
 
 $grease_ikg = new Grease_IKG($_POST['route_id']);
 
-$tyc = $db->query("SELECT COALESCE(SUM(inches_to_gallons),NULL,0) as all_gal FROM sludge_grease_data_table WHERE route_id=$_POST[route_id]");
+$tyc = $db->query("SELECT COALESCE(SUM(inches_to_gallons),NULL,0) as all_gal FROM freight_grease_data_table WHERE route_id=$_POST[route_id]");
 
 
 
@@ -32,11 +32,11 @@ $buffer = array(
 $b3 = array(
     'completed_date' =>date("Y-m-d")
 );
-$db->query("UPDATE sludge_grease_traps SET grease_route_no=null, route_status='scheduled' WHERE grease_route_no = $_POST[route_id] AND route_status IN('enroute','scheduled')");//return uncompleted stops
+$db->query("UPDATE freight_grease_traps SET grease_route_no=null, route_status='scheduled' WHERE grease_route_no = $_POST[route_id] AND route_status IN('enroute','scheduled')");//return uncompleted stops
 
 $db->where('route_id',$_POST['route_id'])->update($dbprefix."_list_of_grease",$buffer);
 $db->where('route_id',$_POST['route_id'])->update($dbprefix."_ikg_grease",$b3);
-$db->query("UPDATE sludge_grease_traps SET completed_date='".date("Y-m-d")."' WHERE grease_route_no = $_POST[route_id]");
+$db->query("UPDATE freight_grease_traps SET completed_date='".date("Y-m-d")."' WHERE grease_route_no = $_POST[route_id]");
 
 
 
@@ -54,8 +54,8 @@ $aco_nums ="";
 $count = 0;
 
 //***************************MARK ROUTE COMPLETED*******************************************************
-$db->query("UPDATE sludge_ikg_grease SET completed_date ='".date("Y-m-d")."' WHERE route_id = $_POST[route_id]");
-$db->query("UPDATE sludge_list_of_grease SET status='completed',completed_date ='".date("Y-m-d")."' WHERE route_id=$_POST[route_id]");
+$db->query("UPDATE freight_ikg_grease SET completed_date ='".date("Y-m-d")."' WHERE route_id = $_POST[route_id]");
+$db->query("UPDATE freight_list_of_grease SET status='completed',completed_date ='".date("Y-m-d")."' WHERE route_id=$_POST[route_id]");
 //***************************MARK ROUTE COMPLETED*******************************************************
 
 

@@ -49,7 +49,7 @@ ini_set("display_errors",1);
     );
    
     
-    if($db->insert("sludge_users",$array)) { 
+    if($db->insert("freight_users",$array)) { 
         mail("ABurkett@iwpusa.com,ttrawick@iwpusa.com,jtrawick@iwpusa.com,AParsons@iwpusa.com,edizon@iwpusa.com","New User added in Oil","New User added $first $last \r\n Please review pending user in Sludge - > Management - > Users \r\n Password is set to: $new_pw",$header);
         echo "User inserted successfully.";
     }

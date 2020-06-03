@@ -163,7 +163,7 @@ $html .='<div id="fields" style="width: 100%;height:auto;margin:auto;">
         $html .='</td>
         </tr>';
         
-        $route_history = $db->query("SELECT * FROM sludge_rout_history WHERE route_no = $ikg_info->route_id AND what_day >1");        
+        $route_history = $db->query("SELECT * FROM freight_rout_history WHERE route_no = $ikg_info->route_id AND what_day >1");        
         if(count($route_history)>0){
             foreach($route_history as $history){
                 $html .="
@@ -365,7 +365,7 @@ $html .='<div id="fields" style="width: 100%;height:auto;margin:auto;">
                 $html .= "</td>";
                 
                  $html .= "<td style='border:1px solid black;padding:0px 0px 0px 0px;width:150px;'>"; 
-                 $bh = $db->query("SELECT fieldreport FROM sludge_data_table WHERE route_id=$ikg_info->route_id AND schedule_id=$sched_ro->schedule_id AND account_no = $sched_ro->account_number");
+                 $bh = $db->query("SELECT fieldreport FROM freight_data_table WHERE route_id=$ikg_info->route_id AND schedule_id=$sched_ro->schedule_id AND account_no = $sched_ro->account_number");
                  
                  if(count($bh)>0){
                     $html .= $bh[0]['fieldreport'];

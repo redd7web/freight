@@ -9,9 +9,9 @@ include "protected/global.php";
 ini_set("display_errors",0);
 if(isset($_POST['change'])){
     $account = new Account($_POST['account_no']);
-    $x = $db->query("SELECT schedule_id FROM sludge_grease_data_table WHERE schedule_id = $_POST[grease_id]");
+    $x = $db->query("SELECT schedule_id FROM freight_grease_data_table WHERE schedule_id = $_POST[grease_id]");
     if( ( !isset($_POST['ccharge']) && strlen(trim($_POST['ccharge']) ==0 ) ) || $_POST['ccharge'] == 0  ){//reseting custom charge 
-           $db->query("UPDATE sludge_grease_traps SET custom_charge = NULL WHERE grease_no = $_POST[grease_id]");
+           $db->query("UPDATE freight_grease_traps SET custom_charge = NULL WHERE grease_no = $_POST[grease_id]");
            if(count($x)>0){
                 switch($account->payment_method){
                     case "Charge Per Pickup":
@@ -28,7 +28,7 @@ if(isset($_POST['change'])){
                         break;
                     
                     case "One Time Payment":
-                        $gh = $db->query("SELECT * FROM sludge_data_table WHERE account_no = $this->account_number");
+                        $gh = $db->query("SELECT * FROM freight_data_table WHERE account_no = $this->account_number");
                         if(count($gh)>0){
                             $old_charge = 0;
                         } else if( count($gh) == 0 ){
@@ -36,7 +36,7 @@ if(isset($_POST['change'])){
                         }
                         break;
                     case "O.T.P. Per Gallon":
-                        $gh = $db->query("SELECT * FROM sludge_data_table WHERE account_no = $this->account_number");
+                        $gh = $db->query("SELECT * FROM freight_data_table WHERE account_no = $this->account_number");
                         if(count($gh)>0){
                             $old_charge = ($account->grease_volume * $account->grease_ppg);
                         }else if( count($gh) == 0 ){
@@ -49,12 +49,12 @@ if(isset($_POST['change'])){
                         $old_charge = number_format(0,2);
                     break;
                 }
-                $db->query("UPDATE sludge_grease_data_table SET paid = $old_charge WHERE schedule_id=$_POST[grease_id]");
+                $db->query("UPDATE freight_grease_data_table SET paid = $old_charge WHERE schedule_id=$_POST[grease_id]");
            }
     } else {
-          $db->query("UPDATE sludge_grease_traps SET custom_charge = $_POST[ccharge] WHERE grease_no = $_POST[grease_id]");
+          $db->query("UPDATE freight_grease_traps SET custom_charge = $_POST[ccharge] WHERE grease_no = $_POST[grease_id]");
          if(count($x)>0){
-            $db->query("UPDATE sludge_grease_data_table SET paid = $_POST[ccharge] WHERE schedule_id = $_POST[grease_id]");       
+            $db->query("UPDATE freight_grease_data_table SET paid = $_POST[ccharge] WHERE schedule_id = $_POST[grease_id]");       
          }
     }
     
@@ -63,14 +63,14 @@ if(isset($_POST['change'])){
     
     
     if(!isset($_POST['ppg']) && strlen(trim($_POST['ppg'])) && $_POST['ppg'] == 0){// reset or blank ppg
-        $db->query("UPDATE sludge_grease_traps SET price_per_gallon=$account->grease_ppg WHERE grease_no = $_POST[grease_id]");    
+        $db->query("UPDATE freight_grease_traps SET price_per_gallon=$account->grease_ppg WHERE grease_no = $_POST[grease_id]");    
          if(count($x)>0){
-            $db->query("UPDATE sludge_grease_data_table SET ppg = $account->grease_ppg WHERE schedule_id=$_POST[grease_id]");
+            $db->query("UPDATE freight_grease_data_table SET ppg = $account->grease_ppg WHERE schedule_id=$_POST[grease_id]");
         }
     } else {
-        $db->query("UPDATE sludge_grease_traps SET price_per_gallon= $_POST[ppg] WHERE grease_no = $_POST[grease_id]");
+        $db->query("UPDATE freight_grease_traps SET price_per_gallon= $_POST[ppg] WHERE grease_no = $_POST[grease_id]");
          if(count($x)>0){
-            $db->query("UPDATE sludge_grease_data_table SET ppg = $_POST[ppg] WHERE schedule_id=$_POST[grease_id]");
+            $db->query("UPDATE freight_grease_data_table SET ppg = $_POST[ppg] WHERE schedule_id=$_POST[grease_id]");
         }
     }
     

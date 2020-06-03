@@ -132,7 +132,7 @@ if(isset($_GET['task'])){
 }
 
 
-if(isset($_SESSION['sludge_id'])){    
+if(isset($_SESSION['freight_id'])){    
     $person = new Person();
 }
 ?>
@@ -161,7 +161,7 @@ if(isset($_SESSION['sludge_id'])){
     
     <div class="content-wrapper" style="height: auto;min-height:450px;">
     <?php
-    if(isset($_SESSION['sludge_id'])){
+    if(isset($_SESSION['freight_id'])){
     
         if(isset($_GET['task'])){
             switch($_GET['task']){
@@ -279,7 +279,7 @@ if(isset($_SESSION['sludge_id'])){
                     );
                     
                     //if you are a facility manage of any uc facility or Richard Lopez
-                    if(  ( isset($_SESSION['sludge_id']) && in_array($person->facility ,$check_uc) && $person->isFacilityManager() ) || ( isset($_SESSION['sludge_id']) && (  $person->user_id ==149 || $person->user_id ==137 || $person->user_id == 138  ) ) ){
+                    if(  ( isset($_SESSION['freight_id']) && in_array($person->facility ,$check_uc) && $person->isFacilityManager() ) || ( isset($_SESSION['freight_id']) && (  $person->user_id ==149 || $person->user_id ==137 || $person->user_id == 138  ) ) ){
                         
                         ?>
                         

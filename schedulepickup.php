@@ -3,7 +3,7 @@
 <?php
 include "protected/global.php";
 $person = new Person();
-error_reporting(-1);
+ini_set("display_errors",1);
 $account = new Account($_GET['account_no']);
  
 ?>
@@ -46,10 +46,10 @@ if(  isset($_POST['schedulepickup'])  ){
     switch($_POST['later_or_new']){
         case "add_to":
         
-            $x = $db->query("SELECT account_no FROM sludge_scheduled_routes WHERE account_no=$_POST[account_no] AND route_status='scheduled'");
+            $x = $db->query("SELECT account_no FROM freight_scheduled_routes WHERE account_no=$_POST[account_no] AND route_status='scheduled'");
             if(count($x)>0){
-                $db->query("DELETE FROM sludge_scheduled_routes WHERE account_no=$_POST[account_no] AND route_id IS NULL AND route_status='scheduled'");
-                $db->query("DELETE FROM sludge_notes WHERE schedule_id=$_POST[scedule_id_] AND account_no=$_POST[account_no]");
+                $db->query("DELETE FROM freight_scheduled_routes WHERE account_no=$_POST[account_no] AND route_id IS NULL AND route_status='scheduled'");
+                $db->query("DELETE FROM freight_notes WHERE schedule_id=$_POST[scedule_id_] AND account_no=$_POST[account_no]");
             }
             
             
@@ -96,23 +96,14 @@ if(  isset($_POST['schedulepickup'])  ){
             $manifest_table = $dbprefix."_ikg_manifest_info";
             $db->query("UPDATE $manifest_table set account_numbers = concat(account_numbers,'$_GET[account_no]|') WHERE route_id = $_POST[existing_routes]");
             
-            $track = array(
-                "date"=>date("Y-m-d H:i:s"),
-                "user"=>$person->user_id,
-                "actionType"=>"Scheduled added to Route",
-                "descript"=>"Schedule $sched_num added to Route ".$_POST['existing_routes'],
-                "account"=>$_GET['account_no'],
-                "pertains"=>2
-            );
-            $db->insert($dbprefix."_activity",$track);
+            
             break;
         case "later":            
         
-            $x = $db->query("SELECT account_no FROM sludge_scheduled_routes WHERE account_no=$_POST[account_no] AND route_status='scheduled'");
+            $x = $db->query("SELECT account_no FROM freight_scheduled_routes WHERE account_no=$_POST[account_no] AND route_status='scheduled'");
             
             if(count($x)>0){
-                $db->query("DELETE FROM sludge_scheduled_routes WHERE account_no=$_POST[account_no] AND route_id IS NULL AND route_status='scheduled'");
-                $db->query("DELETE FROM sludge_notes WHERE schedule_id=$_POST[scedule_id_] AND account_no=$_POST[account_no]");
+                $db->query("DELETE FROM freight_scheduled_routes WHERE account_no=$_POST[account_no] AND route_id IS NULL AND route_status='scheduled'");
             }
         
             
@@ -123,44 +114,11 @@ if(  isset($_POST['schedulepickup'])  ){
                 "account_no"=>"$_GET[account_no]",
                 "route_status"=>"scheduled",
                 "created_by"=>$person->user_id,
-                "date_created"=>$k,
-                "cs_reason"=>$_POST['cs_reason']       
+                "date_created"=>$k       
             );
             var_dump($schedinfo);
-            if( $db->insert("sludge_scheduled_routes",$schedinfo) ){
-                $sched_num = $db->getInsertId();
-                //echo "sched_num: ".$sched_num;      
-                 if(   ( isset($_POST['dispatcher_note']) && strlen($_POST['dispatcher_note']) ) || ( isset($_POST['special_instructions']) && strlen($_POST['special_instructions']) >0   )  ){
-                    if(isset($_POST['dispatcher_note']) && strlen($_POST['dispatcher_note'])>0){
-                        $notex = $_POST['dispatcher_note'];
-                    }
-                    if(isset($_POST['special_instructions']) && strlen($_POST['special_instructions']) ){
-                        $notex .= "|".$_POST['special_instructions'];
-                    }
-                    
-                    $schednotes = Array(  //route_no will be updated upon route creation                            
-                        "schedule_id"=>$sched_num,          
-                        "author_id"=>$person->user_id,
-                        "date"=>date('Y-m-d h:i:s'),
-                        "notes"=>$notex,                
-                        "created_by"=>$person->user_id,
-                        "account_no"=>"$_POST[account_no]",
-                    );
-                    $db->insert($dbprefix."_notes",$schednotes);
-                    echo "Note: $notex for schedule $sched_num successfully made<br/><br/>";
-                }
-                echo "Successfully scheduled ".account_NumtoName($_GET['account_no']) ." for later";
-             }
+            $db->insert("freight_scheduled_routes",$schedinfo);
              
-            $track = array(
-                "date"=>date("Y-m-d H:i:s"),
-                "user"=>$person->user_id,
-                "actionType"=>"Scheduled for Later",
-                "descript"=>"Scheduled $sched_num",
-                "account"=>$_GET['account_no'],
-                "pertains"=>2
-            );
-            $db->insert($dbprefix."_activity",$track);
             
             //where("scheduled_start_date","$_POST[date_sched_pickup_month]")->where("date_created",$k)->get($dbprefix."_scheduled_routes","schedule_id");
             break;
@@ -175,9 +133,9 @@ if(  isset($_POST['schedulepickup'])  ){
                 "date_created"=>$k,
                 "cs_reason"=>$_POST['cs_reason']       
             );
-            $db->query("DELETE FROM sludge_scheduled_routes WHERE account_no = $_GET[account_no]");
+            $db->query("DELETE FROM freight_scheduled_routes WHERE account_no = $_GET[account_no]");
             var_dump($schedinfo);
-            if( $db->insert("sludge_scheduled_routes",$schedinfo) ){
+            if( $db->insert("freight_scheduled_routes",$schedinfo) ){
                 
                 $sched_num = $db->getInsertId();
                 echo $sched_num;
@@ -205,7 +163,7 @@ if(  isset($_POST['schedulepickup'])  ){
 <table align="center" width="370" style="padding: 0px 0px 0px 0px;">
 
     <tbody>
-    <tr><td colspan="10" style="text-align: center;"><span style="width:80%;padding:12px;margin:auto;text-align:center;font-weight:bold;font-size:16px;text-transform:uppercase;">Schedule Confined Space</span><br/></td></tr>
+    <tr><td colspan="10" style="text-align: center;"><span style="width:80%;padding:12px;margin:auto;text-align:center;font-weight:bold;font-size:16px;text-transform:uppercase;">Schedule Freight</span><br/></td></tr>
     <tr class="table_row">
         <td class="table_label" align="right" nowrap="" valign="top">Date of Pickup</td>
         <td class="table_data" align="left" valign="top">
@@ -213,7 +171,7 @@ if(  isset($_POST['schedulepickup'])  ){
 <input type="text"  name="date_sched_pickup_month" value="<?php echo $account->cs['scheduled_start_date']; ?>" id="date_sched_pickup_month" placeholder="Click to select pick up date"/>
 </td>
 </tr>
-<tr><td>Confined Space Reason</td><td><textarea id="cs_reason" name="cs_reason"><?php echo $account->cs['cs_reason']; ?></textarea></td></tr>
+<tr><td>Freight Reason</td><td><textarea id="cs_reason" name="cs_reason"><?php echo $account->cs['cs_reason']; ?></textarea></td></tr>
 
 <tr class="table_row">
 

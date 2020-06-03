@@ -3,7 +3,7 @@ include "protected/global.php";
 include "source/css.php";
 include "source/scripts.php";
 ini_set("display_errors",0);
-if(isset($_SESSION['sludge_id'])){
+if(isset($_SESSION['freight_id'])){
     $grease_ikg = new Grease_IKG($_GET['route']);
     $person  = new Person();
     
@@ -522,7 +522,7 @@ echo "</pre>";
     
             echo "</td>";
             echo "<td style='width:auto;'>";
-                $last = $db->query("SELECT date_of_pickup FROM sludge_grease_data_table WHERE account_no = $saved_gs->account_number ORDER BY date_of_pickup DESC LIMIT 0,1");
+                $last = $db->query("SELECT date_of_pickup FROM freight_grease_data_table WHERE account_no = $saved_gs->account_number ORDER BY date_of_pickup DESC LIMIT 0,1");
                 if(count($last)>0){
                     echo $last[0]['date_of_pickup'];
                 }else{
@@ -623,7 +623,7 @@ if(count($check)> 0){
     
             echo "</td>";
             echo "<td style='width:auto;'>";
-                $last = $db->query("SELECT date_of_pickup FROM sludge_grease_data_table WHERE account_no = $grease_stop->account_number ORDER BY date_of_pickup DESC LIMIT 0,1");
+                $last = $db->query("SELECT date_of_pickup FROM freight_grease_data_table WHERE account_no = $grease_stop->account_number ORDER BY date_of_pickup DESC LIMIT 0,1");
                 if(count($last)>0){
                     echo $last[0]['date_of_pickup'];
                 }else{

@@ -13,11 +13,11 @@ $account = new Account($_POST['account']);
 switch($_POST['mlock']){
     case 1:
        $second = "Master";
-        $db->query("UPDATE sludge_accounts SET master_lock = $_POST[state] WHERE account_ID = $_POST[account]");
+        $db->query("UPDATE freight_accounts SET master_lock = $_POST[state] WHERE account_ID = $_POST[account]");
     break;
     case 0:
         $second = "Normal";
-        $db->query("UPDATE sludge_accounts SET locked = $_POST[state] WHERE account_ID = $_POST[account]");
+        $db->query("UPDATE freight_accounts SET locked = $_POST[state] WHERE account_ID = $_POST[account]");
     break;
 }
 
@@ -42,6 +42,6 @@ $lock_info = array(
 );
 
 
-$db->insert("sludge_lock_reason",$lock_info);
+$db->insert("freight_lock_reason",$lock_info);
 mail("aburkett@iwpusa.com,bgastelum@Iwpusa.com,aparsons@iwpusa.com,gruff@iwpusa.com,lbriseno@iwpusa.com,sgastelum@iwpusa.com","Account $account->name_plain $second locked","Account $account->name_plain $second $phrase by  $person->first_name $person->last_name @ ".date("Y-m-d H:i:s")." \r\n Reason: $_POST[reason]");
 ?>

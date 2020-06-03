@@ -16,7 +16,7 @@ include "protected/global.php";
  
 include "source/scripts.php"; 
 include "source/css.php";
-if(isset($_SESSION['sludge_id'])){ 
+if(isset($_SESSION['freight_id'])){ 
     $person = new Person();
 }
 $driver=0;
@@ -435,74 +435,26 @@ $("input#inchesleftover").change(function(){
 
 $("#pickup_complete").click(function(){
     //$("#loading-screen").show();
-    var text_id = $(this).attr('xlkr');
-    
-    var total_gal =0;    
-    var total_barrel =0;
-    var inches_entered = 0 ;
-    var inches_to_gallons = 0;
-    var inches_left_over = 0;;
-    var gallons_left_over = 0;     
-    var gal_expected = 0;
-    var entry = 0;
-    /**/
-    $("#barrel_section > tbody  > tr").each(function(){
-       //flush variables
-        total_gal = (total_gal +  (  parseInt($(this).find('.aditional_galls').val()) *1)  );
-        //total_barrel = (total_barrel +  ( parseInt(gal_expected) *1)  ); 
-    });
-    
-    $("#barrel_section > tbody  > tr").each(function(){//loop through each barrel for account
-        //flush variables
-        inches_entered = $(this).find('.addtional_inch').val();
-        inches_to_gallons = $(this).find('.aditional_galls').val(); 
-        inches_left_over = $(this).find('.inchesleftover').val();
-        gallons_left_over = $(this).find('.galslefover').val();
-        gal_expected = $(this).find('.addtional_inch').attr('total_cap');
-        entry = $(this).find('.entry').val();
-        label = $(this).find('.label').val();
-        
-        $.post("save_data_info.php",{                
+     entry = $(this).find('.entry').val();
+    $.post("save_data_info.php",{                
                 route_id:<?php echo "$_GET[route_id]"; ?>,
                 schedule_number: schedules_to_traverse[current_schedule],
-                inches_entered: inches_entered, 
-                picked_up:inches_to_gallons,
-                inches_left:inches_left_over,
-                inches_to_gallons_leftover: 0,
-                gallons_expected:gal_expected,
-                label:label,
                 account_no: $("input#update_this_account").val(),
                 zero_gallon_reason: $("#reason_for_skip_id").val(),
                 field_note:$("#field_notes").val(),
                 driver: $("#drivers").val(),
                 dop:$("input#dop").val(),
                 entry:entry,
-                sum:total_gal,
-                day:<?php echo $_GET['day']; ?>,
                 mileage:$("input#mileage").val()                             
             },function(data){
+                alert("Pickup complete");
                 $("#debug").append(data);
                 if(current_schedule == schedule_max -1){
                     alert("At end of list");
                     
                 }
                
-        });    
-        
-        //alert(label);
-    });
-    
-
-    
-    
-    
-    
-    
-    if( $("input#"+text_id).val() != 1 ){        
-        alert("schedule: "+schedules_to_traverse[current_schedule]+" route_id: <?php echo "$_GET[route_id]"; ?>"+" account_no"+ $("input#update_this_account").val());
-        $.post("save_oil_history.php",{route_id:<?php echo $_GET['route_id'] ?>,what_day:<?php echo $_GET['day']; ?>,account_no:$("input#update_this_account").val()},function(data){});
-        $.post("decrement_inc.php",{route_id:<?php echo $_GET['route_id'] ?>},function(data){});//when pick up is complete decrement incomplete one less than number started( which is the same amount as stops in the begginning)
-    }
+    }); 
     
     $("#loading-screen").fadeOut("slow");    
         

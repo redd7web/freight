@@ -63,7 +63,7 @@ if($_POST){
         echo "state: ".trim($city_zip[0])."<br/>";
         echo "zip: ".trim($city_zip[1]);
         
-        $db->query("UPDATE sludge_accounts SET address='$buffer[0]', city='$buffer[1]',state='$city_zip[0]',zip='$city_zip[1]' WHERE account_ID = $ ");
+        $db->query("UPDATE freight_accounts SET address='$buffer[0]', city='$buffer[1]',state='$city_zip[0]',zip='$city_zip[1]' WHERE account_ID = $ ");
     ?>
  
     <!-- google map will be shown here -->

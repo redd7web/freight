@@ -21,13 +21,13 @@ if(($handle = fopen($file,"r"))!==FALSE){
                     "inches_to_gallons"=>$data[7],
                     "fieldreport"=>$data[8]
                 );
-                $db->where("schedule_id",$data[0])->where("account_no",$data[1])->update("iwp_data_table",$data_pack);
+                $db->where("schedule_id",$data[0])->where("account_no",$data[1])->update("freight_data_table",$data_pack);
                 
                 
                 $sched_pack = array(
                     "date_created"=>$data[10]
                 );
-                $db->where("schedule_id",$data[0])->where("account_no",$data[1])->update("iwp_scheduled_routes",$sched_pack);
+                $db->where("schedule_id",$data[0])->where("account_no",$data[1])->update("freight_scheduled_routes",$sched_pack);
                 
                 
             } else {
@@ -38,7 +38,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
                     "inches_to_gallons"=>$data[7],
                     "fieldreport"=>$data[8]
                );
-               $db->insert("iwp_data_table",$data_pack);
+               $db->insert("freight_data_table",$data_pack);
                
                
                $sched_pack = array(

@@ -28,7 +28,7 @@ $data = Array(
 
 //var_dump($data);
 $db->insert($dbprefix.'_utility_data_table',$data);
-echo "sched update status: ".$db->query("UPDATE sludge_utility SET route_status='completed' WHERE utility_sched_id = $_POST[schedule_number] AND rout_no=$_POST[route_id]")." ";  
+echo "sched update status: ".$db->query("UPDATE freight_utility SET route_status='completed' WHERE utility_sched_id = $_POST[schedule_number] AND rout_no=$_POST[route_id]")." ";  
 
 
 //schedule stop 

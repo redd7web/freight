@@ -101,7 +101,7 @@ $html .="
         </tr>
         ";
         
-        $route_history = $db->query("SELECT * FROM sludge_rout_history WHERE route_no = $_GET[route_no]");        
+        $route_history = $db->query("SELECT * FROM freight_rout_history WHERE route_no = $_GET[route_no]");        
         if(count($route_history)>0){
             foreach($route_history as $history){
                 $html .="<tr>
@@ -247,7 +247,7 @@ $html .="
                 $html .="</td>";
                 $html .= "<td style='border:1px solid black;'>$g_stop->volume</td>";
                 $html .="<td style='border:1px solid black;'>";
-                $gh = $db->query("SELECT SUM(inches_to_gallons) as io FROM sludge_grease_data_table WHERE schedule_id=$g_stop->grease_no AND account_no = $g_stop->account_number AND route_id=$g_stop->grease_route_no");
+                $gh = $db->query("SELECT SUM(inches_to_gallons) as io FROM freight_grease_data_table WHERE schedule_id=$g_stop->grease_no AND account_no = $g_stop->account_number AND route_id=$g_stop->grease_route_no");
                 if(count($gh)>0){
                     foreach($gh as $bv){
                        $html .= $bv['io'];

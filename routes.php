@@ -35,7 +35,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
             "scheduled_date"=>$scheds,
             "completed_date"=>$comps,
         );
-        $db->where("route_id",$data[0])->update("sludge_ikg_manifest_info",$route_package);
+        $db->where("route_id",$data[0])->update("freight_ikg_manifest_info",$route_package);
         
         $list_of_routes = array(
             "status"=>$data[1],
@@ -45,7 +45,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
             "collected"=>$data[9],
             "created_date"=>$data[3]
         );
-        $db->where("route_id",$data[0])->update("sludge_list_of_routes",$list_of_routes);
+        $db->where("route_id",$data[0])->update("freight_list_of_routes",$list_of_routes);
         
         if($data[1] == "En-route"){
             $status = "enroute";
@@ -56,7 +56,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
         $sched_status = array (
             "route_status"=>$status
         );
-        $db->where("route_id",$data[0])->update("sludge_scheduled_routes",$sched_status);
+        $db->where("route_id",$data[0])->update("freight_scheduled_routes",$sched_status);
     }
 }
 

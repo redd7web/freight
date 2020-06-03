@@ -13,7 +13,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
                 "division"=>reverseTranslate($data[12])
             );
             
-            $db->where("account_ID",$data[0])->update("sludge_accounts",$package);
+            $db->where("account_ID",$data[0])->update("freight_accounts",$package);
         
         
     }

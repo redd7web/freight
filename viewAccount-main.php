@@ -12,36 +12,8 @@
     //$dtable = new Dtable();
     //echo basename($_SERVER['REQUEST_URI']);
     //var_dump($account);
-    $grease_info = $db->where("account_no",$account->acount_id)->get($dbprefix."_grease_traps");
-    $rate = 0;
-    $volume = 0;
-    $ppg = 0;
-    $freq = 0;
-    $active = 0;
-    $active ="";
-    $serviec = "";
-    $grease_name="";
-    $time_detail = "";
-    $descript = "";
-    $adt_price = "";
-    $adt_price_detail = "";
-    $dos = "";
-    if(count($grease_info)>0){
-        $volume = $grease_info[0]['volume'];
-        $rate =$grease_info[0]['base_rate'];
-        $ppg = $grease_info[0]['price_per_gallon'];
-        $freq = $grease_info[0]['frequency'];
-        $active =$grease_info[0]['active'];
-        $service= $grease_info[0]['service'];
-        $grease_name= $grease_info[0]['grease_name'];
-        $time_detail = $grease_info[0]['time_of_service'];
-        $descript = $grease_info[0]['notes'];
-        $adt_price= $grease_info[0]['addt_price'];
-        $adt_price_detail=$grease_info[0]['addt_info'];
-        $dos = $grease_info[0]['service_date'];
-    }
-    $k = $account->acount_id - 200;
-    $askthree = $db->query("SELECT * FROM Inetforms.ap_form_27963 WHERE ap_form_27963.element_55 = $k ORDER BY ap_form_27963.date_created DESC");
+        
+    $askthree = $db->query("SELECT * FROM freight_data_table WHERE account_no = $account->acount_id ORDER BY date_of_pickup DESC");
 ?>
 <style type="text/css">
 .box{
@@ -132,13 +104,13 @@ $("#times").hide();
 </script>
 <?php
 $total_cap=  20000;
-$check_complete = $db->query("SELECT route_id FROM sludge_list_of_grease WHERE status='completed' AND facility =$account->acount_id");
+$check_complete = $db->query("SELECT route_id FROM freight_list_of_grease WHERE status='completed' AND facility =$account->acount_id");
 
 if(count($check_complete)>0){
     foreach($check_complete as $check){
         $these[] = $check['route_id'];
     }
-    $hb = $db->query("SELECT SUM(inches_to_gallons) as current_level FROM sludge_grease_data_table WHERE facility_origin = $account->acount_id AND route_id IN(".implode(",",$these).") ORDER BY date_of_pickup DESC LIMIT 0,1");
+    $hb = $db->query("SELECT SUM(inches_to_gallons) as current_level FROM freight_grease_data_table WHERE facility_origin = $account->acount_id AND route_id IN(".implode(",",$these).") ORDER BY date_of_pickup DESC LIMIT 0,1");
     if(count($hb)>0){
         $onsite = $hb[0]['current_level'];
     }else{
@@ -152,12 +124,12 @@ if(count($check_complete)>0){
 <div id="debug"></div>
 <div id="top-info-box-left" style="width:130px;height: 350px;float:left;background:rgba(255,255,255,.5);text-align:center;" title="oil-service-pickup">
 <br />
-&nbsp;&nbsp;<span style="font-weight: bold;font-size:16px;">Grease Trap Service</span>
+&nbsp;&nbsp;<span style="font-weight: bold;font-size:16px;">Freight Service</span>
 <p id="siren">
 <?php echo $account->siren; ?>
 <br /><br />
 <?php
-$hb = $db->query("SELECT date_of_pickup FROM sludge_grease_data_table WHERE account_no = $account->acount_id ORDER BY date_of_pickup DESC LIMIT 0,1");
+$hb = $db->query("SELECT date_of_pickup FROM freight_data_table WHERE account_no = $account->acount_id ORDER BY date_of_pickup DESC LIMIT 0,1");
 
  echo"<span style='font-size:20px;font-weight:bold;font-familt:tahoma' id='sub_script'><sup id='subscript'>$onsite</sup>/<sub>20000</sub></span>";
  
@@ -184,20 +156,14 @@ if($account->is_trap == 1){
 
 <div id="top-info-box-right" style="width: 490px;height:265px;background:none;float:left;" title="notes">
     
-     <div class="box" style="width: 50px;height:50px;float:left;background:rgba(255,255,255);margin-top:19px;margin-right:8px;">
-        <img id="bar" src="img/service.jpg"  title="Schedule Grease Trap" style="cursor:pointer;" />
     
-    </div>
-            
-    <div id="schedpickup" class="box" style="width: 50px;height:50px;float:left;margin-right:8px;background:rgba(0,0,0,.7);margin-top:19px;margin-left:8px;background-size: contain;background:url(img/nroute.jpg) no-repeat center top;cursor:pointer;" title="Schedule Confined Space">
-        <form action="oil_routing.php" method="post" id="route_this_now">
-            <input type="hidden" name="schecheduled_ids" value="" id="schecheduled_ids"/>
-            <input type="hidden" name="accounts_checked" value="<?php echo $account->acount_id."|"; ?>"/>
-        </form>
-    </div>
-    <div id="onsite" class="box" style="width: 50px;height:50px;float:left;background:rgba(255,255,255);margin-top:19px;margin-right:8px;cursor:pointer;">
+    
+    
+    
+   
+    <div id="onsite" rel="<?php echo $account->acount_id; ?>" class="box" style="width: 50px;height:50px;float:left;background:rgba(255,255,255);margin-top:19px;margin-right:8px;cursor:pointer;" title="Schedule Freight">
         
-        <img src="img/grese.jpg" title="Schedule Line Jetting Delivery"/></a>
+        <img src="img/grese.jpg" /></a>
     </div>
     
    
@@ -264,7 +230,7 @@ if($account->is_trap == 1){
                 </tr>
                 <?php 
 
-                 $uy = $db->query("SELECT * FROM sludge_sound_files WHERE account_no = $account->acount_id");
+                 $uy = $db->query("SELECT * FROM freight_sound_files WHERE account_no = $account->acount_id");
                  if(count($uy)>0){
                     foreach($uy as $ku){
                         echo "<tr><td>$ku[author]</td><td>$ku[note]</td><td>$ku[date]</td><td><a href='$ku[file]' target='_blank'>Sound File</a></td></tr>";
@@ -292,8 +258,8 @@ if($account->is_trap == 1){
                         <td style="vertical-align: top;padding: 0px 0px 0px 0px;">Date</td>
                     </tr>
                     <?php
-                    //echo "SELECT * FROM sludge_notes WHERE account_no = $account->acount_id<br/>";
-                    $notes = $db->query("SELECT * FROM sludge_notes WHERE account_no = $account->acount_id");
+                    //echo "SELECT * FROM freight_notes WHERE account_no = $account->acount_id<br/>";
+                    $notes = $db->query("SELECT * FROM freight_notes WHERE account_no = $account->acount_id");
                     if(count($notes)>0){
                         foreach($notes as $note){         
                             $k = explode("|","$note[notes]");
@@ -451,7 +417,7 @@ if($account->is_trap == 1){
                     
                     <tr><td>Author</td><td>Date</td><td>Note</td></tr>
                     <?php
-                     $jb = $db->query("SELECT * FROM sludge_account_notes WHERE account_no = $account->acount_id");
+                     $jb = $db->query("SELECT * FROM freight_account_notes WHERE account_no = $account->acount_id");
                     if(count($jb)>0){
                         foreach($jb as $bj){
                             echo "<tr><td>".uNumToName($bj['author'])."</td><td>$bj[date]</td><td>$bj[note]</td></tr>";
@@ -504,108 +470,55 @@ $("#table").on("click",".outbound",function(){
 
 <div id="top-inf-box-short" style="height:15px;width:890px;float:left;background:rgb(255,255,255);padding:5px 5px 5px 5px;font-size:16px;word-spacing:1px;border:1px solid black;border-right:0px solid transparent;border-left:0px solid transparent;">
 
-<span style="font-weight: bold;margin-left:10px;">Containment</span>
+&nbsp;
 
 </div>
 
 <div id="next" style="height: 338px;width:100%;float:left;">
-    <div id="leftnext" style="width: 405px;height:330px;float:left;">
-        <div id="leftnexttop" style="width: 405px;height:338px;">
-             <div id="totelist" style="width: 405px;height:250px;float:left;">
-             
-             <table style="width:100%;margin-top:5px;" id="containerlistxx">
-                <tr><td colspan="2" style="text-align: center;"> <span style="font-weight:bold;font-size:20px;">Add Grease Trap Size</span><br />Click the "+" to set trap size</td></tr>
-                <tr>
-
-                    <td style="width:50%;">&nbsp;<input type="submit" value=""  style="width: 25px;height:25px;background:transparent url(img/plus.png) no-repeat center center; background-size:contain;" id="addContainer"  title="Select then add container"/></td>   
-                    <td style="text-align: left;vertical-align: top;">&nbsp;</td>
-                               
-                </tr>
-                
-                <tr><td colspan="3">
-               <div id="containment" style="width: 390px;height:150px;overflow-y:scroll;background:transparent;overflow-x:hidden;border:1px dotted black;">
-               <?php 
-                     echo "Grease Trap Size: $account->grease_volume";
-               ?>
-               </div>
-               </td></tr>
-               <tr><td colspan="2"><input type="hidden" id="acc_no" value="<?php echo $account->acount_id; ?>"/></td></tr>
-               </table>   
-               <script>
-               $("#addContainer").click(function(){                
-                   
-                  
-                  Shadowbox.open({
-                        content:"addtrapsize.php?account=<?php echo $account->acount_id; ?>",
-                        player:"iframe",
-                        width:"400px",
-                        height:"400px",
-                        title:"Add Grease Type Size"
-                  });
-                });
-                
-                $(".righthold").on("click",function(){
-                    
-                    //alert( $(this).attr('account')+" "+$(this).attr('entry')  );
-                    
-                    /**/
-                    $.post('deleteTote.php',{
-                            account:$(this).attr('account') ,
-                            entry:$(this).attr('entry')},function(data){
-                                alert('Container removed');
-                                $("#guage").attr('src','plugins/jqwidgets-ver3.4.0/demos/jqxgauge/settings.php?account_no=<?php echo $account->acount_id; ?>');
-                                $.post("totelist.php",{id:<?php echo $account->acount_id; ?>},function(data){
-                                    $("#totelist").html(data);
-                                }); 
-                        
-                                $.post("showsiren.php",{id :<?php echo $account->acount_id;  ?>},function(data){
-                                    $("#siren").html(data); 
-                                });
-                            });
-                    });
-               </script>             
+   
+    <div id="rightnext" style="width: 100%;height:270px;float:left;">
+        
+        
+        
+        <div id="scheduled" style="width: 100%;height:20px;background:white;float:left;text-align:center;font-weight:bold;">
+                <span  style="color:blue;">Scheduled Pickups</span>
             </div>
-          
-            <div id="scheduled" style="width: 405px;height:20px;background:white;float:left;text-align:center;font-weight:bold;">
-                <span  style="color:blue;">Scheduled Grease Pickups</span>
-            </div>
-            <div id="pickupboxtwo" style="width: 405px;height:70px;background:transparent;float:left;overflow:auto;">
+            <div id="pickupboxtwo" style="width: 100%;height:150px;background:transparent;float:left;overflow:auto;">
                  <table style="width: 100%;">
                  <tr>
                     <td style="padding:0px 0px 0px 0px; border:1px solid;"><div style="width: 200px;">Date</div></td>
-                    <td style="padding:0px 0px 0px 0px;border:1px solid;"><div style="width: 100px;">Status</div></td>
                     <td style="padding:0px 0px 0px 0px;border:1px solid;"><div style="width: 60px;">Route</div></td></tr>
                  <?php
+                    print_r($account->schedule);
                     echo "<tr>";
                     echo "<td>";
                     if(count($account->schedule)>0){
-                        
-                        switch($account->schedule['route_status']){
-                            case "enroute":
-                                $stat = "<img src='img/delete-icon.jpg' id='del_scheduled_stop' rel='".$account->schedule['schedule_id']."' style='cursor:pointer;'  xlr='".$account->acount_id."' title='Delete scheduled trap' rrr='".$account->schedule['route_id']."'/>&nbsp;&nbsp;&nbsp;&nbsp;(enroute)";
-                                break;
-                            case "scheduled":
-                                  $stat = "<img src='img/delete-icon.jpg' id='del_scheduled_stop' rel='".$account->schedule['schedule_id']."' style='cursor:pointer;' title='Delete scheduled trap' xlr='".$account->account_id."' rrr=''/>&nbsp;&nbsp;&nbsp;&nbsp;<span style='cursor:pointer;font-weight:bold;' id='sched_trap'>scheduled</span>";
-                                break;
-                            case "completed":
-                                 $stat = "completed";
-                                break;
+                        if($account->schedule['route_status'] == "enroute"){
+                            $stat = "(enroute)";
                         }
-                        
-                      
+                        else if($account->schedule['route_status']=="scheduled"){
+                            $stat = "scheduled";
+                        } else if($account->schedule['route_status']=="completed"){
+                            $stat = "completed";
+                        }
                         $r_st ="";
                         if($account->schedule['route_id'] !=null){    
-                            $r_stat = $db->query("SELECT status FROM sludge_list_of_routes WHERE route_id =". $account->schedule['route_id']);
+                            $r_stat = $db->query("SELECT status FROM iwp_list_of_routes WHERE route_id =". $account->schedule['route_id']);
+                            
+                            
                             if($r_stat[0]['status']=="enroute"){
                                 $r_st = " - Route Open";
                             }
                         }
-                        echo $account->schedule['scheduled_start_date']."  $r_st";
+                      
+                        if(count($account->schedule)>0){
+                            echo "<img src='img/delete-icon.jpg' style='cursor:pointer;' rel='".$account->schedule['schedule_id']."' class='del_stop2'/>&nbsp;&nbsp;".$account->schedule['scheduled_start_date']." $stat $r_st";    
+                        } 
+                        
                     } else {
                         echo "No Stops.";
                     }
                     echo "</td>";
-                    echo "<td>$stat</td>";
                     echo "<td>";
                     if($account->schedule['route_id'] != NULL){
                         echo "<img src='img/info_icon_12.png' class='tooltip' style='cursor:pointer;' title='".$account->schedule['route_id']."' />";
@@ -615,23 +528,17 @@ $("#table").on("click",".outbound",function(){
                  ?>
                  </table>
             </div>
-            <div id="specs" style="height: 110px;margin-top:15px;width:405px;text-align:center;float:left;background:rgba(255,255,255);border-bottom:1px solid black;">
-             
-            </div>
-        </div>
-    </div>
-    <div id="rightnext" style="width: 495px;height:270px;float:left;">
         
-        <div id="completed_pickups" style="width: 495px;height:390px;background:rgb(255,255,255);float:left;">
+        <div id="completed_pickups" style="width: 100%;height:390px;background:rgb(255,255,255);float:left;">
             
-            <div id="secondinfo" style="width: 490px;height:340px;background:rgba(255, 255, 255);border-left:0px solid black;border-top:1px solid black;border-bottom:1px solid black;">
+            <div id="secondinfo" style="width: 100%;height:340px;background:rgba(255, 255, 255);border-left:0px solid black;border-top:1px solid black;border-bottom:1px solid black;">
             
             
             
-            <div id="titlx" style="width: 495px;background:white;height:30px;text-align:center;font-size:18px;font-weight:bold;border:0px solid #bbb;">
+            <div id="titlx" style="width:100%;background:white;height:30px;text-align:center;font-size:18px;font-weight:bold;border:0px solid #bbb;">
             <table style="width: 100%;height:100%;"><tr><td style="text-align: center;vertical-align: central;">Completed Services( All Locations )</td></tr></table>
             </div>
-            <div id="tablepickup" style="width: 493px;height:315px;overflow:auto;border-top:1px solid black;">
+            <div id="tablepickup" style="width:100%;height:315px;overflow:auto;border-top:1px solid black;">
              <table style="width: 100%;">
                 <tr style="background: rgb(233, 234, 228);">
                     <td>Date</td>
@@ -900,13 +807,7 @@ $(document).ready(function(){
     
     $("#onsite").click(function(){
         Shadowbox.open({
-             content:<?php
-            if(isset($_GET['sched_util']) || strtolower($account->status) == "new"){
-                echo '"onsite.php?account='.$account->acount_id.'&sched_util=1"';
-            } else {
-                echo '"onsite.php?account='.$account->acount_id.'"';
-            }
-            ?>,
+             content:"schedulepickup.php?account_no="+$(this).attr('rel'),
             player: "iframe",
             width: 500,
             height:365,

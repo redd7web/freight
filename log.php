@@ -1,11 +1,11 @@
 <?php
 include "protected/global.php";
 ini_set("display_errors",1);
-$kj = $db->query("SELECT * FROM sludge_ikg_grease");
+$kj = $db->query("SELECT * FROM freight_ikg_grease");
 
 if(count($kj)>0){
     foreach($kj as $route){
-        $ytc = $db->query("SELECT * FROM sludge_rout_history_grease WHERE route_no = $route[route_id]");
+        $ytc = $db->query("SELECT * FROM freight_rout_history_grease WHERE route_no = $route[route_id]");
             $package = array(
                 "route_no"=>$route['route_id'],
                 "start_date"=>$route['scheduled_date']." ".$route['time_start'],
@@ -26,10 +26,10 @@ if(count($kj)>0){
             );
         if(count($ytc)==0){
             //insert
-            $db->insert("sludge_rout_history_grease",$package);
+            $db->insert("freight_rout_history_grease",$package);
         } else {
             //update
-            $db->where("route_no",$route['route_id'])->update("sludge_rout_history_grease",$package);
+            $db->where("route_no",$route['route_id'])->update("freight_rout_history_grease",$package);
         }
     }
 }

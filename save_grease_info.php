@@ -12,10 +12,10 @@ $id = $_POST['route_id'];
 
 
 
-$check_ = $db->query("SELECT * FROM sludge_grease_data_table WHERE route_id=$_POST[route_id] AND schedule_id=$_POST[schedule_number] AND account_no=$_POST[account_no]");
+$check_ = $db->query("SELECT * FROM freight_grease_data_table WHERE route_id=$_POST[route_id] AND schedule_id=$_POST[schedule_number] AND account_no=$_POST[account_no]");
     
     
-$route_info = $db->query("SELECT driver FROM sludge_ikg_grease WHERE route_id=$_POST[route_id]");
+$route_info = $db->query("SELECT driver FROM freight_ikg_grease WHERE route_id=$_POST[route_id]");
 
 if(count($check_) >0){
     $data = Array(
@@ -36,7 +36,7 @@ if(count($check_) >0){
         "route_status"=>"completed"
     );
     
-   $db->where("route_id",$_POST['route_id'])->update("sludge_grease_data_table",$data);  
+   $db->where("route_id",$_POST['route_id'])->update("freight_grease_data_table",$data);  
    $track = array(
         "date"=>date("Y-m-d H:i:s"),
         "user"=>$person->user_id,

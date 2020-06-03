@@ -1,12 +1,12 @@
 <?php
 include "protected/global.php";
 
-if(isset($_SESSION['sludge_id']) ){
+if(isset($_SESSION['freight_id']) ){
     $date = date("Y-m-d");
     $person = new Person();
         
     if(isset($_POST['g_label']) && strlen($_POST['g_label'])>0){
-        $db->query("UPDATE sludge_accounts SET label = '$_POST[g_label]' WHERE account_ID= $_POST[account]");
+        $db->query("UPDATE freight_accounts SET label = '$_POST[g_label]' WHERE account_ID= $_POST[account]");
     }
     $grease_table = $dbprefix."_grease_traps";
     $kl = new Account($_POST['account']);
@@ -57,24 +57,24 @@ if(isset($_SESSION['sludge_id']) ){
        $db->insert($dbprefix."_grease_traps",$jet_data); 
        $id =$db->getInsertId();
        echo $id;
-       $db->query("UPDATE sludge_accounts SET current_stop=$id WHERE account_ID = $_POST[account]");
+       $db->query("UPDATE freight_accounts SET current_stop=$id WHERE account_ID = $_POST[account]");
     }else {
         $result = $db->query("SELECT * FROM $grease_table WHERE account_no= $_POST[account] AND (route_status IN ('scheduled','enroute') ) ");
         if(count($result) == 0){
             if($db->insert($dbprefix."_grease_traps",$jet_data)){
                 $id =$db->getInsertId();
                 echo $id;    
-                $db->query("UPDATE sludge_accounts SET current_stop=$id WHERE account_ID = $_POST[account]");
+                $db->query("UPDATE freight_accounts SET current_stop=$id WHERE account_ID = $_POST[account]");
             }else{
                 echo "Insert Failed";
             }
         }
         else {
-           $db->query("DELETE  FROM sludge_grease_traps WHERE grease_no = ".$result[0]['grease_no']);                          
+           $db->query("DELETE  FROM freight_grease_traps WHERE grease_no = ".$result[0]['grease_no']);                          
             if($db->insert($dbprefix."_grease_traps",$jet_data)){
                 $id =$db->getInsertId();
                 echo $id;    
-                $db->query("UPDATE sludge_accounts SET current_stop=$id WHERE account_ID = $_POST[account]");
+                $db->query("UPDATE freight_accounts SET current_stop=$id WHERE account_ID = $_POST[account]");
             }else{
                 echo "Insert Failed";
             } 
