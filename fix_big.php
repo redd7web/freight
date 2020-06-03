@@ -10,25 +10,25 @@ function date_dif($beg,$lat){
 }
 
 $count =1;
-$accounts_pickedup = $db->query("SELECT account_ID,estimated_volume,pickup_frequency,created FROM sludge_accounts WHERE status in ('active','new')");
+$accounts_pickedup = $db->query("SELECT account_ID,estimated_volume,pickup_frequency,created FROM freight_accounts WHERE status in ('active','new')");
 $atr = new Account();
  $total = 0;
        if(count($accounts_pickedup)>0){
     foreach($accounts_pickedup as $nos){
        $total = 0;
        
-       $how_many_picks = $db->query("SELECT DISTINCT (schedule_id) date_of_pickup,sum  FROM sludge_data_table WHERE account_no =$nos[account_ID] GROUP BY schedule_id ORDER BY date_of_pickup DESC ");
+       $how_many_picks = $db->query("SELECT DISTINCT (schedule_id) date_of_pickup,sum  FROM freight_data_table WHERE account_no =$nos[account_ID] GROUP BY schedule_id ORDER BY date_of_pickup DESC ");
        //echo "fault after..<br/>";
        /**/
        if(count($how_many_picks)>3) {     
            
-            $check = $db->query("SELECT DISTINCT (schedule_id), date_of_pickup,sum  FROM sludge_data_table WHERE account_no =$nos[account_ID] GROUP BY schedule_id ORDER BY date_of_pickup DESC  LIMIT 0,4");
+            $check = $db->query("SELECT DISTINCT (schedule_id), date_of_pickup,sum  FROM freight_data_table WHERE account_no =$nos[account_ID] GROUP BY schedule_id ORDER BY date_of_pickup DESC  LIMIT 0,4");
             $for_this  = 0;
             
             
            
           
-            $next_sched = $db->query("SELECT schedule_id, scheduled_start_date,route_status FROM sludge_scheduled_routes WHERE account_no =$nos[account_ID] ORDER BY scheduled_start_date DESC LIMIT 0,1");
+            $next_sched = $db->query("SELECT schedule_id, scheduled_start_date,route_status FROM freight_scheduled_routes WHERE account_no =$nos[account_ID] ORDER BY scheduled_start_date DESC LIMIT 0,1");
                 if(count($next_sched)>0){
                         if($next_sched[0]['route_status'] == "completed" || $next_sched[0]['route_status'] == "complete"){
                             echo  "<br/><br/>$count ".account_NumToName($nos['account_ID'])."  account is picked up up, but route is not completed.<br/>";

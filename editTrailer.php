@@ -1,4 +1,4 @@
-<?php include "protected/global.php"; $page = "Management | View Vehicle"; if(isset($_SESSION['sludge_id'])){  
+<?php include "protected/global.php"; $page = "Management | View Vehicle"; if(isset($_SESSION['freight_id'])){  
     //ini_set('display_errors',1); 
     //error_reporting(E_ALL);
     

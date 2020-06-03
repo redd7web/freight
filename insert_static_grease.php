@@ -10,7 +10,7 @@ $grease_pack = array(
     "grease_rate"=>$_POST['rate'],
     "grease_ppg"=>$_POST['ppg']
 );
-echo $db->where("account_ID",$_POST['account_no'])->update("sludge_accounts",$grease_pack);
+echo $db->where("account_ID",$_POST['account_no'])->update("freight_accounts",$grease_pack);
 
 
 ?>

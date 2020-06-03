@@ -27,7 +27,7 @@
   
  
     
-    if($db->where("user_id","$_POST[id]")->update("sludge_users",$array)) {        
+    if($db->where("user_id","$_POST[id]")->update("freight_users",$array)) {        
         $track = array(
             "date"=>date("Y-m-d H:i:s"),
             "user"=>$person->user_id,

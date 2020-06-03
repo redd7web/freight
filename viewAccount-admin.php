@@ -11,18 +11,18 @@ function is_dir_empty($dir) {
   return TRUE;
 }
 
-include "protected/global.php"; $page = "customers"; if(isset($_SESSION['sludge_id'])){  
+include "protected/global.php"; $page = "customers"; if(isset($_SESSION['freight_id'])){  
     date_default_timezone_set("America/Los_Angeles");
     $account = new Account($_GET['id']);
     $person = new Person();
-    $value = $db->where("account_no",$account->acount_id)->get("sludge_containers");     
+    $value = $db->where("account_no",$account->acount_id)->get("freight_containers");     
    //echo $account->payment_method;
     //echo "<br/>".$account->acount_id;
   // var_dump($account);
 }
 function get_index(){
     global $db;
-    $xo =  $db->query("SELECT date,percentage FROM sludge_jacobsen ORDER BY DATE DESC LIMIT 0,1 ");
+    $xo =  $db->query("SELECT date,percentage FROM freight_jacobsen ORDER BY DATE DESC LIMIT 0,1 ");
     
     if(count($xo)>0){
         return $xo;
@@ -236,7 +236,7 @@ include "source/css.php";
                 <tr><td colspan="2">
                 <div id="kkd" style="width:360px;height:200px;overflow:auto;">
                 <?php 
-                    $hj = $db->query("SELECT * FROM sludge_grease_traps WHERE account_no = $account->acount_id ORDER BY service_date DESC");
+                    $hj = $db->query("SELECT * FROM freight_grease_traps WHERE account_no = $account->acount_id ORDER BY service_date DESC");
 
                     echo "<table style='width:360px;'>";
                     echo "<tr>
@@ -488,7 +488,7 @@ include "source/css.php";
                 <td style="background: #E2E5DE;">Route</td>
             </tr>
             <?php
-                $admin_payments = $db->query("SELECT * FROM sludge_grease_data_table  WHERE account_no = $account->acount_id order by date_of_pickup DESC");
+                $admin_payments = $db->query("SELECT * FROM freight_grease_data_table  WHERE account_no = $account->acount_id order by date_of_pickup DESC");
                 
                 if(count($admin_payments)>0){
                     foreach($admin_payments as $payments){

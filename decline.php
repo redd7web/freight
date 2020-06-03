@@ -11,7 +11,7 @@ $head ='From: account-creation@iwpusa.com' . "\r\n" .
     if(isset($_POST['decline_now'])){
         
 
-        $db->query("UPDATE sludge_accounts SET status='Archive',decline_note='$_POST[decline_reason]' WHERE account_ID = '$_GET[id]'");
+        $db->query("UPDATE freight_accounts SET status='Archive',decline_note='$_POST[decline_reason]' WHERE account_ID = '$_GET[id]'");
     
     
         mail("KMickle@iwpusa.com,Kjankowski@iwpusa.com, AParsons@iwpusa.com,GRuff@iwpusa.com,ABurkett@iwpusa.com","Account $account->name_plain set to pending","Name: $account->name_plain  \r\n Account id:$account->acount_id \r\n Address: $account->address, $account->city, $account->state $account->zip \r\n Phone: $account->area_code - $account->phone \r\n Contact Name: $account->contact_name \r\n  Account has been de-activated by Kevin: <a href='https://inet.iwpusa.com/grease/viewAccount.php?id=$account->acount_id'>$account->name_plain</a> \r\n Decline Reason: $_POST[decline_reason]\r\n Scheduled date: ".$account->schedule['scheduled_start_date'],$head);    

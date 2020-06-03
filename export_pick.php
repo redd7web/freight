@@ -3,7 +3,7 @@ include "protected/global.php";
 $picknpay = $db->query($_POST['param']);
 function get_index(){
     global $db;
-    $xo =  $db->query("SELECT date,percentage FROM sludge_jacobsen ORDER BY DATE DESC LIMIT 0,1 ");
+    $xo =  $db->query("SELECT date,percentage FROM freight_jacobsen ORDER BY DATE DESC LIMIT 0,1 ");
     
     if(count($xo)>0){
         return $xo;

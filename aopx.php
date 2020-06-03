@@ -10,7 +10,7 @@ $list_of_routes = $dbprefix."_list_of_routes";
 
 //***************************** UPDATE LIST OF ROUTES TABLE*************************//
 
-$check_how_much = $db->where("route_id",$_POST['route_id'])->get("sludge_list_of_routes","collected");
+$check_how_much = $db->where("route_id",$_POST['route_id'])->get("freight_list_of_routes","collected");
 
 if(count($check_how_much)>0){
     $collected = $_POST['picked_up'] + $check_how_much[0]['collected'];    
@@ -22,8 +22,8 @@ if(count($check_how_much)>0){
 
 
 
-//$db->query("UPDATE sludge_list_of_routes SET collected = $collected WHERE route_id=$_POST[route_id] ");
-//$db->query("UPDATE sludge_list_of_routes SET  inc  = inc-1 WHERE route_id=$_POST[route_id] AND inc >0 ");
+//$db->query("UPDATE freight_list_of_routes SET collected = $collected WHERE route_id=$_POST[route_id] ");
+//$db->query("UPDATE freight_list_of_routes SET  inc  = inc-1 WHERE route_id=$_POST[route_id] AND inc >0 ");
 
 
 //******* UPDATE LIST OF ROUTES TABLE*************************//

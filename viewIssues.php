@@ -11,7 +11,7 @@ if( isset( $_POST['rep'] ) ) {
             "completed_date"=>date("Y-m-d")
         );
         
-        $db->where('issue_no',$_GET['id'])->update("sludge_issues",$issue_pack);
+        $db->where('issue_no',$_GET['id'])->update("freight_issues",$issue_pack);
     }
     
     

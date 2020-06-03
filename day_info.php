@@ -1,6 +1,6 @@
 <?php
 include "protected/global.php";
-$history_table = "sludge_rout_history";
+$history_table = "freight_rout_history";
 ini_set("display_errors",0);
 switch($_POST['mode']){
     case 1: // time start
@@ -15,7 +15,7 @@ switch($_POST['mode']){
         break;
     case 2: //start mileage
         $crit = "start_mileage";
-        $history = $db->where("route_no",$_POST['route_id'])->where("what_day",$_POST['what_day'])->get("sludge_rout_history",$crit);
+        $history = $db->where("route_no",$_POST['route_id'])->where("what_day",$_POST['what_day'])->get("freight_rout_history",$crit);
         if(count($history)>0){
             echo $history[0][$crit];
         }else {
@@ -24,7 +24,7 @@ switch($_POST['mode']){
         break;
     case 3: // first stop
         $crit = "first_stop";
-        $history = $db->where("route_no",$_POST['route_id'])->where("what_day",$_POST['what_day'])->get("sludge_rout_history",$crit);
+        $history = $db->where("route_no",$_POST['route_id'])->where("what_day",$_POST['what_day'])->get("freight_rout_history",$crit);
         if(count($history)>0){
             echo $history[0][$crit];
         }else {
@@ -34,7 +34,7 @@ switch($_POST['mode']){
         break;
     case 4: //first stop mileage
         $crit = "first_stop_mileage";
-        $history = $db->where("route_no",$_POST['route_id'])->where("what_day",$_POST['what_day'])->get("sludge_rout_history",$crit);
+        $history = $db->where("route_no",$_POST['route_id'])->where("what_day",$_POST['what_day'])->get("freight_rout_history",$crit);
         if(count($history)>0){
             echo $history[0][$crit];
         }else {
@@ -43,7 +43,7 @@ switch($_POST['mode']){
         break;
     case 5: //last stop
         $crit = "last_stop";
-        $history = $db->where("route_no",$_POST['route_id'])->where("what_day",$_POST['what_day'])->get("sludge_rout_history",$crit);
+        $history = $db->where("route_no",$_POST['route_id'])->where("what_day",$_POST['what_day'])->get("freight_rout_history",$crit);
         if(count($history)>0){
             echo $history[0][$crit];
         }else {
@@ -52,7 +52,7 @@ switch($_POST['mode']){
         break;
     case 6: // last stop mileage
         $crit = "last_stop_mileage";
-        $history = $db->where("route_no",$_POST['route_id'])->where("what_day",$_POST['what_day'])->get("sludge_rout_history",$crit);
+        $history = $db->where("route_no",$_POST['route_id'])->where("what_day",$_POST['what_day'])->get("freight_rout_history",$crit);
         if(count($history)>0){
             echo $history[0][$crit];
         }else {
@@ -69,7 +69,7 @@ switch($_POST['mode']){
         break;
     case 8:// end mileage
         $crit = "end_mileage";
-        $history = $db->where("route_no",$_POST['route_id'])->where("what_day",$_POST['what_day'])->get("sludge_rout_history",$crit);
+        $history = $db->where("route_no",$_POST['route_id'])->where("what_day",$_POST['what_day'])->get("freight_rout_history",$crit);
         if(count($history)>0){
             echo $history[0][$crit];
         }else {

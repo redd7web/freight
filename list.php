@@ -2,7 +2,7 @@
 include "protected/global.php";
 error_reporting(E_ALL);
 
-$sql="SELECT * FROM sludge_ikg_utility ORDER BY route_id";
+$sql="SELECT * FROM freight_ikg_utility ORDER BY route_id";
 
 if ($result=mysqli_query($sql))
   {

@@ -6,8 +6,8 @@ include "source/scripts.php";
 include "source/css.php";
 
 if(isset($_POST['change_sched'])){
-    echo "UPDATE sludge_grease_traps SET service_date ='$_POST[new_schedule_date]' WHERE grease_no=$_GET[grease_no]";
-    if($db->query("UPDATE sludge_grease_traps SET service_date ='$_POST[new_schedule_date]' WHERE grease_no=$_GET[grease_no]")){
+    echo "UPDATE freight_grease_traps SET service_date ='$_POST[new_schedule_date]' WHERE grease_no=$_GET[grease_no]";
+    if($db->query("UPDATE freight_grease_traps SET service_date ='$_POST[new_schedule_date]' WHERE grease_no=$_GET[grease_no]")){
         echo "Service date successfully updated!";
     }
 }else{
@@ -15,7 +15,7 @@ if(isset($_POST['change_sched'])){
 }
 
 
-$cn = $db->query("SELECT service_date FROM sludge_grease_traps WHERE grease_no = $_GET[grease_no]");
+$cn = $db->query("SELECT service_date FROM freight_grease_traps WHERE grease_no = $_GET[grease_no]");
 ?>
 <style type="text/css">
 body{

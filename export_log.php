@@ -10,14 +10,14 @@ if(isset($_GET['clear'])){
     unset($_SESSION['exlude_list']);
 }
 
-if(isset($_SESSION['sludge_id'])){
+if(isset($_SESSION['freight_id'])){
     $self = new Person();
 }
 
 
 function start_date($route_id,$day){
     global $db;
-    $sched = $db->query("SELECT DATE(start_date) as Date FROM sludge_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
+    $sched = $db->query("SELECT DATE(start_date) as Date FROM freight_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
     if(count($sched)>0){
         return $sched[0]['Date'];
     }else {
@@ -28,7 +28,7 @@ function start_date($route_id,$day){
 function time_start($route_id,$day){
     $fs_stop ="00:00:00";
     global $db;
-    $f_stop = $db->query("SELECT time_start FROM sludge_rout_history_grease WHERE route_no=$route_id AND what_day = $day ORDER BY time_start ASC LIMIT 0,1");
+    $f_stop = $db->query("SELECT time_start FROM freight_rout_history_grease WHERE route_no=$route_id AND what_day = $day ORDER BY time_start ASC LIMIT 0,1");
     if(count($f_stop)>0){
         $fs_stop = $f_stop[0]['time_start'];
     }
@@ -38,7 +38,7 @@ function time_start($route_id,$day){
 function time_end($route_id,$day){
     $ls_stop = "00:00:00";
     global $db;
-    $l_stop = $db->query("SELECT time_end FROM sludge_rout_history_grease WHERE route_no=$route_id  AND what_day = $day ORDER BY time_end DESC LIMIT 0,1");
+    $l_stop = $db->query("SELECT time_end FROM freight_rout_history_grease WHERE route_no=$route_id  AND what_day = $day ORDER BY time_end DESC LIMIT 0,1");
     if(count($l_stop)>0){
         $ls_stop = $l_stop[0]['time_end'];
     }
@@ -49,7 +49,7 @@ function time_end($route_id,$day){
 function start_time_from_date($route_id,$day){
     global $db;
     $start_time = "00:00:00";
-     $sched = $db->query("SELECT first_stop as Time FROM sludge_rout_history_grease WHERE route_no =$route_id AND what_day =$day");
+     $sched = $db->query("SELECT first_stop as Time FROM freight_rout_history_grease WHERE route_no =$route_id AND what_day =$day");
     if(count($sched)>0){
         $start_time=  $sched[0]['Time'];
     }
@@ -59,7 +59,7 @@ function start_time_from_date($route_id,$day){
 function end_time_from_date($route_id,$day){
     global $db;
     $end_time = "00:00:00";
-    $end1 = $db->query("SELECT last_stop as ETime FROM sludge_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
+    $end1 = $db->query("SELECT last_stop as ETime FROM freight_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
     if(count($end1)>0){
         $end_time= $end1[0]['ETime'];
     } 
@@ -69,7 +69,7 @@ function end_time_from_date($route_id,$day){
 function total_hours($route_id,$day){
     global $db;
     $total_day = 0;
-    $day1 = $db->query("SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(timediff(last_stop, first_stop)))) AS totalhours FROM `sludge_rout_history_grease` WHERE route_no=$route_id AND what_day =$day GROUP BY what_day");
+    $day1 = $db->query("SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(timediff(last_stop, first_stop)))) AS totalhours FROM `freight_rout_history_grease` WHERE route_no=$route_id AND what_day =$day GROUP BY what_day");
     if(count($day1)>0){
         $total_day = $day1[0]['totalhours'];
     }
@@ -81,7 +81,7 @@ function first_stop_mileage($route_id,$day){
     global $db;
     $f_mileage = 0; 
     if($route_id>0 && $route_id !="" && $route_id !=" "){
-        $first_stop_mileage = $db->query("SELECT first_stop_mileage FROM sludge_rout_history_grease WHERE route_no=$route_id  AND what_day =$day");
+        $first_stop_mileage = $db->query("SELECT first_stop_mileage FROM freight_rout_history_grease WHERE route_no=$route_id  AND what_day =$day");
         if(count($first_stop_mileage)>0){
             $f_mileage = $first_stop_mileage[0]['first_stop_mileage'];
         }
@@ -94,7 +94,7 @@ function last_stop_mileage($route_id,$day){
     $l_mileage = 0;
     
     if($route_id>0&& $route_id !="" && $route_id !=" "){
-        $last_stop_mileage = $db->query("SELECT last_stop_mileage FROM sludge_rout_history_grease WHERE route_no=$route_id AND what_day =$day");
+        $last_stop_mileage = $db->query("SELECT last_stop_mileage FROM freight_rout_history_grease WHERE route_no=$route_id AND what_day =$day");
         if(count($last_stop_mileage)>0){
             $l_mileage = $last_stop_mileage[0]['last_stop_mileage'];
         }
@@ -106,7 +106,7 @@ function last_stop_mileage($route_id,$day){
 function start_mileage($route_id,$day){
     global $db;
     $start = 0;
-    $s = $db->query("SELECT start_mileage FROM sludge_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
+    $s = $db->query("SELECT start_mileage FROM freight_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
     if(count($s)>0){
        return $s[0]['start_mileage'];
     } else {
@@ -117,7 +117,7 @@ function start_mileage($route_id,$day){
 function end_mileage($route_id,$day){
     global $db;
     $end = 0;
-    $e = $db->query("SELECT end_mileage FROM sludge_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
+    $e = $db->query("SELECT end_mileage FROM freight_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
     if(count($e)>0){
         return $e[0]['end_mileage'];
     } else {
@@ -193,7 +193,7 @@ function variable_operating($labor_cost,$total_mileage,$truck_mpg,$net_gallons,$
 
 function charged_amount($route_id){
     global $db;
-    $data = $db->query("SELECT ppg,inches_to_gallons FROM sludge_grease_data_table WHERE route_id = $route_id");
+    $data = $db->query("SELECT ppg,inches_to_gallons FROM freight_grease_data_table WHERE route_id = $route_id");
     if(count($data)>0){
         $all_picked_up=0;
         foreach($data as $calc){
@@ -210,34 +210,34 @@ if(isset($_POST['exp_log'])){
     if(isset($_SESSION['exclude_list'])){
         $_SESSION['exlude_list'] = array_unique($_SESSION['exlude_list']);
         if(!empty($_SESSION['exlude_list'])){
-            $exl = " AND sludge_ikg_grease.route_id NOT IN (".implode(",",$_SESSION['exlude_list']).")";
+            $exl = " AND freight_ikg_grease.route_id NOT IN (".implode(",",$_SESSION['exlude_list']).")";
         }    
     }
      $x = $db->query("SELECT 
-                    sludge_list_of_grease.stops,
-                    sludge_ikg_grease.route_id,
-                    sludge_ikg_grease.ikg_manifest_route_number,
-                    COALESCE(sludge_ikg_grease.net_weight,NULL,0.00) as net_weight,
-                    COALESCE(sludge_ikg_grease.tare_weight,NULL, 0.00) as tare_weight,
-                    sludge_ikg_grease.tank1,
-                    sludge_ikg_grease.tank2,
-                    COALESCE(sludge_ikg_grease.gross_weight,NULL,0.00) as gross_weight,
-                    sludge_ikg_grease.end_mileage,
-                    sludge_ikg_grease.start_mileage,
-                    sludge_ikg_grease.fuel,
-                    sludge_ikg_grease.route_id,
-                    sludge_ikg_grease.end_time,
-                    sludge_ikg_grease.time_start,
-                    sludge_ikg_grease.driver,
-                    sludge_ikg_grease.inventory_code,
-                    sludge_ikg_grease.truck,
-                    sludge_ikg_grease.other_expense_desc, 
-                    sludge_ikg_grease.route_notes,
-                    sludge_ikg_grease.percent_fluid,  
-                    sludge_ikg_grease.trailer,   
-                    COALESCE(sludge_ikg_grease.other_expense_value,NULL,0.00) as other_expense_value,    
-                    sludge_ikg_grease.fuel_per_gallon,         
-                    TIME(sludge_ikg_grease.first_stop) as Time FROM sludge_list_of_grease  LEFT JOIN sludge_ikg_grease  ON sludge_ikg_grease.route_id = sludge_list_of_grease.route_id LEFT JOIN sludge_rout_history_grease ON sludge_rout_history_grease.route_no = sludge_ikg_grease.route_id  WHERE sludge_list_of_grease.status IN ('completed') AND sludge_ikg_grease.route_id >0 AND sludge_ikg_grease.route_id IS NOT NULL $_POST[params] $exl
+                    freight_list_of_grease.stops,
+                    freight_ikg_grease.route_id,
+                    freight_ikg_grease.ikg_manifest_route_number,
+                    COALESCE(freight_ikg_grease.net_weight,NULL,0.00) as net_weight,
+                    COALESCE(freight_ikg_grease.tare_weight,NULL, 0.00) as tare_weight,
+                    freight_ikg_grease.tank1,
+                    freight_ikg_grease.tank2,
+                    COALESCE(freight_ikg_grease.gross_weight,NULL,0.00) as gross_weight,
+                    freight_ikg_grease.end_mileage,
+                    freight_ikg_grease.start_mileage,
+                    freight_ikg_grease.fuel,
+                    freight_ikg_grease.route_id,
+                    freight_ikg_grease.end_time,
+                    freight_ikg_grease.time_start,
+                    freight_ikg_grease.driver,
+                    freight_ikg_grease.inventory_code,
+                    freight_ikg_grease.truck,
+                    freight_ikg_grease.other_expense_desc, 
+                    freight_ikg_grease.route_notes,
+                    freight_ikg_grease.percent_fluid,  
+                    freight_ikg_grease.trailer,   
+                    COALESCE(freight_ikg_grease.other_expense_value,NULL,0.00) as other_expense_value,    
+                    freight_ikg_grease.fuel_per_gallon,         
+                    TIME(freight_ikg_grease.first_stop) as Time FROM freight_list_of_grease  LEFT JOIN freight_ikg_grease  ON freight_ikg_grease.route_id = freight_list_of_grease.route_id LEFT JOIN freight_rout_history_grease ON freight_rout_history_grease.route_no = freight_ikg_grease.route_id  WHERE freight_list_of_grease.status IN ('completed') AND freight_ikg_grease.route_id >0 AND freight_ikg_grease.route_id IS NOT NULL $_POST[params] $exl
 ");    
 }
 
@@ -406,13 +406,13 @@ if(count($x)>0){
         } else {
             $driver = "N/A";
         }
-        $zero = $db->query("SELECT distinct(schedule_id) FROM sludge_grease_data_table WHERE route_id = $log[route_id] AND inches_to_gallons = 0");
+        $zero = $db->query("SELECT distinct(schedule_id) FROM freight_grease_data_table WHERE route_id = $log[route_id] AND inches_to_gallons = 0");
         
-        $skipped = $db->query("SELECT DISTINCT(schedule_id) FROM sludge_grease_data_table WHERE route_id=$log[route_id] AND zero_gallon_reason IN(12,14,16)");
+        $skipped = $db->query("SELECT DISTINCT(schedule_id) FROM freight_grease_data_table WHERE route_id=$log[route_id] AND zero_gallon_reason IN(12,14,16)");
         
-        $emergency = $db->query("SELECT DISTINCT(schedule_id) FROM sludge_grease_data_table WHERE route_id=$log[route_id] AND zero_gallon_reason =99");
+        $emergency = $db->query("SELECT DISTINCT(schedule_id) FROM freight_grease_data_table WHERE route_id=$log[route_id] AND zero_gallon_reason =99");
         
-        $no_oil = $db->query("SELECT DISTINCT(schedule_id) FROM sludge_grease_data_table WHERE route_id=$log[route_id] AND zero_gallon_reason = 10");
+        $no_oil = $db->query("SELECT DISTINCT(schedule_id) FROM freight_grease_data_table WHERE route_id=$log[route_id] AND zero_gallon_reason = 10");
         
         //************************* DAY 1***************************************************************//      
         $total_hours =  time_end($log['route_id'],1) - time_start($log['route_id'],1);
@@ -527,7 +527,7 @@ if(count($x)>0){
         $sum_all_milaege +=$all_mileage;
         $all_pu_mileage = $total_pu_mileage+$total_pu_mileage2;
         $sum_pu_mileage_all +=$all_pu_mileage;
-        $skip = $db->query("SELECT DISTINCT(schedule_id) FROM sludge_grease_data_table WHERE route_id=$log[route_id] AND zero_gallon_reason !=0");
+        $skip = $db->query("SELECT DISTINCT(schedule_id) FROM freight_grease_data_table WHERE route_id=$log[route_id] AND zero_gallon_reason !=0");
         $avg_lb_stop = lb_per_stop($log['net_weight'],$log['stops']);
         $avg_fuel = $all_mileage/$truck->mpg;            
         //$fuel_per_money = avg_fuel_money($log['net_weight'],$log['stops']); 
@@ -580,7 +580,7 @@ if(count($x)>0){
             }
             
             $dataString .=  ","; //paid amount
-            $yu = $db->query("SELECT COALESCE(SUM(total_price),NULL,0.00) as total_charge FROM sludge_pay_trace WHERE route_id=$log[route_id] AND status =1");
+            $yu = $db->query("SELECT COALESCE(SUM(total_price),NULL,0.00) as total_charge FROM freight_pay_trace WHERE route_id=$log[route_id] AND status =1");
             $dataString .=  $yu[0]['total_charge'];
             $total_price = $yu[0]['total_charge'];
         $dataString .=  ",".number_format(charged_amount($log['route_id']),2).",".number_format($total_price - $total_cost,2).",".number_format( charged_amount($log['route_id']) - $total_cost  ,2); 

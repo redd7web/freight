@@ -9,7 +9,7 @@ include "protected/global.php";
 include "source/scripts.php"; 
 include "source/css.php";
 //ini_set("display_errors",1);
-if(isset($_SESSION['sludge_id'])){ 
+if(isset($_SESSION['freight_id'])){ 
     $person = new Person();
     $util_route = new Container_Route($_GET['route_id']);
     //echo "<pre>";

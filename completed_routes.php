@@ -10,7 +10,7 @@ $searcharg  = $_GET['searcharg'];
 	$term = $_GET['term']; 
 
 	 
-		$query = "SELECT  route_id,ikg_manifest_route_number FROM sludge_list_of_grease WHERE ( route_id like '%" . trim($_GET['term']) . "%' OR ikg_manifest_route_number  like '%" . trim($_GET['term']) . "%' )  AND status='completed'";  
+		$query = "SELECT  route_id,ikg_manifest_route_number FROM freight_list_of_grease WHERE ( route_id like '%" . trim($_GET['term']) . "%' OR ikg_manifest_route_number  like '%" . trim($_GET['term']) . "%' )  AND status='completed'";  
 
 	    // $query = $query." LIMIT  $limit"; Limit results based on the limit parameter from the ajax call. 
 

@@ -7,7 +7,7 @@
 	<meta name="author" content="Ede Dizon" />
 <?php
 include "protected/global.php";
-if(isset($_SESSION['sludge_id'])){
+if(isset($_SESSION['freight_id'])){
     ini_set("display_errors",0);
     
     include "source/scripts.php"; 
@@ -63,8 +63,8 @@ input[type="text"] {
                  $grease_stop = new Grease_Stop($grease_scheds);
                  $accnt = new Account($grease_stop->account_number);
                  $mark = '';
-            //echo "SELECT * FROM sludge_grease_data_table WHERE route_id=$grease_scheds[grease_route_no] AND account_no = $grease_scheds[account_no] AND schedule_id = $grease_scheds[grease_no]<br/>";
-                $get_gallons = $db->query("SELECT * FROM sludge_grease_data_table WHERE route_id=$grease_stop->grease_route_no AND account_no = $grease_stop->account_number AND schedule_id = $grease_stop->grease_no"); //has this account been picked up for this route?
+            //echo "SELECT * FROM freight_grease_data_table WHERE route_id=$grease_scheds[grease_route_no] AND account_no = $grease_scheds[account_no] AND schedule_id = $grease_scheds[grease_no]<br/>";
+                $get_gallons = $db->query("SELECT * FROM freight_grease_data_table WHERE route_id=$grease_stop->grease_route_no AND account_no = $grease_stop->account_number AND schedule_id = $grease_stop->grease_no"); //has this account been picked up for this route?
                 if(count($get_gallons) >=1){
                     $mark =1 ;
                 }

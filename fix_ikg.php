@@ -4,7 +4,7 @@ include "protected/global.php";
 
 $already_scheduled = array();
 
-$po = $db->query("SELECT account_no FROM sludge_scheduled_routes WHERE route_status IN (
+$po = $db->query("SELECT account_no FROM freight_scheduled_routes WHERE route_status IN (
 'scheduled', 'new', 'en-route'
 )");
 
@@ -14,7 +14,7 @@ if(count($po)>0){
     }
 }
 
-$k = $db->query("SELECT DISTINCT sludge_data_table.account_no, sludge_accounts.status,sludge_accounts.account_ID FROM sludge_data_table INNER JOIN sludge_accounts ON sludge_data_table.account_no = sludge_accounts.account_ID WHERE sludge_accounts.status ='Active' || sludge_accounts.status ='New' ");
+$k = $db->query("SELECT DISTINCT freight_data_table.account_no, freight_accounts.status,freight_accounts.account_ID FROM freight_data_table INNER JOIN freight_accounts ON freight_data_table.account_no = freight_accounts.account_ID WHERE freight_accounts.status ='Active' || freight_accounts.status ='New' ");
 
 if(count($k)>0){
     
@@ -22,7 +22,7 @@ if(count($k)>0){
         
         if(!in_array($o['account_no'],$already_scheduled)){
             $ant = new Account();
-            $dte = $db->query("SELECT date_of_pickup FROM sludge_data_table WHERE account_no = $o[account_no] ORDER by date_of_pickup DESC");
+            $dte = $db->query("SELECT date_of_pickup FROM freight_data_table WHERE account_no = $o[account_no] ORDER by date_of_pickup DESC");
                     
             if(count($dte)>0){
                 
@@ -35,7 +35,7 @@ if(count($k)>0){
                     "code_red"=>0,
                     "facility_origin"=>(int)$ant->singleField($o['account_no'],"division")
                 );
-                echo "status: ".$db->insert("sludge_scheduled_routes",$schedule_info)."<br/>";
+                echo "status: ".$db->insert("freight_scheduled_routes",$schedule_info)."<br/>";
                 var_dump($schedule_info);
                 echo "account $o[account_no] last picked up on ".$dte[0]['date_of_pickup']."<br/><br/>";
                 

@@ -34,7 +34,7 @@
         "new_bos_coa"=>$_POST['coa']
     );
     var_dump($array);
-    if($db->insert("sludge_users",$array)){
+    if($db->insert("freight_users",$array)){
         echo "User $_POST[fname] $_POST[lname] INSERTED !";
     }
     

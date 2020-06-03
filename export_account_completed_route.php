@@ -89,22 +89,22 @@ tr.odd {
     
   
     $gv = $db->query("SELECT 
-                        sludge_grease_data_table.*, 
-                        sludge_ikg_grease.conductivity,
-                        sludge_ikg_grease.percent_fluid,
-                        sludge_ikg_grease.ikg_manifest_route_number,
+                        freight_grease_data_table.*, 
+                        freight_ikg_grease.conductivity,
+                        freight_ikg_grease.percent_fluid,
+                        freight_ikg_grease.ikg_manifest_route_number,
                         COALESCE(ap_form_28181.element_48,NULL,0) as cs_total,
-                        COALESCE(ap_form_28181.element_5,NULL,0) as cs_hours FROM sludge_grease_data_table
+                        COALESCE(ap_form_28181.element_5,NULL,0) as cs_hours FROM freight_grease_data_table
                 LEFT JOIN Inetforms.ap_form_29942 ON 
-                            sludge_grease_data_table.route_id = ap_form_29942.element_2 AND 
-                            sludge_grease_data_table.schedule_id =  ap_form_29942.element_3 AND
-                            sludge_grease_data_table.account_no =  ap_form_29942.element_1 
+                            freight_grease_data_table.route_id = ap_form_29942.element_2 AND 
+                            freight_grease_data_table.schedule_id =  ap_form_29942.element_3 AND
+                            freight_grease_data_table.account_no =  ap_form_29942.element_1 
                 LEFT JOIN Inetforms.ap_form_28181 ON  
-                           sludge_grease_data_table.route_id = ap_form_28181.element_50 AND 
-                           sludge_grease_data_table.schedule_id =  ap_form_28181.element_51 AND
-                           sludge_grease_data_table.account_no =  ap_form_28181.element_52 
-                LEFT JOIN sludge_ikg_grease ON
-                            sludge_grease_data_table.route_id = sludge_ikg_grease.route_id 
+                           freight_grease_data_table.route_id = ap_form_28181.element_50 AND 
+                           freight_grease_data_table.schedule_id =  ap_form_28181.element_51 AND
+                           freight_grease_data_table.account_no =  ap_form_28181.element_52 
+                LEFT JOIN freight_ikg_grease ON
+                            freight_grease_data_table.route_id = freight_ikg_grease.route_id 
                 WHERE account_no= $_POST[account_no] OR facility_origin = $_POST[account_no] $string");
     
     

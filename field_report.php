@@ -3,16 +3,16 @@ include "protected/global.php";
 ini_set("display_errors",0);
 switch($_GET['type']){
     case "oil":
-    $table = "sludge_data_table";
+    $table = "freight_data_table";
     $ikg = new IKG($_GET['ikg']);
     break;
     case "grease":
-    $table = "sludge_grease_data_table";
+    $table = "freight_grease_data_table";
     $ikg = new Grease_IKG($_GET['ikg']);
     break;
     
     case "util":
-    $table = "sludge_utility_data_table";
+    $table = "freight_utility_data_table";
     $ikg = new Container_Route($_GET['ikg']);
 }
 

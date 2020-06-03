@@ -238,9 +238,9 @@ if(isset($_GET['search'])){
                 to:$("input#user_id").val(),
                 from:<?php 
                 if($x[0]['division']=="oil"){
-                    echo $_SESSION['sludge_id'];
+                    echo $_SESSION['freight_id'];
                 } else {
-                    echo $_SESSION['sludge_id'];
+                    echo $_SESSION['freight_id'];
                 }
                  ?>, 
                 notes:$(".nicEdit-main").html(),

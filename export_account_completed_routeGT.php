@@ -67,7 +67,7 @@ tr.odd {
     
     
     $data_table = $dbprefix."_grease_data_table";
-    $gv = $db->query("SELECT $data_table.*,sludge_ikg_grease.ikg_manifest_route_number FROM $data_table LEFT JOIN sludge_ikg_grease ON $data_table.route_id = sludge_ikg_grease.route_id WHERE (date_of_pickup >= '$_POST[from]'  && date_of_pickup <= '$_POST[to]') && account_no=$_POST[account_no]");
+    $gv = $db->query("SELECT $data_table.*,freight_ikg_grease.ikg_manifest_route_number FROM $data_table LEFT JOIN freight_ikg_grease ON $data_table.route_id = freight_ikg_grease.route_id WHERE (date_of_pickup >= '$_POST[from]'  && date_of_pickup <= '$_POST[to]') && account_no=$_POST[account_no]");
     
     
     

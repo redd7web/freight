@@ -15,7 +15,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
             } else if ($x == "Barrel - 55 Gal"){
                 $x = "Barrel-55";
             }
-            echo "SELECT container_id FROM sludge_list_of_containers WHERE container_label like '%$x%'<br/>";
+            echo "SELECT container_id FROM freight_list_of_containers WHERE container_label like '%$x%'<br/>";
             $barrrel_look = $db->query("SELECT container_id FROM iwp_list_of_containers WHERE container_label like '%$x%'");
             if(count($barrrel_look)>0){
                 

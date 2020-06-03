@@ -5,7 +5,7 @@ $person = new Person();
 function last_pickup($account_no){
     global $db;
     
-    $iuc = $db->query("SELECT date_of_pickup FROM sludge_grease_data_table WHERE account_no = $account_no ORDER BY date_of_pickup DESC LIMIT 0,1");
+    $iuc = $db->query("SELECT date_of_pickup FROM freight_grease_data_table WHERE account_no = $account_no ORDER BY date_of_pickup DESC LIMIT 0,1");
     if(count($iuc)>0){
         return $iuc[0]['date_of_pickup'];
     } else{
@@ -15,8 +15,8 @@ function last_pickup($account_no){
 }
 $dupe = array();
 $k = 0;
-$yuc = $db->query("SELECT Name,account_ID,grease_freq FROM sludge_accounts 
- WHERE account_ID NOT IN (SELECT account_no FROM sludge_grease_traps WHERE route_status IN('enroute','scheduled')) AND status IN('New','Active') ORDER BY Name ASC");
+$yuc = $db->query("SELECT Name,account_ID,grease_freq FROM freight_accounts 
+ WHERE account_ID NOT IN (SELECT account_no FROM freight_grease_traps WHERE route_status IN('enroute','scheduled')) AND status IN('New','Active') ORDER BY Name ASC");
     if(count($yuc)>0){
         
         foreach($yuc as $jv){
@@ -73,14 +73,14 @@ $yuc = $db->query("SELECT Name,account_ID,grease_freq FROM sludge_accounts
                 }
                 echo "<pre>";
                 print_r($new_grease_sched);
-                $db->insert("sludge_grease_traps",$new_grease_sched);
+                $db->insert("freight_grease_traps",$new_grease_sched);
                 echo "</pre>";
                 echo "<br/>";
         }
     }
 
 
-$iop = $db->query("SELECT account_no,grease_no,route_status,sludge_accounts.Name,sludge_accounts.grease_freq,grease_route_no FROM sludge_grease_traps LEFT JOIN sludge_accounts ON sludge_grease_traps.account_no = sludge_accounts.account_ID WHERE route_status ='enroute' AND grease_route_no NOT IN (SELECT route_id FROM sludge_list_of_grease WHERE status IN ('enroute','completed') ) AND account_no NOT IN (SELECT account_no FROM sludge_grease_traps WHERE route_status='scheduled')");
+$iop = $db->query("SELECT account_no,grease_no,route_status,freight_accounts.Name,freight_accounts.grease_freq,grease_route_no FROM freight_grease_traps LEFT JOIN freight_accounts ON freight_grease_traps.account_no = freight_accounts.account_ID WHERE route_status ='enroute' AND grease_route_no NOT IN (SELECT route_id FROM freight_list_of_grease WHERE status IN ('enroute','completed') ) AND account_no NOT IN (SELECT account_no FROM freight_grease_traps WHERE route_status='scheduled')");
     foreach($iop as $po){
          $ant = new Account($po['account_no']);
         $k++;
@@ -136,10 +136,10 @@ $iop = $db->query("SELECT account_no,grease_no,route_status,sludge_accounts.Name
             echo " (Are labeled enroute but missing route) <br/>";
             echo "<pre>";
             print_r($new_grease_sched);
-            $db->insert("sludge_grease_traps",$new_grease_sched);
+            $db->insert("freight_grease_traps",$new_grease_sched);
             echo "</pre>";
             echo "<br/>";
-            $db->query("DELETE FROM sludge_grease_traps WHERE grease_no = $po[grease_no]");
+            $db->query("DELETE FROM freight_grease_traps WHERE grease_no = $po[grease_no]");
     }
 
 echo "<br/><br/>$k";

@@ -1,7 +1,7 @@
 <?php
 include "protected/global.php";
 
-$hc = $db->query("SELECT sludge_ikg_grease.customer_name,sludge_accounts.Name,sludge_grease_data_table.date_of_pickup,sludge_grease_data_table.arrival,sludge_grease_data_table.departure,sludge_grease_data_table.drop_removal,sludge_grease_data_table.route_id,sludge_ikg_grease.ikg_manifest_route_number,sludge_grease_data_table.facility_origin,sludge_grease_data_table.account_no FROM sludge_accounts LEFT JOIN sludge_grease_data_table ON sludge_accounts.account_ID = sludge_grease_data_table.account_no LEFT JOIN sludge_ikg_grease ON sludge_grease_data_table.route_id = sludge_ikg_grease.route_id  WHERE sludge_grease_data_table.facility_origin = $_GET[tank]  OR sludge_grease_data_table.account_no = $_GET[tank]  ORDER BY sludge_grease_data_table.arrival ASC LIMIT 0,1");
+$hc = $db->query("SELECT freight_ikg_grease.customer_name,freight_accounts.Name,freight_grease_data_table.date_of_pickup,freight_grease_data_table.arrival,freight_grease_data_table.departure,freight_grease_data_table.drop_removal,freight_grease_data_table.route_id,freight_ikg_grease.ikg_manifest_route_number,freight_grease_data_table.facility_origin,freight_grease_data_table.account_no FROM freight_accounts LEFT JOIN freight_grease_data_table ON freight_accounts.account_ID = freight_grease_data_table.account_no LEFT JOIN freight_ikg_grease ON freight_grease_data_table.route_id = freight_ikg_grease.route_id  WHERE freight_grease_data_table.facility_origin = $_GET[tank]  OR freight_grease_data_table.account_no = $_GET[tank]  ORDER BY freight_grease_data_table.arrival ASC LIMIT 0,1");
 
 
 if(count($hc)>0){

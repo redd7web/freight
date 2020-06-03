@@ -2,7 +2,7 @@
 include "protected/global.php";
 
 $k = $db->query("SELECT account_no, grease_no, count( account_no ) AS how_many
-FROM sludge_grease_traps
+FROM freight_grease_traps
 WHERE route_status
 IN (
 'scheduled'
@@ -14,7 +14,7 @@ foreach($k as $x){
    
     echo "<br/><br/>";
     echo  account_NumToName($x['account_no'])." $x[grease_no]"." $x[how_many]<br/>";
-    $bv = $db->query("SELECT grease_no,route_status FROM sludge_grease_traps WHERE account_no = $x[account_no] AND route_status ='scheduled'");
+    $bv = $db->query("SELECT grease_no,route_status FROM freight_grease_traps WHERE account_no = $x[account_no] AND route_status ='scheduled'");
         echo "**********<br/>";
         if(count($bv)>0){
             foreach($bv as $b){
@@ -38,9 +38,9 @@ foreach($k as $x){
 }
 
 if(!empty($delete)){
-    echo "DELETE FROM sludge_grease_traps WHERE grease_no IN(".implode(",",$delete).")<br/>";
+    echo "DELETE FROM freight_grease_traps WHERE grease_no IN(".implode(",",$delete).")<br/>";
      unset($delete);
-    $db->query("DELETE FROM sludge_grease_traps WHERE grease_no IN(".implode(",",$delete).")");
+    $db->query("DELETE FROM freight_grease_traps WHERE grease_no IN(".implode(",",$delete).")");
 }
 
 ?>

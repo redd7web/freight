@@ -9,7 +9,7 @@ if(strlen($_POST['selected_scheds'])>0 && $_POST['selected_scheds'] !=' ' && iss
     array_pop($first_stop);
     print_r($first_stop);
     /**/ 
-    if($db->query("DELETE FROM sludge_grease_traps WHERE grease_no IN(".implode(",",$first_stop).")" )){
+    if($db->query("DELETE FROM freight_grease_traps WHERE grease_no IN(".implode(",",$first_stop).")" )){
         echo "Stops Deleted!";
     }  
     UNSET($_SESSION['temp_stops']);

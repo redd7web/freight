@@ -17,7 +17,7 @@ body{
 </style>
 <?php
 if(isset($_POST['cc'])){
-    if($db->query("UPDATE sludge_grease_traps SET custom_charge =$_POST[ccupdate] WHERE grease_no=$_GET[schedule_id]")){
+    if($db->query("UPDATE freight_grease_traps SET custom_charge =$_POST[ccupdate] WHERE grease_no=$_GET[schedule_id]")){
         echo "Custom Charge Updated!<br/>";
         ?>
         <script>
@@ -26,7 +26,7 @@ if(isset($_POST['cc'])){
         <?php
     }
 }
-$custom = $db->query("SELECT IFNULL(custom_charge,0.00) as custom_charge FROM sludge_grease_traps WHERE grease_no = $_GET[schedule_id]");
+$custom = $db->query("SELECT IFNULL(custom_charge,0.00) as custom_charge FROM freight_grease_traps WHERE grease_no = $_GET[schedule_id]");
 
 
 

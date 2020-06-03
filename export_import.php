@@ -18,10 +18,10 @@ include "protected/global.php";
         foreach($picknpay as $pick){
             $desc_5 = 0;
             $acctt = new Account($pick['account_ID']);
-            $com_loc = $db->query("SELECT IFNULL(location,NULL) as location,IFNULL(inventory_code,NULL) as inventory_code,IFNULL(wtn,NULL) as wtn FROM sludge_ikg_grease WHERE route_id = $pick[route_id]");
+            $com_loc = $db->query("SELECT IFNULL(location,NULL) as location,IFNULL(inventory_code,NULL) as inventory_code,IFNULL(wtn,NULL) as wtn FROM freight_ikg_grease WHERE route_id = $pick[route_id]");
             
             if($pick['grease_no'] != NULL AND $pick['route_id'] !=NULL AND $pick['account_ID'] !=NULL ){
-                $add_desc_amou = $db->query("SELECT IFNULL(addtional_cost_description,NULL) as additional_cost_description,IFNULL(additional_cost_amount,0.00) as additional_cost_amount,IFNULL(jetting,0) as jetting,IFNULL(jet_cost,0.00) as jet_cost,IFNULL(import_note,NULL) as import_note,date_of_pickup FROM sludge_grease_data_table WHERE route_id =$pick[route_id] AND account_no=$pick[account_ID] AND schedule_id = $pick[grease_no]");
+                $add_desc_amou = $db->query("SELECT IFNULL(addtional_cost_description,NULL) as additional_cost_description,IFNULL(additional_cost_amount,0.00) as additional_cost_amount,IFNULL(jetting,0) as jetting,IFNULL(jet_cost,0.00) as jet_cost,IFNULL(import_note,NULL) as import_note,date_of_pickup FROM freight_grease_data_table WHERE route_id =$pick[route_id] AND account_no=$pick[account_ID] AND schedule_id = $pick[grease_no]");
             }
             if($pick['account_ID']==42869 || $pick['account_ID'] == 28637){
                 $serv = "SLUDGE";//AR.MISCDESC[7]

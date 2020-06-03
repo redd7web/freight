@@ -1,7 +1,7 @@
 <?php
 include "protected/global.php";
 
-$check_complete = $db->query("SELECT DISTINCT(sludge_list_of_grease.route_id),sludge_list_of_grease.status FROM sludge_list_of_grease LEFT JOIN sludge_grease_data_table ON sludge_grease_data_table.route_id = sludge_list_of_grease.route_id WHERE sludge_list_of_grease.status='completed' AND (sludge_grease_data_table.account_no = $_GET[tank] OR sludge_grease_data_table.facility_origin =$_GET[tank] ) GROUP BY sludge_list_of_grease.route_id");
+$check_complete = $db->query("SELECT DISTINCT(freight_list_of_grease.route_id),freight_list_of_grease.status FROM freight_list_of_grease LEFT JOIN freight_grease_data_table ON freight_grease_data_table.route_id = freight_list_of_grease.route_id WHERE freight_list_of_grease.status='completed' AND (freight_grease_data_table.account_no = $_GET[tank] OR freight_grease_data_table.facility_origin =$_GET[tank] ) GROUP BY freight_list_of_grease.route_id");
 
 
 

@@ -14,7 +14,7 @@ while (!feof($csvfile)) {
 	$insert_csv['container_label'] = $csv_array[0];
 	$insert_csv['amount_holds'] = $csv_array[1];
 	$insert_csv['gpi'] = $csv_array[2];
-	$query = "INSERT INTO sludge_list_of_containers(container_id,container_label,amount_holds,gpi) VALUES(0,'".$insert_csv['container_label']."','".$insert_csv['amount_holds']."','".$insert_csv['gpi']."')";
+	$query = "INSERT INTO freight_list_of_containers(container_id,container_label,amount_holds,gpi) VALUES(0,'".$insert_csv['container_label']."','".$insert_csv['amount_holds']."','".$insert_csv['gpi']."')";
 	$n=mysql_query($query, $connect );
 	$i++;
 }

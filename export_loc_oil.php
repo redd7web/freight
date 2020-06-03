@@ -3,7 +3,7 @@ include "protected/global.php";
 function getDates($id){
     global $db;
     global $dbprefix;
-    $first_last = $db->query("SELECT (SELECT date_of_pickup FROM sludge_data_table WHERE account_no=$id ORDER BY date_of_pickup LIMIT 1) as 'first', (SELECT date_of_pickup FROM sludge_data_table WHERE account_no=$id ORDER BY date_of_pickup DESC LIMIT 1) as 'last'");
+    $first_last = $db->query("SELECT (SELECT date_of_pickup FROM freight_data_table WHERE account_no=$id ORDER BY date_of_pickup LIMIT 1) as 'first', (SELECT date_of_pickup FROM freight_data_table WHERE account_no=$id ORDER BY date_of_pickup DESC LIMIT 1) as 'last'");
     return $first_last;
 }
 
@@ -13,7 +13,7 @@ $data_table = $dbprefix."_data_table";
 
 
 if(isset($_POST['export'])){
-    $query = "SELECT sludge_accounts.name, sludge_accounts.account_ID, SUM( inches_to_gallons ) AS total_gallons, SUM( inches_to_gallons * .25 ) AS adj, sludge_accounts.status, sludge_accounts.friendly, COUNT( inches_to_gallons ) AS pickups, sludge_accounts.address, sludge_accounts.city, sludge_accounts.state FROM sludge_accounts INNER JOIN sludge_data_table ON  sludge_accounts.account_ID = sludge_data_table.account_no WHERE 1 $_POST[param] GROUP BY sludge_accounts.account_ID";
+    $query = "SELECT freight_accounts.name, freight_accounts.account_ID, SUM( inches_to_gallons ) AS total_gallons, SUM( inches_to_gallons * .25 ) AS adj, freight_accounts.status, freight_accounts.friendly, COUNT( inches_to_gallons ) AS pickups, freight_accounts.address, freight_accounts.city, freight_accounts.state FROM freight_accounts INNER JOIN freight_data_table ON  freight_accounts.account_ID = freight_data_table.account_no WHERE 1 $_POST[param] GROUP BY freight_accounts.account_ID";
     $result = $db->query($query);
     
     //var_dump($ghu);

@@ -55,7 +55,7 @@ $person = new Person();
         <table style="width: 100%;">
         <?php
         
-        if(isset($_SESSION['sludge_id'])){
+        if(isset($_SESSION['freight_id'])){
             
         
         

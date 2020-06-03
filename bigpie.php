@@ -4,14 +4,14 @@ ini_set("display_errors",0);
 $ikg_info = new Grease_IKG($_GET['route_id']);
 //print_r($ikg_info);
 $uv= 0;
-$truck_cap = $db->query("SELECT max_capacity FROM sludge_truck_id WHERE truck_id = $ikg_info->truck");
+$truck_cap = $db->query("SELECT max_capacity FROM freight_truck_id WHERE truck_id = $ikg_info->truck");
 
-$collected = $db->query("SELECT coalesce(SUM(inches_to_gallons) ,0) as so_far FROM sludge_grease_data_table WHERE route_id = $ikg_info->route_id");
-$gv = $db->query("SELECT coalesce(SUM(volume),NULL,0) as volume FROM sludge_grease_traps WHERE route_status ='enroute' AND grease_route_no	=$ikg_info->route_id");
+$collected = $db->query("SELECT coalesce(SUM(inches_to_gallons) ,0) as so_far FROM freight_grease_data_table WHERE route_id = $ikg_info->route_id");
+$gv = $db->query("SELECT coalesce(SUM(volume),NULL,0) as volume FROM freight_grease_traps WHERE route_status ='enroute' AND grease_route_no	=$ikg_info->route_id");
 
 
 if($ikg_info->trailer != 0 && strlen($ikg_info->trailer)>0)   {
-    $trailer_info = $db->query("SELECT max_capacity FROM sludge_trailers WHERE truck_id = $ikg_info->trailer");
+    $trailer_info = $db->query("SELECT max_capacity FROM freight_trailers WHERE truck_id = $ikg_info->trailer");
     if(count($trailer_info)>0){
         $uv = $uv + $trailer_info[0]['max_capacity'];
         

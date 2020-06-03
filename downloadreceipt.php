@@ -97,14 +97,14 @@ if( count($ikg_info->scheduled_routes)>0){
               <tr><td colspan="2"  style="vertical-align:top;text-align:left;border:1px solid black;">Address: '.$address.' '. $city.', '.$state.'</td></tr>
               <tr><td colspan="2"  style="vertical-align:top;text-align:left;height:100px;border:1px solid black;">Comments: ';  $html .=$schedules->notes."<br/>".$schedules->special_instructions; $html .=' </td></tr>
               <tr><td colspan="2" style="text-align:center;border:1px solid black;">'; 
-                    $get = $db->query("SELECT DISTINCT (container_no), count( * ) AS num_of_barrel, account_no FROM sludge_containers WHERE account_no =$schedules->account_number GROUP BY account_no");
+                    $get = $db->query("SELECT DISTINCT (container_no), count( * ) AS num_of_barrel, account_no FROM freight_containers WHERE account_no =$schedules->account_number GROUP BY account_no");
                     if(count($get)>0){
                         $html .= "<table style='width:100%;'>";
                         foreach($get as $container){
                             $html .= "<tr><td>$container[num_of_barrel])</td><td>".containerNumToName($container['container_no'])." GPI ".round(gpi($container['container_no']),2)."</td></tr>";
                         }
                         $html .="<tr><td>Collected</td><td>";  
-                        $ty = $db->query("SELECT SUM(inches_to_gallons) as s FROM sludge_data_table WHERE account_no=$schedules->account_number AND route_id= $ikg_info->route_id AND schedule_id= $schedules->schedule_id");
+                        $ty = $db->query("SELECT SUM(inches_to_gallons) as s FROM freight_data_table WHERE account_no=$schedules->account_number AND route_id= $ikg_info->route_id AND schedule_id= $schedules->schedule_id");
                         
                          if( $ty[0]['s'] == 0){
                             $sum = "";
@@ -142,14 +142,14 @@ if( count($ikg_info->scheduled_routes)>0){
               
               $html .='</td></tr>
               <tr><td colspan="2" style="text-align:center;border:1px solid black;">'; 
-                    $get = $db->query("SELECT DISTINCT (container_no), count( * ) AS num_of_barrel, account_no FROM sludge_containers WHERE account_no =$schedules->account_number GROUP BY account_no");
+                    $get = $db->query("SELECT DISTINCT (container_no), count( * ) AS num_of_barrel, account_no FROM freight_containers WHERE account_no =$schedules->account_number GROUP BY account_no");
                     if(count($get)>0){
                         $html .= "<table style='width:100%;'>";
                         foreach($get as $container){
                             $html .= "<tr><td>$container[num_of_barrel])</td><td>".containerNumToName($container['container_no'])." GPI ".round(gpi($container['container_no']),2)."</td></tr>";
                         }
                          $html .="<tr><td>Collected</td><td>";  
-                        $ty = $db->query("SELECT SUM(inches_to_gallons) as s FROM sludge_data_table WHERE account_no=$schedules->account_number AND route_id= $ikg_info->route_id AND schedule_id= $schedules->schedule_id");
+                        $ty = $db->query("SELECT SUM(inches_to_gallons) as s FROM freight_data_table WHERE account_no=$schedules->account_number AND route_id= $ikg_info->route_id AND schedule_id= $schedules->schedule_id");
                         
                          if( $ty[0]['s'] == 0){
                             $sum = "";

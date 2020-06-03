@@ -21,7 +21,7 @@ while($i<12){
     echo "<pre>";
     var_dump($fhold);
     echo "</pre>";
-    $db->insert("sludge_accounts",$fhold);
+    $db->insert("freight_accounts",$fhold);
     $i = 1 +$i;
     
 }

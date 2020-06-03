@@ -1,4 +1,4 @@
-<?php include "protected/global.php"; $page = "Management | View User"; if(isset($_SESSION['sludge_id'])){  
+<?php include "protected/global.php"; $page = "Management | View User"; if(isset($_SESSION['freight_id'])){  
     
     $person = new Person();
     $edit_person = new Person($_GET['id']); 

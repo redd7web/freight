@@ -67,8 +67,8 @@ function getDistance($addressFrom, $addressTo, $unit){
 }
 
 
-//"COALESCE(SUM(paid),NULL,0)  as total_for_fac, facility_origin  FROM sludge_grease_data_table WHERE facility_origin IS NOT NULL GROUP BY facility_origin";
-$test = $db->query("SELECT DISTINCT(facility_origin) FROM sludge_grease_data_table WHERE facility_origin IS NOT NULL AND facility_origin  !=0");
+//"COALESCE(SUM(paid),NULL,0)  as total_for_fac, facility_origin  FROM freight_grease_data_table WHERE facility_origin IS NOT NULL GROUP BY facility_origin";
+$test = $db->query("SELECT DISTINCT(facility_origin) FROM freight_grease_data_table WHERE facility_origin IS NOT NULL AND facility_origin  !=0");
 /**/
 
 ?>
@@ -115,41 +115,41 @@ $test = $db->query("SELECT DISTINCT(facility_origin) FROM sludge_grease_data_tab
             $x = $db->query("SELECT (
 (
 (
-acos( sin( ( $lat_long[0] * pi( ) /180 ) ) * sin( ( sludge_accounts.latitude * pi( ) /180 ) ) + cos( ( $lat_long[0] * pi( ) /180 ) ) * cos( ( sludge_accounts.latitude * pi( ) /180 ) ) * cos( (
+acos( sin( ( $lat_long[0] * pi( ) /180 ) ) * sin( ( freight_accounts.latitude * pi( ) /180 ) ) + cos( ( $lat_long[0] * pi( ) /180 ) ) * cos( ( freight_accounts.latitude * pi( ) /180 ) ) * cos( (
 (
-$lat_long[1] - sludge_accounts.longitude
+$lat_long[1] - freight_accounts.longitude
 ) * pi( ) /180 ) )
 )
 ) *180 / pi( )
 ) *60 * 1.1515
 ) AS dist,
-    sludge_grease_traps.grease_no,
-    sludge_grease_traps.account_no,
-    sludge_grease_traps.grease_route_no,
-    sludge_grease_traps.volume,
-    sludge_grease_data_table.inches_to_gallons,
-    sludge_grease_data_table.driver, 
-    sludge_grease_data_table.net_mileage,
-    sludge_grease_data_table.date_of_pickup,
-    sludge_accounts.Name,
-    sludge_accounts.longitude,
-    sludge_accounts.latitude,
-    sludge_ikg_grease.truck,
-    sludge_ikg_grease.trailer,
-    sludge_ikg_grease.other_expense_value,
-    sludge_ikg_grease.fuel_per_gallon,
-    sludge_ikg_grease.percent_fluid
- FROM sludge_grease_traps 
-    INNER JOIN sludge_accounts ON 
-        sludge_grease_traps.account_no = sludge_accounts.account_ID 
-    INNER JOIN sludge_grease_data_table ON 
-        sludge_grease_data_table.schedule_id = sludge_grease_traps.grease_no AND 
-        sludge_grease_data_table.route_id = sludge_grease_traps.grease_route_no AND 
-        sludge_grease_data_table.account_no = sludge_grease_traps.account_no 
-    INNER JOIN sludge_ikg_grease ON 
-        sludge_grease_traps.grease_route_no = sludge_ikg_grease.route_id
+    freight_grease_traps.grease_no,
+    freight_grease_traps.account_no,
+    freight_grease_traps.grease_route_no,
+    freight_grease_traps.volume,
+    freight_grease_data_table.inches_to_gallons,
+    freight_grease_data_table.driver, 
+    freight_grease_data_table.net_mileage,
+    freight_grease_data_table.date_of_pickup,
+    freight_accounts.Name,
+    freight_accounts.longitude,
+    freight_accounts.latitude,
+    freight_ikg_grease.truck,
+    freight_ikg_grease.trailer,
+    freight_ikg_grease.other_expense_value,
+    freight_ikg_grease.fuel_per_gallon,
+    freight_ikg_grease.percent_fluid
+ FROM freight_grease_traps 
+    INNER JOIN freight_accounts ON 
+        freight_grease_traps.account_no = freight_accounts.account_ID 
+    INNER JOIN freight_grease_data_table ON 
+        freight_grease_data_table.schedule_id = freight_grease_traps.grease_no AND 
+        freight_grease_data_table.route_id = freight_grease_traps.grease_route_no AND 
+        freight_grease_data_table.account_no = freight_grease_traps.account_no 
+    INNER JOIN freight_ikg_grease ON 
+        freight_grease_traps.grease_route_no = freight_ikg_grease.route_id
     
-    WHERE sludge_accounts.division = $_POST[facility] AND route_status='completed' AND sludge_grease_traps.completed_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE() AND sludge_accounts.grease_volume>200 $ex HAVING dist <=15 ");
+    WHERE freight_accounts.division = $_POST[facility] AND route_status='completed' AND freight_grease_traps.completed_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE() AND freight_accounts.grease_volume>200 $ex HAVING dist <=15 ");
             if(count($x)>0){
                $uuuuuu = 0;
                 foreach($x as $log){
@@ -291,7 +291,7 @@ echo '<div id="accordion">';
 foreach($test as $facs){
      $tot = 0;
      $expected =0;
-     $kcxa = $db->query("SELECT sludge_grease_traps.volume,sludge_grease_traps.payment_method,inches_to_gallons,ppg,volume,sludge_grease_data_table.account_no,sludge_grease_data_table.paid FROM sludge_grease_data_table LEFT JOIN sludge_grease_traps ON sludge_grease_data_table.account_no = sludge_grease_traps.account_no AND sludge_grease_data_table.schedule_id = sludge_grease_traps.grease_no AND sludge_grease_data_table.route_id = sludge_grease_traps.grease_route_no  WHERE sludge_grease_data_table.facility_origin = $facs[facility_origin] ");
+     $kcxa = $db->query("SELECT freight_grease_traps.volume,freight_grease_traps.payment_method,inches_to_gallons,ppg,volume,freight_grease_data_table.account_no,freight_grease_data_table.paid FROM freight_grease_data_table LEFT JOIN freight_grease_traps ON freight_grease_data_table.account_no = freight_grease_traps.account_no AND freight_grease_data_table.schedule_id = freight_grease_traps.grease_no AND freight_grease_data_table.route_id = freight_grease_traps.grease_route_no  WHERE freight_grease_data_table.facility_origin = $facs[facility_origin] ");
      if(count($kcxa)>0){
 
         foreach($kcxa as $stops){

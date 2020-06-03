@@ -14,7 +14,7 @@ function is_dir_empty($dir) {
   return TRUE;
 }
 
-if(isset($_SESSION['sludge_id'])){  
+if(isset($_SESSION['freight_id'])){  
     
     //error_reporting(E_ALL);
 
@@ -163,7 +163,7 @@ if(isset($_SESSION['sludge_id'])){
         $table = $_POST['typey'];
         if(isset($_POST['tid']) && strlen(trim($_POST['tid']))>0){
             if($db->where('truck_id',$_POST['tid'])->update("assets.$table",$package)){
-                $db->where('module_id',$_POST['tid'])->update("sludge_truck_id",$package);
+                $db->where('module_id',$_POST['tid'])->update("freight_truck_id",$package);
                  mail("KMickle@iwpusa.com","Grease Trap Asset Updated"," Please log in asset module to review  $_POST[name] ",$headers);
                 echo "ASSET $_POST[name]  UPDATED<br/>";
             }    
@@ -174,9 +174,9 @@ if(isset($_SESSION['sludge_id'])){
                         $asset_id = $db->getInsertId();
                         $extra = array("module_id"=>$asset_id);
                         $package = $package + $extra;
-                        $db->insert("sludge_trailer",$package);
+                        $db->insert("freight_trailer",$package);
                         mail("KMickle@iwpusa.com,AParsons@iwpusa.com","Grease Trap Asset Added"," Please log in asset module to review  $_POST[name] ",$headers);                        
-                        $ppp = $db->query("SELECT truck_id FROM sludge_trailer WHERE name ='$_POST[name]'");
+                        $ppp = $db->query("SELECT truck_id FROM freight_trailer WHERE name ='$_POST[name]'");
                         $db->query("UPDATE assets.trailer SET trailer.module_id =".$ppp[0]['truck_id']." WHERE trailer.truck_id = $asset_id");
                         echo "ASSET $_POST[name]  Added<br/>";
                         
@@ -188,9 +188,9 @@ if(isset($_SESSION['sludge_id'])){
                         $asset_id = $db->getInsertId();
                         $extra = array("module_id"=>$asset_id);
                         $package = $package + $extra;
-                        $db->insert("sludge_truck_id",$package); 
+                        $db->insert("freight_truck_id",$package); 
                         mail("KMickle@iwpusa.com,AParsons@iwpusa.com","Grease Trap Asset Added"," Please log in asset module to review  $_POST[name] ",$headers);
-                        $ppp = $db->query("SELECT truck_id FROM sludge_truck_id WHERE name = '$_POST[name]'");
+                        $ppp = $db->query("SELECT truck_id FROM freight_truck_id WHERE name = '$_POST[name]'");
                         $db->query("UPDATE assets.truck SET truck.module_id=".$ppp[0]['truck_id']." WHERE truck.truck_id=$asset_id");
                         echo "ASSET $_POST[name]  Added<br/>";   
                     }

@@ -35,6 +35,6 @@ $grease_info = new Grease_Stop($id[2]);
  <?php 
 echo "Thank you, $x your status has been approved for service for ".$grease_info->service_date."<br/>";
 
-echo "UPDATE sludge_pay_trace SET status=1,date_paid='".date("Y-m-d")."' WHERE account_no = $id[0] AND route_id= $id[1] AND schedule_id = $id[2]";
+echo "UPDATE freight_pay_trace SET status=1,date_paid='".date("Y-m-d")."' WHERE account_no = $id[0] AND route_id= $id[1] AND schedule_id = $id[2]";
 
 ?>

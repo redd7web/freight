@@ -1,7 +1,7 @@
 <?php
 include "protected/global.php";
 
-$xp = $db->query("SELECT route_id,account_numbers,ikg_manifest_route_number FROM sludge_ikg_manifest_info");
+$xp = $db->query("SELECT route_id,account_numbers,ikg_manifest_route_number FROM freight_ikg_manifest_info");
 
 
 
@@ -12,7 +12,7 @@ if(count($xp)>0){
         array_pop($uffer);//get current account list
          
         
-         $ic = $db->query("SELECT account_no FROM sludge_scheduled_routes WHERE route_id = $px[route_id]");
+         $ic = $db->query("SELECT account_no FROM freight_scheduled_routes WHERE route_id = $px[route_id]");
          
          if(count($ic)>0){
             foreach($ic as $ci){

@@ -10,7 +10,7 @@ $date = date("Y-m-d H:i:s");
 
 function get_index(){
     global $db;
-    $xo =  $db->query("SELECT date,percentage FROM sludge_jacobsen ORDER BY DATE DESC LIMIT 0,1 ");
+    $xo =  $db->query("SELECT date,percentage FROM freight_jacobsen ORDER BY DATE DESC LIMIT 0,1 ");
     
     if(count($xo)>0){
         return $xo;
@@ -21,7 +21,7 @@ function get_index(){
 
 
 
-$req = $db->query("SELECT * FROM `sludge_data_table` WHERE route_id =$_GET[route_id] GROUP BY schedule_id");
+$req = $db->query("SELECT * FROM `freight_data_table` WHERE route_id =$_GET[route_id] GROUP BY schedule_id");
 $count =0;
 $tot = 0;
 $avg =0;
@@ -40,22 +40,22 @@ if(count($req)>0){
         $count++;
         
        
-        $db->query("UPDATE sludge_accounts SET avg_gallons_per_Month=0 WHERE account_ID = $stops[account_no]");//reset account oil guage back to 0
+        $db->query("UPDATE freight_accounts SET avg_gallons_per_Month=0 WHERE account_ID = $stops[account_no]");//reset account oil guage back to 0
         
     } 
     
-    $db->query("UPDATE sludge_ikg_manifest_info SET account_numbers='$nums',driver_completed_date='$date' WHERE route_id=$_GET[route_id]");
+    $db->query("UPDATE freight_ikg_manifest_info SET account_numbers='$nums',driver_completed_date='$date' WHERE route_id=$_GET[route_id]");
      
     //echo "stops: ".$count."<br/>";    
     //echo $tot."<br/>";
     //echo "expected ".$avg."<br/>";
     
         
-   $uo = $db->query("SELECT sludge_data_table.entry_number,sludge_data_table.date_of_pickup,sludge_data_table.schedule_id,sludge_data_table.sum, (sludge_data_table.sum - (sludge_data_table.sum * sludge_accounts.miu) ) as adj,sludge_data_table.route_id, sludge_accounts.name,sludge_accounts.payment_method, sludge_accounts.miu,sludge_accounts.index_percentage,sludge_accounts.ppg_jacobsen_percentage,sludge_accounts.price_per_gallon,sludge_accounts.account_ID FROM sludge_data_table LEFT JOIN sludge_accounts ON sludge_accounts.account_ID = sludge_data_table.account_no WHERE sludge_data_table.route_id =$_GET[route_id] ");
+   $uo = $db->query("SELECT freight_data_table.entry_number,freight_data_table.date_of_pickup,freight_data_table.schedule_id,freight_data_table.sum, (freight_data_table.sum - (freight_data_table.sum * freight_accounts.miu) ) as adj,freight_data_table.route_id, freight_accounts.name,freight_accounts.payment_method, freight_accounts.miu,freight_accounts.index_percentage,freight_accounts.ppg_jacobsen_percentage,freight_accounts.price_per_gallon,freight_accounts.account_ID FROM freight_data_table LEFT JOIN freight_accounts ON freight_accounts.account_ID = freight_data_table.account_no WHERE freight_data_table.route_id =$_GET[route_id] ");
 $ko =get_index();
 if(count($uo)>0){
     foreach($uo as $stops){
-        $jux = $db->query("SELECT paid FROM sludge_accounts WHERE account_ID = $stops[account_ID]");
+        $jux = $db->query("SELECT paid FROM freight_accounts WHERE account_ID = $stops[account_ID]");
         echo "<br/>--------";
          switch($stops['payment_method']){
             case "Jacobson": case "Index":
@@ -92,7 +92,7 @@ if(count($uo)>0){
             case "O.T.P. Per Gallon": case "O.T.P. PG":
                 $ppg = $stops['price_per_gallon'] *$stops['adj'];
                 if(  $jux[0]['paid'] == 0 || $jux[0]['paid'] == null  ){
-                     $db->query("UPDATE sludge_accounts SET paid = 1 WHERE account_ID = $stops[account_ID]");
+                     $db->query("UPDATE freight_accounts SET paid = 1 WHERE account_ID = $stops[account_ID]");
                      $one_time = $stops['ppg_jacobsen_percentage']; 
                     $paid = $ppg + $stops['ppg_jacobsen_percentage'];
                     echo "<br/>$stops[account_ID] First time paid for this account<br/>"; 
@@ -139,8 +139,8 @@ if(count($uo)>0){
         }
         
         $indice = $ko[0]['percentage'];
-        //echo "<br/><br/>Name: $stops[name] <br/>Date of pickup: $stops[date_of_pickup] <br/>Payment Method: $stops[payment_method]<br/>Gallons retrieved: $stops[sum]<br/>Adju Gallons: $stops[adj]<br/>MIU: $stops[miu] <br/>PPG: $ppg <br/>Paid: $paid<br/>Rate: $rate <br/>Index at pickup:$indice<br/> UPDATE sludge_data_table SET rate=$rate,	ppg= $ppg,index_at_pickup = $indice, temp_miu = $stops[miu],paid = $paid WHERE route_id= $stops[route_id] AND account_no = $stops[account_ID] AND schedule_id =$stops[schedule_id] <br/><br/>------- ";
-        $db->query("UPDATE sludge_data_table SET rate=$rate,	ppg= $ppg,index_at_pickup = $indice, temp_miu = $stops[miu],paid = $paid,payment_method='$stops[payment_method]' WHERE entry_number = $stops[entry_number]");
+        //echo "<br/><br/>Name: $stops[name] <br/>Date of pickup: $stops[date_of_pickup] <br/>Payment Method: $stops[payment_method]<br/>Gallons retrieved: $stops[sum]<br/>Adju Gallons: $stops[adj]<br/>MIU: $stops[miu] <br/>PPG: $ppg <br/>Paid: $paid<br/>Rate: $rate <br/>Index at pickup:$indice<br/> UPDATE freight_data_table SET rate=$rate,	ppg= $ppg,index_at_pickup = $indice, temp_miu = $stops[miu],paid = $paid WHERE route_id= $stops[route_id] AND account_no = $stops[account_ID] AND schedule_id =$stops[schedule_id] <br/><br/>------- ";
+        $db->query("UPDATE freight_data_table SET rate=$rate,	ppg= $ppg,index_at_pickup = $indice, temp_miu = $stops[miu],paid = $paid,payment_method='$stops[payment_method]' WHERE entry_number = $stops[entry_number]");
     }
 }
    
@@ -150,14 +150,14 @@ if(count($uo)>0){
    
 }
 
-$db->query("UPDATE sludge_ikg_manifest_info SET driver_completed_date='$date' WHERE route_id=$_GET[route_id]");
- $db->query("UPDATE sludge_list_of_routes SET stops = $count, collected = $tot, expected = $avg,driver_completed_date='$date' WHERE route_id=$_GET[route_id]");
+$db->query("UPDATE freight_ikg_manifest_info SET driver_completed_date='$date' WHERE route_id=$_GET[route_id]");
+ $db->query("UPDATE freight_list_of_routes SET stops = $count, collected = $tot, expected = $avg,driver_completed_date='$date' WHERE route_id=$_GET[route_id]");
  
- $db->query("UPDATE sludge_list_of_routes SET inc = inc - $count WHERE route_id=$_GET[route_id] AND inc >0");
+ $db->query("UPDATE freight_list_of_routes SET inc = inc - $count WHERE route_id=$_GET[route_id] AND inc >0");
 
 
 //************************************* RETURN uncomplete stops to pickups pool ********************************//    
- $db->query("UPDATE sludge_scheduled_routes set route_status='scheduled',route_id=null WHERE route_id=$_GET[route_id] AND route_status in ('enroute','scheduled')");
+ $db->query("UPDATE freight_scheduled_routes set route_status='scheduled',route_id=null WHERE route_id=$_GET[route_id] AND route_status in ('enroute','scheduled')");
 //************************************* RETURN uncomplete stops to pickups pool ********************************//
  
  
