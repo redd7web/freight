@@ -25,7 +25,7 @@ class Util_Stop {
         if(is_numeric($schedule_id)){
             $db = new Database();
             global $dbprefix;
-            $select = $db->query("SELECT * FROM sludge_utility WHERE utility_sched_id = $schedule_id");
+            $select = $db->query("SELECT * FROM freight_utility WHERE utility_sched_id = $schedule_id");
             
             if(count($select) >0){
                 $account_info = new Account();

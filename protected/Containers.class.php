@@ -30,7 +30,7 @@ Class Container {
         $data = array (
             "request_date"=>$value
         );
-        $db->where("container_no",$this->account_no)->where("container_no",$container)->update("sludge_containers",$data);
+        $db->where("container_no",$this->account_no)->where("container_no",$container)->update("freight_containers",$data);
    }
    
    function updateDeliveryDate($value,$container){
@@ -38,7 +38,7 @@ Class Container {
         $data = array (
             "delivery_date"=>$value        
         );
-        $db->where("account_no",$this->account_no)->where("container_no",$container)->update("sludge_containers",$data);
+        $db->where("account_no",$this->account_no)->where("container_no",$container)->update("freight_containers",$data);
    }
    
    function updateRemovalDate($value,$container){ 
@@ -46,7 +46,7 @@ Class Container {
         $data = array(
             "removal_date"=>$value
         );
-        $db->where("account_no",$this->account_no)->where("container_no",$container)->update("sludge_containers",$data);
+        $db->where("account_no",$this->account_no)->where("container_no",$container)->update("freight_containers",$data);
    }
    
    function updateContainer($value,$container){
@@ -54,7 +54,7 @@ Class Container {
         $data = array(
             "container"=>$value
         );
-        $db->where("account_no",$this->account_no)->where("container_no",$container)->update("sludge_containers",$data);
+        $db->where("account_no",$this->account_no)->where("container_no",$container)->update("freight_containers",$data);
    }
    
    function updateNotes($value,$container) { 
@@ -62,7 +62,7 @@ Class Container {
         $data = array(
             "notes"=>$value
         );
-        $db->where("account_no",$this->account_no)->where("container_no",$container)->update("sludge_containers",$data);
+        $db->where("account_no",$this->account_no)->where("container_no",$container)->update("freight_containers",$data);
    }
    
    function updateSerial($value,$container){ 
@@ -70,7 +70,7 @@ Class Container {
         $data = array(
             "serial_number"=>$value
         );
-        $db->where("account_no",$this->account_no)->where("container_no",$container)->update("sludge_containers",$data);
+        $db->where("account_no",$this->account_no)->where("container_no",$container)->update("freight_containers",$data);
    }
    
    function updateAssignedBy($value,$container){ 
@@ -78,7 +78,7 @@ Class Container {
         $data = array(
             "container"=>$value
         );
-        $db->where("account_no",$this->account_no)->where("container_no",$container)->update("sludge_containers",$data);
+        $db->where("account_no",$this->account_no)->where("container_no",$container)->update("freight_containers",$data);
    }
     
 }

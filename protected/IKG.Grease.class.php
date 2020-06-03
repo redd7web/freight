@@ -98,12 +98,12 @@ class Grease_IKG {
             $db = new Database();
             if (is_numeric($route_id)){
              
-             $ikg_table = "sludge_ikg_grease";
+             $ikg_table = "freight_ikg_grease";
              $from_oilrouted = $db->query("SELECT * FROM $ikg_table WHERE route_id=$route_id");
-             $bop = $db->query("SELECT SUM(inches_to_gallons) as all_collected FROM sludge_grease_data_table WHERE route_id = $route_id");
+             $bop = $db->query("SELECT SUM(inches_to_gallons) as all_collected FROM freight_grease_data_table WHERE route_id = $route_id");
              $this->collected = $bop[0]['all_collected'];
              
-             $db->query("UPDATE sludge_list_of_grease SET collected ='$this->collected' WHERE route_id=$route_id");
+             $db->query("UPDATE freight_list_of_grease SET collected ='$this->collected' WHERE route_id=$route_id");
              $overhead =  $db->query("SELECT * FROM overhead_value");
              
              if(count($from_oilrouted) >0){
@@ -204,7 +204,7 @@ class Grease_IKG {
                 
 
                 foreach($this->account_numbers as $act){
-                    $ik = $db->query("SELECT grease_no FROM sludge_grease_traps WHERE grease_route_no = $this->route_id AND account_no = $act");
+                    $ik = $db->query("SELECT grease_no FROM freight_grease_traps WHERE grease_route_no = $this->route_id AND account_no = $act");
                     
                     if(count($ik)>0){
                        $buff[] =  $ik[0]['grease_no'];
@@ -231,8 +231,8 @@ class Grease_IKG {
              }
             
              
-             $route_info = $db->query("SELECT * FROM sludge_ikg_grease WHERE route_id = $this->route_id");             
-             $stops = $db->query("SELECT schedule_id,TIME(arrival) as arrival,mileage,TIME(departure) as departure, HOUR( TIMEDIFF(departure, arrival)) as `difference`,inches_to_gallons * ppg as billable FROM sludge_grease_data_table WHERE route_id = $this->route_id ORDER BY arrival,departure ASC");
+             $route_info = $db->query("SELECT * FROM freight_ikg_grease WHERE route_id = $this->route_id");             
+             $stops = $db->query("SELECT schedule_id,TIME(arrival) as arrival,mileage,TIME(departure) as departure, HOUR( TIMEDIFF(departure, arrival)) as `difference`,inches_to_gallons * ppg as billable FROM freight_grease_data_table WHERE route_id = $this->route_id ORDER BY arrival,departure ASC");
              if(count($stops)>0){
                 $prev = null;
                 foreach($stops as $calc){
@@ -241,11 +241,11 @@ class Grease_IKG {
                         $x = $route_info[0]['first_stop_mileage']- $route_info[0]['start_mileage'];
                         $this->corresp_net_mileage_diff[] =$x;
                         $prev = $x;
-                        $db->query("UPDATE sludge_grease_data_table SET net_mileage =$x WHERE schedule_id = $calc[schedule_id]");
+                        $db->query("UPDATE freight_grease_data_table SET net_mileage =$x WHERE schedule_id = $calc[schedule_id]");
                     } else {
                         $x = $calc['mileage'] - $prev;
                         $this->corresp_net_mileage_diff[] =$x;
-                        $db->query("UPDATE sludge_grease_data_table SET net_mileage =$x WHERE schedule_id =  $calc[schedule_id]");
+                        $db->query("UPDATE freight_grease_data_table SET net_mileage =$x WHERE schedule_id =  $calc[schedule_id]");
                         $prev = $calc['mileage'];
                     }
                     
@@ -327,7 +327,7 @@ class Grease_IKG {
             
             
              
-              $inc = $db->query("SELECT COUNT(DISTINCT(account_no)) as inc FROM sludge_grease_traps WHERE route_status IN ('enroute') AND grease_route_no = $this->route_id");
+              $inc = $db->query("SELECT COUNT(DISTINCT(account_no)) as inc FROM freight_grease_traps WHERE route_status IN ('enroute') AND grease_route_no = $this->route_id");
               if(count($inc)>0){
                 $this->inc =$inc[0]['inc'];
               } else {
@@ -335,13 +335,13 @@ class Grease_IKG {
               }
               
               
-              $total_stops = $db->query("SELECT COUNT(DISTINCT(account_no)) as total_stops FROM sludge_grease_traps WHERE grease_route_no = $this->route_id");
+              $total_stops = $db->query("SELECT COUNT(DISTINCT(account_no)) as total_stops FROM freight_grease_traps WHERE grease_route_no = $this->route_id");
               if(count($total_stops)>0){
                 $this->total_stops = $total_stops[0]['total_stops'];
               } else {
                 $this->total_stops = 0;
               }
-              $db->query("UPDATE sludge_list_of_grease SET inc = $this->inc, stops = $this->total_stops WHERE route_id = $this->route_id");
+              $db->query("UPDATE freight_list_of_grease SET inc = $this->inc, stops = $this->total_stops WHERE route_id = $this->route_id");
               
               
              

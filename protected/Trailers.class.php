@@ -119,7 +119,7 @@ class Trailer {
     function SelectList(){
         $db = new Database();
         $select ="<select id='vehicle' name='vehicle'>";
-        $ryt = $db->get("sludge_truck_id");
+        $ryt = $db->get("freight_truck_id");
         if(count($ryt) !=0){
             foreach($ryt as $truck){
                 $select .="<option value='$truck[truck_no]'>$truck[name]</option>";

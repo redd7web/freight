@@ -130,7 +130,7 @@ class Account{
             
         }
         else if($id != NULL){ 
-            $retrive = $db->where("account_ID",$id)->get("sludge_accounts");
+            $retrive = $db->where("account_ID",$id)->get("freight_accounts");
             if($retrive >0){
                 $this->acount_id = $retrive[0]['account_ID'];
                 $this->id = $retrive[0]['id'];
@@ -225,58 +225,20 @@ class Account{
                 $this->mlocked = $retrive[0]['master_lock'];
                 //********************************************************************//
                 
-                if($this->current_stop == NULL || strlen(trim($this->current_stop))==0){
-                    $hgv = $db->query("SELECT grease_no FROM sludge_grease_traps WHERE account_no = $this->acount_id AND route_status IN('enroute','scheduled')");
-                    if(count($hgv)>0){
-                        $this->current_stop = $hgv[0]['grease_no'];
-                    }
-                }
+              
                 
 
-                $hb = $db->query("SELECT date_of_pickup FROM sludge_grease_data_table WHERE account_no = $this->acount_id ORDER BY date_of_pickup DESC LIMIT 0,1");
+                $hb = $db->query("SELECT date_of_pickup FROM freight_data_table WHERE account_no = $this->acount_id ORDER BY date_of_pickup DESC LIMIT 0,1");
                 
                 
                 
-                if(count($hb)>0){
-                    $onsite = date_different($hb[0]['date_of_pickup'],date("Y-m-d"));
-                    if($onsite >0 && ($this->grease_freq<>0)){
-                        $this->percent_full =  number_format($onsite/$this->grease_freq,2);
-                    }   
-                    else {
-                        $this->percent_full = 0;
-                    } 
-                }else {
-                    $this->percent_full = 0;
-                }
-                
-                //********************* GREASE  SCHEDULE FOR ACCOUNT scheduled or completed *****************************//
-                /**/
-                 $x = $db->query("SELECT * FROM sludge_grease_traps WHERE account_no = $this->acount_id AND route_status IN('enroute','scheduled')   ORDER BY date DESC");  
-                
-                $instr = "";
-                $note = "";
-                if(count($x)>0){      
-                    $this->schedule = array(
-                        "schedule_id"=>$x[0]['grease_no'],
-                        "route_id"=>$x[0]['grease_route_no'],
-                        "scheduled_start_date"=>$x[0]['service_date'],
-                        "date_created"=>$x[0]['date'],
-                        "account_no"=>$x[0]['account_no'],
-                        "route_status"=>$x[0]['route_status'],
-                        "facility_origin"=>$x[0]['facility_origin'],
-                        "driver"=>$x[0]['driver'],
-                        "code_red"=>$x[0]['code_red'],
-                        "created_by"=>$x[0]['created_by'],
-                        "driver_instructions"=>$instr,
-                        "notes"=>$note
-                    );
-                }
+                 
                 //*********************  SCHEDULE FOR ACCOUNT *****************************//
                 
                 
-                $y = $db->query("SELECT * FROM sludge_scheduled_routes WHERE account_no = $this->acount_id ORDER BY scheduled_start_date DESC LIMIT 0,1");
+                $y = $db->query("SELECT * FROM freight_scheduled_routes WHERE account_no = $this->acount_id AND route_status='scheduled' ORDER BY scheduled_start_date DESC LIMIT 0,1");
                 if(count($y)>0){
-                    $this->cs = array(
+                    $this->schedule = array(
                         "schedule_id"=>$y[0]['schedule_id'],
                         "route_id"=>$y[0]['route_id'],
                         "scheduled_start_date"=>$y[0]['scheduled_start_date'],
@@ -295,7 +257,7 @@ class Account{
                 
                 //********************** CONTAINER INFO ***********************************//
                 /*
-                $jh = $db->query("SELECT * FROM sludge_containers WHERE account_no=$this->acount_id");
+                $jh = $db->query("SELECT * FROM freight_containers WHERE account_no=$this->acount_id");
                 $this->number_of_barrels = count($jh);                        
                 
                 if(count($jh)>0){                
@@ -320,7 +282,7 @@ class Account{
                 */
                 
                 /*
-                $y = $db->query("SELECT SUM(inches_to_gallons) as tot_gal FROM sludge_data_table WHERE account_no = $this->acount_id");
+                $y = $db->query("SELECT SUM(inches_to_gallons) as tot_gal FROM freight_data_table WHERE account_no = $this->acount_id");
                 $this->total_gallons = round($y[0]['tot_gal'],2);
                 
                 
@@ -352,14 +314,14 @@ class Account{
    function onsite($id){
         global $dbprefix;
         global $db;
-        $jh = $db->query("SELECT avg_gallons_per_Month FROM sludge_accounts WHERE account_ID=$id");
+        $jh = $db->query("SELECT avg_gallons_per_Month FROM freight_accounts WHERE account_ID=$id");
         return $jh[0]['avg_gallons_per_Month'];
    }    
    
    function num_of_barrel($id){
     global $dbprefix;
     global $db;
-    $jh = $db->query("SELECT account_no FROM sludge_containers WHERE account_no=$id");
+    $jh = $db->query("SELECT account_no FROM freight_containers WHERE account_no=$id");
     return count($jh);
   } 
   
@@ -410,7 +372,7 @@ class Account{
   function total_gallons($id){
     global $dbprefix,$db;  
     $total = 0; 
-    $pickups = $db->query("SELECT SUM(inches_to_gallons) as all FROM sludge_data_table WHERE account_no = $id");
+    $pickups = $db->query("SELECT SUM(inches_to_gallons) as all FROM freight_data_table WHERE account_no = $id");
     
     return $picksup[0]['all']; 
   }
@@ -419,7 +381,7 @@ class Account{
   function expected_gallons($id){
     global $dbprefix,$db;
     $expected =0;
-    $ask = $db->query("SELECT estimated_volume FROM sludge_accounts WHERE account_ID =$id");
+    $ask = $db->query("SELECT estimated_volume FROM freight_accounts WHERE account_ID =$id");
     
     return $ask[0]['estimated_volume'];      
   }
@@ -429,7 +391,7 @@ class Account{
     global $dbprefix,$db;
     $total = 0; 
     $gpp = 0;
-    $ask = $db->query("SELECT DISTINCT (date_of_pickup), count( date_of_pickup ) AS num, SUM( inches_to_gallons ) AS tot_for_pickup, account_no, inches_to_gallons FROM sludge_data_table WHERE account_no =$id GROUP BY date_of_pickup
+    $ask = $db->query("SELECT DISTINCT (date_of_pickup), count( date_of_pickup ) AS num, SUM( inches_to_gallons ) AS tot_for_pickup, account_no, inches_to_gallons FROM freight_data_table WHERE account_no =$id GROUP BY date_of_pickup
 ORDER BY date_of_pickup DESC");
     foreach($ask as $individ){
         $for_this = $for_this + $individ['tot_for_pickup'];

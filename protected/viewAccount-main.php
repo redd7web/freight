@@ -38,7 +38,7 @@
         $adt_price_detail=$grease_info[0]['addt_info'];
         $dos = $grease_info[0]['service_date'];
     }
-    $askthree = $db->query("SELECT * FROM `sludge_grease_data_table` WHERE account_no=$account->acount_id GROUP BY schedule_id ORDER BY date_of_pickup DESC");
+    $askthree = $db->query("SELECT * FROM `freight_grease_data_table` WHERE account_no=$account->acount_id GROUP BY schedule_id ORDER BY date_of_pickup DESC");
 ?>
 <style type="text/css">
 .box{
@@ -140,7 +140,7 @@ $total_caps ="";
 <?php echo $account->siren; ?>
 <br /><br />
 <?php
-$hb = $db->query("SELECT date_of_pickup FROM sludge_grease_data_table WHERE account_no = $account->acount_id ORDER BY date_of_pickup DESC LIMIT 0,1");
+$hb = $db->query("SELECT date_of_pickup FROM freight_grease_data_table WHERE account_no = $account->acount_id ORDER BY date_of_pickup DESC LIMIT 0,1");
 $onsite = date_different($hb[0]['date_of_pickup'],date("Y-m-d"));
  echo"<span style='font-size:20px;font-weight:bold;font-familt:tahoma'><sup>$onsite</sup>/<sub>$account->grease_freq</sub></span>"; ?>
 
@@ -238,8 +238,8 @@ if($account->is_trap == 1){
                         <td style="vertical-align: top;padding: 0px 0px 0px 0px;">Date</td>
                     </tr>
                     <?php
-                    //echo "SELECT * FROM sludge_notes WHERE account_no = $account->acount_id<br/>";
-                    $notes = $db->query("SELECT * FROM sludge_notes WHERE account_no = $account->acount_id");
+                    //echo "SELECT * FROM freight_notes WHERE account_no = $account->acount_id<br/>";
+                    $notes = $db->query("SELECT * FROM freight_notes WHERE account_no = $account->acount_id");
                     if(count($notes)>0){
                         foreach($notes as $note){         
                             $k = explode("|","$note[notes]");
@@ -397,7 +397,7 @@ if($account->is_trap == 1){
                     
                     <tr><td>Author</td><td>Date</td><td>Note</td></tr>
                     <?php
-                        $jb = $db->query("SELECT * FROM sludge_account_notes WHERE account_no = $account->acount_id");
+                        $jb = $db->query("SELECT * FROM freight_account_notes WHERE account_no = $account->acount_id");
                         if(count($jb)>0){
                             foreach($jb as $bj){
                                 echo "<tr><td>".uNumToName($bj['author'])."</td><td>$bj[date]</td><td>$bj[note]</td></tr>";
@@ -502,7 +502,7 @@ if($account->is_trap == 1){
                         }
                         $r_st ="";
                         if($account->schedule['route_id'] !=null){    
-                            $r_stat = $db->query("SELECT status FROM sludge_list_of_routes WHERE route_id =". $account->schedule['route_id']);
+                            $r_stat = $db->query("SELECT status FROM freight_list_of_routes WHERE route_id =". $account->schedule['route_id']);
                             
                             
                             if($r_stat[0]['status']=="enroute"){
@@ -687,7 +687,7 @@ if($account->is_trap == 1){
             <table style="width: 100%;">
                 <tr style="background: rgb(233, 234, 228);"><td>date</td><td>#</td><td>#</td><td>#</td><td>#</td><td>Routed I</td></tr>
                 <?php 
-                $getc = $db->query("SELECT * FROM sludge_utility WHERE account_no = $account->acount_id AND route_status IN('enroute','scheduled')");
+                $getc = $db->query("SELECT * FROM freight_utility WHERE account_no = $account->acount_id AND route_status IN('enroute','scheduled')");
                 //where("route_status","enroute")->where('account_no',$account->acount_id)->get($dbprefix."_utility","utility_sched_id,date_of_service");                
                 if(count($getc)>0){                    
                     $alter = 1;
@@ -726,7 +726,7 @@ if($account->is_trap == 1){
                         if($alter !=1 ||  $alter%2 == 0){
                             $bg = '-moz-linear-gradient(center top , #F7F7F9, #E5E5E7) repeat scroll 0 0 rgba(0, 0, 0, 0)';
                         }
-                        $op = $db->where("account_no",$account->acount_id)->where("route_id",$gtraps['grease_route_no'])->get("sludge_grease_data_table");
+                        $op = $db->where("account_no",$account->acount_id)->where("route_id",$gtraps['grease_route_no'])->get("freight_grease_data_table");
                        
                         echo "<tr style='background:$bg' id='trap$gtraps[grease_no]'><td>".$op[0]['date_of_pickup']."</td><td>".$op[0]['inches_to_gallons']."</td><td>$gtraps[grease_route_no]</td>
                         
@@ -756,7 +756,7 @@ if($account->is_trap == 1){
                         if($alter !=1 ||  $alter%2 == 0){
                             $bg = '-moz-linear-gradient(center top , #F7F7F9, #E5E5E7) repeat scroll 0 0 rgba(0, 0, 0, 0)';
                         }
-                        $hu = $db->query("SELECT date_of_pickup FROM sludge_utility_data_table WHERE account_no=$account->acount_id AND schedule_id=$utils[utility_sched_id] AND route_id=$utils[rout_no]");
+                        $hu = $db->query("SELECT date_of_pickup FROM freight_utility_data_table WHERE account_no=$account->acount_id AND schedule_id=$utils[utility_sched_id] AND route_id=$utils[rout_no]");
                         
                         if(count($hu)>0){
                             $completed_ = $hu[0]['date_of_pickup'];

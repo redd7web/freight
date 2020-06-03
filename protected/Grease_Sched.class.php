@@ -50,7 +50,7 @@ class Grease_Stop{
         if($schedule_id != NULL){
             $db = new Database();
             global $dbprefix;
-            $select = $db->where("grease_no",$schedule_id)->get("sludge_grease_traps");
+            $select = $db->where("grease_no",$schedule_id)->get("freight_grease_traps");
             
             if(count($select) >0){
                 $account_info = new Account();
@@ -94,14 +94,14 @@ class Grease_Stop{
                     $this->cc_on_file       =       $account_info->singleField($this->account_number,"cc_on_file");
                     $this->percent_split    =       $value['percent_split'];
                 }
-                $aq =  $db->query("SELECT zero_gallon_reason FROM sludge_data_table WHERE account_no = $this->account_number AND schedule_id = $this->grease_no");
+                $aq =  $db->query("SELECT zero_gallon_reason FROM freight_data_table WHERE account_no = $this->account_number AND schedule_id = $this->grease_no");
                 if( count($aq)>0){
                     $this->zero_gallon_reason = $aq[0]['zero_gallon_reason'];
                 }else{
                     $this->zero_gallon_reason = "";
                 }
                 
-                $routes = $db->query("SELECT net_weight FROM sludge_ikg_grease WHERE route_id = $this->grease_route_no");
+                $routes = $db->query("SELECT net_weight FROM freight_ikg_grease WHERE route_id = $this->grease_route_no");
                 
                 $this->volume = (($this->percent_split/100) * $routes[0]['net_weight'])/8.34;
                 

@@ -32,12 +32,12 @@ class Person{
     
      function __construct($id = NULL){ 
         if($id == NULL){ 
-            $ix = $_SESSION['sludge_id'];
+            $ix = $_SESSION['freight_id'];
         }else { 
             $ix = $id;
         }
         $db = new Database();  
-        $pull = $db->where("user_id","$ix")->get("sludge_users","*");
+        $pull = $db->where("user_id","$ix")->get("freight_users","*");
         
         $this->first_name            = $pull[0]['first'];
         $this->last_name             = $pull[0]['last'];

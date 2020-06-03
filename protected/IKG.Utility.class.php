@@ -120,7 +120,7 @@ class Container_Route{
                 }
                  
                 foreach($this->account_numbers as $act){
-                    $ik = $db->query("SELECT utility_sched_id FROM sludge_utility WHERE rout_no= $this->route_id AND account_no = $act");
+                    $ik = $db->query("SELECT utility_sched_id FROM freight_utility WHERE rout_no= $this->route_id AND account_no = $act");
                     if(count($ik)>0){
                         $this->scheduled_routes[] = $ik[0]['utility_sched_id']; 
                     }

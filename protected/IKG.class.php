@@ -76,8 +76,8 @@ class IKG {
              $from_oilrouted = $db->query("SELECT * FROM $ikg_table WHERE route_id=$route_id");
              
               //UPDATE FIRST STOP/ MILEAGE INFO 
-              $fs = $db->query("SELECT DISTINCT(schedule_id),mileage,date_of_pickup FROM sludge_data_table WHERE route_id= $route_id ORDER BY date_of_pickup DESC");
-              $ls = $db->query("SELECT DISTINCT(schedule_id),mileage,date_of_pickup FROM sludge_data_table WHERE route_id= $route_id ORDER BY date_of_pickup ASC");
+              $fs = $db->query("SELECT DISTINCT(schedule_id),mileage,date_of_pickup FROM freight_data_table WHERE route_id= $route_id ORDER BY date_of_pickup DESC");
+              $ls = $db->query("SELECT DISTINCT(schedule_id),mileage,date_of_pickup FROM freight_data_table WHERE route_id= $route_id ORDER BY date_of_pickup ASC");
               
               
               
@@ -150,13 +150,13 @@ class IKG {
                 $uyc = $db->query("SELECT DISTINCT (
 schedule_id
 ), mileage, route_id, date_of_pickup
-FROM `sludge_data_table`
+FROM `freight_data_table`
 WHERE route_id =$route_id 
 GROUP BY schedule_id ORDER BY date_of_pickup DESC LIMIT 0,1");
                 $cyu = $db->query("SELECT DISTINCT (
 schedule_id
 ), mileage, route_id, date_of_pickup
-FROM `sludge_data_table`
+FROM `freight_data_table`
 WHERE route_id =$route_id 
 GROUP BY schedule_id ORDER BY date_of_pickup ASC LIMIT 0,1");
                 
@@ -231,7 +231,7 @@ GROUP BY schedule_id ORDER BY date_of_pickup ASC LIMIT 0,1");
                 
                 if(strlen($this->acount_numbers_full_string) >0  && $this->acount_numbers_full_string !="|"  ){
                     foreach($this->account_numbers as $act){
-                        $yuc = $db->query("SELECT friendly FROM sludge_accounts WHERE account_ID = $act");
+                        $yuc = $db->query("SELECT friendly FROM freight_accounts WHERE account_ID = $act");
                         if( !in_array($yuc[0]['friendly'],$buff)  ){
                              $buff[]= $yuc[0]['friendly'];
                         }   
@@ -275,15 +275,15 @@ GROUP BY schedule_id ORDER BY date_of_pickup ASC LIMIT 0,1");
         
         
         //******************* FIX ACCOUNT NUMBERS LIST IF COMPLETELY EMPTY ***********************************//
-        $check_empty = $db->query("SELECT account_numbers FROM sludge_ikg_manifest_info WHERE route_id=$route_id AND (account_numbers IS NULL OR account_numbers ='' OR account_numbers ='|')");
+        $check_empty = $db->query("SELECT account_numbers FROM freight_ikg_manifest_info WHERE route_id=$route_id AND (account_numbers IS NULL OR account_numbers ='' OR account_numbers ='|')");
         
         
         if(count($check_empty)>0){
             $full = $db->query("SELECT account_no, GROUP_CONCAT(account_no SEPARATOR '|') as full
-FROM sludge_scheduled_routes WHERE route_id=$route_id");
+FROM freight_scheduled_routes WHERE route_id=$route_id");
             if(count($full)>0){
                 $string = $full[0]['full']."|";
-                $db->query("UPDATE sludge_ikg_manifest_info SET account_numbers='$string' WHERE route_id=$route_id");
+                $db->query("UPDATE freight_ikg_manifest_info SET account_numbers='$string' WHERE route_id=$route_id");
             }
 
         }
@@ -291,13 +291,13 @@ FROM sludge_scheduled_routes WHERE route_id=$route_id");
         
         
         //********************* FIX ACCOUNT NUMBERS LIST IF NECESSARY (MISSING PIPES)**********************************//        
-        $uo = $db->query("SELECT account_numbers FROM sludge_ikg_manifest_info WHERE route_id=$route_id AND account_numbers NOT LIKE '%|%'");
+        $uo = $db->query("SELECT account_numbers FROM freight_ikg_manifest_info WHERE route_id=$route_id AND account_numbers NOT LIKE '%|%'");
         if(count($uo)>0){
             $ko = wordwrap($uo[0]['account_numbers'],5,'|',true);
             $ko = $ko."|";
             $ko = str_replace("||","|",$ko);
             //echo $ko."<br/><br/>";
-            $db->query("UPDATE sludge_ikg_manifest_info SET account_numbers = '$ko' WHERE route_id=$route_id");
+            $db->query("UPDATE freight_ikg_manifest_info SET account_numbers = '$ko' WHERE route_id=$route_id");
         }
         //********************* FIX ACCOUNT NUMBERS LIST IF NECESSARY (MISSING PIPES)**********************************//
         
@@ -310,32 +310,32 @@ FROM sludge_scheduled_routes WHERE route_id=$route_id");
         
         
         
-        $db->query("UPDATE sludge_scheduled_routes SET route_status='completed' WHERE route_id=$route_id AND schedule_id IN( SELECT schedule_id FROM sludge_data_table WHERE route_id=$route_id)");
+        $db->query("UPDATE freight_scheduled_routes SET route_status='completed' WHERE route_id=$route_id AND schedule_id IN( SELECT schedule_id FROM freight_data_table WHERE route_id=$route_id)");
         //***************** FIND COMPLETED STOPS AND MARK AS COMPLETE ****************************************//
         
-        $db->query("UPDATE sludge_scheduled_routes SET route_status='enroute' WHERE route_status NOT IN ('completed', 'complete'
+        $db->query("UPDATE freight_scheduled_routes SET route_status='enroute' WHERE route_status NOT IN ('completed', 'complete'
         ) AND route_id =$route_id");
         
         
         
         //*******************  FIND UNCOMPLETED STOPS **********************************//
-        $nj =  $db->query("SELECT count(schedule_id) as inkomp FROM sludge_scheduled_routes WHERE route_id= $route_id AND route_status='enroute'");
+        $nj =  $db->query("SELECT count(schedule_id) as inkomp FROM freight_scheduled_routes WHERE route_id= $route_id AND route_status='enroute'");
         $bud = $nj[0]['inkomp'];
         if(count($nj)>0){
-            $db->query("UPDATE sludge_list_of_routes SET inc = $bud WHERE route_id=$route_id");    
+            $db->query("UPDATE freight_list_of_routes SET inc = $bud WHERE route_id=$route_id");    
         }
         
         
         
         
         $ko =0;
-        $y = $db->query("SELECT SUM(inches_to_gallons) as cur_tot FROM sludge_data_table WHERE route_id=$route_id");
+        $y = $db->query("SELECT SUM(inches_to_gallons) as cur_tot FROM freight_data_table WHERE route_id=$route_id");
         
         
         if($y[0]['cur_tot']>0){
             $ko = $y[0]['cur_tot'];  
         }
-        $db->query("UPDATE sludge_list_of_routes SET collected = $ko WHERE route_id=$route_id");
+        $db->query("UPDATE freight_list_of_routes SET collected = $ko WHERE route_id=$route_id");
     }
 }
 

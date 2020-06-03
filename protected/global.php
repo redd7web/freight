@@ -1,11 +1,11 @@
 <?php
 session_start();
-
+ ini_set("display_errors",1);
 date_default_timezone_set('America/Los_Angeles');
 ini_set('max_execution_time', -1);
  
 static $debug = 2;
-static $dbprefix="sludge";
+static $dbprefix="freight";
 static $fixed_lbs = 7.56;
 global $db;
 global $facils;
@@ -22,9 +22,9 @@ if($debug == 1){
 else if ($debug == 2){
      $cfg['connection'] = array( 
         "host"=>"localhost",
-        "username"=>"root",
-        "password"=>"Chr0nOTrigg3r35!",
-        "database"=>"sludge"
+        "username"=>"phpmyadmin",
+        "password"=>"IwpSoftware1!",
+        "database"=>"freight"
     );
 }
 
@@ -404,7 +404,7 @@ function priorityConverter($pri){
 function uNumToName($number){
     
     $db = new Database();
-    $answer = $db->where("user_id",$number)->get("sludge_users","first,last,user_id");
+    $answer = $db->where("user_id",$number)->get("freight_users","first,last,user_id");
     if(count($answer) >0){
         return "<a href='viewUser.php?id=$number'>".$answer[0]['first']." ".$answer[0]['last']."</a>";
     }
@@ -414,7 +414,7 @@ function uNumToName($number){
 function user_info($number,$field){
     
     $db = new Database();
-    $answer = $db->where("user_id",$number)->get("sludge_users","$field");
+    $answer = $db->where("user_id",$number)->get("freight_users","$field");
     if(count($answer) >0){
         return $answer[0][$field];
     }
@@ -485,7 +485,7 @@ function statusColors($status,$id){
 function getJake(){
     global $dbprefix;
     $db = new Database();
-    $request = $db->orderby("id","desc")->get("sludge_jacobsen");    
+    $request = $db->orderby("id","desc")->get("freight_jacobsen");    
     return $request[0]['percentage'];
 }
 
@@ -543,23 +543,23 @@ function inboundFacility( $list_name = NULL ,$compare = NULL){
         $name = "facility";
     }
     
-    $fr1 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =201");
-    $fr2 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =202");
-    $fr3 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =203");
-    $fr4 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =204");
-    $fr5 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =205");
-    $fr6 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =206");
-    $fr7 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =207");
-    $fr8 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =208");
-    $fr9 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =209");
-    $fr10 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =210");
-    $fr11 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =211");
+    $fr1 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =201");
+    $fr2 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =202");
+    $fr3 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =203");
+    $fr4 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =204");
+    $fr5 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =205");
+    $fr6 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =206");
+    $fr7 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =207");
+    $fr8 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =208");
+    $fr9 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =209");
+    $fr10 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =210");
+    $fr11 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =211");
     
-    $tmp1 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =212");
-    $tmp2 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =213");
-    $tmp3 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =214");
-    $tmp4 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =215");
-    $tmp5 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =216");
+    $tmp1 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =212");
+    $tmp2 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =213");
+    $tmp3 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =214");
+    $tmp4 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =215");
+    $tmp5 = $db->query("SELECT locked,master_lock FROM freight_accounts WHERE account_ID =216");
     
     $select = "<select id='$name' name='$name'><option value='ignore' required>--</option>";
         $select  .='<option'; 
@@ -653,110 +653,50 @@ function getFacilityList( $list_name = NULL ,$compare = NULL){
     else {
         $name = "facility";
     }
+    $select = "<select id='$name' name='$name' ";  
+        if( $compare != NULL){
+             $select .=" rel='$list_name' ";
+        }
     
-    $fr1 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =201");
-    $fr2 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =202");
-    $fr3 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =203");
-    $fr4 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =204");
-    $fr5 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =205");
-    $fr6 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =206");
-    $fr7 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =207");
-    $fr8 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =208");
-    $fr9 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =209");
-    $fr10 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =210");
-    $fr11 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =211");
+    $select .= "><option value='ignore' required>--</option>";
     
-    $tmp1 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =212");
-    $tmp2 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =213");
-    $tmp3 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =214");
-    $tmp4 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =215");
-    $tmp5 = $db->query("SELECT locked,master_lock FROM sludge_accounts WHERE account_ID =216");
-    
-    $select = "<select id='$name' name='$name'><option value='ignore' required>--</option>";
-        $select  .='<option'; 
-            if( $fr1[0]['locked'] ==1 || $fr1[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 201){  $select .= " selected "; }
-        $select .=' value="201">Frack Tank 1</option>';
-        $select  .='<option'; 
-            if(  $fr2[0]['locked'] ==1 || $fr2[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 202){  $select .= " selected "; }
-        $select .='  value="202">Frack Tank 2</option>';
-        $select  .='<option value="203"'; 
-            if(  $fr3[0]['locked'] ==1 || $fr3[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 203){  $select .= " selected "; }
-        $select .=' >Frack Tank 3</option>';
-        $select  .='<option value="204"'; 
-            if(  $fr4[0]['locked'] ==1 || $fr4[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 204){  $select .= " selected "; }
-        $select .=' >Frack Tank 4</option>';
-        $select  .='<option'; 
-            if(  $fr5[0]['locked'] ==1 || $fr5[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 205){  $select .= " selected "; }
-        $select .='  value="205">Frack Tank 5</option>';
-        $select  .='<option value="206"'; 
-            if(  $fr6[0]['locked'] ==1 || $fr6[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 206){  $select .= " selected "; }
-        $select .=' >Frack Tank 6</option>';
-        $select  .='<option value="207"'; 
-            if(  $fr7[0]['locked'] ==1 || $fr7[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 207){  $select .= " selected "; }
-        $select .=' >Frack Tank 7</option>';
-        $select  .='<option value="208"'; 
-            if(  $fr8[0]['locked'] ==1 || $fr8[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 208){  $select .= " selected "; }
-        $select .=' >Frack Tank 8</option>';
-        $select  .='<option value="209"'; 
-            if(  $fr9[0]['locked'] ==1 || $fr9[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 209){  $select .= " selected "; }
-        $select .=' >Frack Tank 9</option>';
-        $select  .='<option'; 
-            if(  $fr10[0]['locked'] ==1 || $fr10[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 210){  $select .= " selected "; }
-        $select .='  value="210">Frack Tank 10</option>';
-        $select  .='<option value="211"'; 
-            if(  $fr11[0]['locked'] ==1 || $fr11[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 211){  $select .= " selected "; }
-        $select .=' >Frack Tank 11</option>';
-        
-        $select  .='<option value="211"'; 
-            if(  $fr11[0]['locked'] ==1 || $fr11[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 211){  $select .= " selected "; }
-        $select .=' >Frack Tank 11</option>';
-        
-        $select  .='<option value="212"'; 
-            if(  $tmp1[0]['locked'] ==1 || $tmp1[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 212){  $select .= " selected "; }
-        $select .=' >Temp Frac1</option>';
-        
-        $select  .='<option value="213"'; 
-            if(  $tmp2[0]['locked'] ==1 || $tmp2[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 213){  $select .= " selected "; }
-        $select .=' >Temp Frac2</option>';
-        
-        $select  .='<option value="214"'; 
-            if(  $tmp3[0]['locked'] ==1 || $tmp3[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 214){  $select .= " selected "; }
-        $select .=' >Temp Frac3</option>';
-        
-        $select  .='<option value="215"'; 
-            if(  $tmp4[0]['locked'] ==1 || $tmp4[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 215){  $select .= " selected "; }
-        $select .=' >Temp Frac4</option>';
-        
-        $select  .='<option value="216"'; 
-            if(  $tmp5[0]['locked'] ==1 || $tmp5[0]['master_lock']==1 ) { $select  .= " disabled ='disabled' "; }
-            if( $compare == 216){  $select .= " selected "; }
-        $select .=' >Temp Frac5</option>';
-        
-     $select .='<option '; if($compare ==15){ $select .='selected'; }   $select .='  value="15" />W Division</option>
-    <option '; if($compare ==16){ $select .='selected'; }   $select .='  value="16" />Victorville</option>
-    <option '; if($compare ==17){ $select .='selected'; }   $select .='  value="17" />RC Waste Resources BL</option>
-    <option '; if($compare ==18){ $select .='selected'; }   $select .='  value="18" />RC Waste Resources LC</option>
-    <option '; if($compare ==19){ $select .='selected'; }   $select .='  value="19" />Baker Com</option>
-    ';
+         $select .=' <option '; if($compare == 22){$select .= 'selected'; }  $select.=' value="22">San Diego (US Division))</option>
+                <option '; if($compare == 23){$select .= 'selected'; }  $select.=' value="23">Imperial Western Products</option>
+                <option '; if($compare == 99){$select .= 'selected'; }  $select.=' value="99">ALL UC</option>
+                <option '; if($compare == 24){$select .= 'selected'; }  $select.=' value="24">UC Division (Corporate)</option>
+                <option '; if($compare == 30){$select .= 'selected'; }  $select.=' value="30">UC Division (San Bernadino)</option>
+                <option '; if($compare == 31){$select .= 'selected'; }  $select.=' value="31">UC Division (Los Angeles)</option>
+                <option '; if($compare == 32){$select .= 'selected'; }  $select.='  value="32">UC Division (Riverside)</option>
+                <option '; if($compare == 33){$select .= 'selected'; }  $select.='  value="33">UC Division (Orange County)</option>
+                <option '; if($compare == 8){$select .= 'selected'; }  $select.='  value="8">Arizona (4 Division)</option>
+                 <option '; if($compare == 5){$select .= 'selected'; }  $select.='  value="5">VSLM (V Division)</option>
+                <option '; if($compare ==10){ $select .='selected'; }   $select .='  value="10">V-BAK</option>
+                <option '; if($compare ==11){ $select .='selected'; }   $select .='  value="11">V-Fres</option>
+                <option '; if($compare ==12){ $select .='selected'; }   $select .='  value="12">V-North</option>
+                <option '; if($compare ==13){ $select .='selected'; }   $select .='  value="13">V-Vis</option>
+                <option '; if($compare ==14){ $select .='selected'; }   $select .='  value="14" >L Division</option>
+                <option '; if($compare ==15){ $select .='selected'; }   $select .='  value="15">Co West</option>
+                <option '; if($compare ==35){ $select .='selected'; }   $select .='   value="35">Arizona Zone 1</option>
+                <option '; if($compare ==36){ $select .='selected'; }   $select .='   value="36">Arizona Zone 2</option>
+                <option '; if($compare ==37){ $select .='selected'; }   $select .='   value="37">Arizona Zone 3</option>
+                <option '; if($compare ==38){ $select .='selected'; }   $select .='   value="38">Arizona Zone 4</option>
+                <option '; if($compare ==39){ $select .='selected'; }   $select .='   value="39">Arizona Zone 5</option>
+                <option '; if($compare ==40){ $select .='selected'; }   $select .='   value="40">Arizona Zone 6</option>
+                <option '; if($compare ==41){ $select .='selected'; }   $select .='   value="41">Arizona Zone 7</option>
+                <option '; if($compare ==42){ $select .='selected'; }   $select .='   value="42">Arizona Zone 8</option>
+                <option '; if($compare ==43){ $select .='selected'; }   $select .='   value="43">Arizona Zone 9</option>
+                <option '; if($compare ==44){ $select .='selected'; }   $select .='   value="44">Arizona Zone 10</option>
+                <option '; if($compare ==45){ $select .='selected'; }   $select .='   value="45">Arizona Zone 11</option>
+                <option '; if($compare ==46){ $select .='selected'; }   $select .='   value="46">Arizona Zone 12</option>
+                <option '; if($compare ==47){ $select .='selected'; }   $select .='   value="47">Arizona Zone 13</option>
+                <option '; if($compare ==48){ $select .='selected'; }   $select .='   value="48">Arizona Zone 14</option>
+                <option '; if($compare ==49){ $select .='selected'; }   $select .='   value="49">Arizona Zone 15</option>
+                <option '; if($compare ==50){ $select .='selected'; }   $select .='   value="50">Arizona Zone Temp</option>';
+                
+               
     $select .="</select>";
-    echo $select;
-
+    echo $select;  
+  
 }
 
 
@@ -972,12 +912,12 @@ function reverseTranslate($facName){
 
 function getVehiclesList($compare = NULL){
     global $dbprefix;
-    $select ="<select id='vehicle' name='vehicle'>";    
+    $select ="<select id='vehicle' name='vehicle'><option>--</option>";    
     $db = new Database();    
-     $request = $db->query("SELECT truck_id,name FROM assets.truck WHERE truck.enabled=1 AND truck.is_sludge = 1  AND truck.sold = 0");
+     $request = $db->query("SELECT truck_id,name FROM assets.truck WHERE truck.enabled=1 AND truck.is_freight = 1  AND truck.sold = 0");
     if(count($request) !=0 ){
         foreach($request as $truck){
-            $select .= "<option "; if($compare == $truck['truck_id']) { $select .="selected";}  $select .="  value='$truck[truck_id]'>$truck[name]</option>";
+            $select .= "<option "; if($compare == $truck['truck_id']) { $select .="selected";}else{ $select .="";  }  $select .="  value='$truck[truck_id]'>$truck[name]</option>";
         }
     }    
     $select .="</select>";
@@ -985,7 +925,7 @@ function getVehiclesList($compare = NULL){
 }
 
 
-function getSludge_trailers($compare = NULL){
+function getfreight_trailers($compare = NULL){
     global $db;
     $select ="<select id='trailers' name='trailers' style='text-align:center;'><option style='text-align:center;' value='-'>-</option>";
     $request = $db->query("SELECT * FROM assets.trailer WHERE trailer.is_sludge=1 AND trailer.enabled=1  AND truck.sold = 0");
@@ -1500,7 +1440,7 @@ function in_assoc($needle, $haystack) {
 
 function gpi($id){
     global $db;
-    $t = $db->query("SELECT gpi FROM sludge_list_of_containers WHERE container_id = $id");
+    $t = $db->query("SELECT gpi FROM freight_list_of_containers WHERE container_id = $id");
     
     if(count($t)>0){
         return $t[0]['gpi'];
@@ -1513,15 +1453,15 @@ function gpi($id){
 
 function container_amountHolds($number){
     $db = new Database();
-    $jk = $db->where("container_id",$number)->get("sludge_list_of_containers","amount_holds");
+    $jk = $db->where("container_id",$number)->get("freight_list_of_containers","amount_holds");
     return $jk[0]['amount_holds'];
 }
 
 function container_amountHolds_from_containers($entry_number){
     $db = new Database();
-    $jk = $db->where("entry",$entry_number)->get("sludge_containers","container_no");
+    $jk = $db->where("entry",$entry_number)->get("freight_containers","container_no");
     
-    $lp = $db->where("container_id",$jk[0]['container_no'])->get("sludge_list_of_containers","amount_holds");
+    $lp = $db->where("container_id",$jk[0]['container_no'])->get("freight_list_of_containers","amount_holds");
     return $lp[0]['amount_holds']; 
     
     
@@ -1529,9 +1469,9 @@ function container_amountHolds_from_containers($entry_number){
 
 function container_own_label($entry_number){
     $db = new Database();
-    $jk = $db->where("entry",$entry_number)->get("sludge_containers","container_no");
+    $jk = $db->where("entry",$entry_number)->get("freight_containers","container_no");
     
-    $lp = $db->where("container_id",$jk[0]['container_no'])->get("sludge_list_of_containers","container_id");
+    $lp = $db->where("container_id",$jk[0]['container_no'])->get("freight_list_of_containers","container_id");
     return $lp[0]['container_id'];
     
 }
@@ -1563,7 +1503,7 @@ function service_list ($name = NULL,$compare =NULL){
 
 function start_date($route_id,$day){
     global $db;
-    $sched = $db->query("SELECT DATE(start_date) as Date FROM sludge_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
+    $sched = $db->query("SELECT DATE(start_date) as Date FROM freight_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
     if(count($sched)>0){
         return $sched[0]['Date'];
     }else {
@@ -1574,7 +1514,7 @@ function start_date($route_id,$day){
 function time_start($route_id,$day){
     $fs_stop ="00:00:00";
     global $db;
-    $f_stop = $db->query("SELECT time_start FROM sludge_rout_history_grease WHERE route_no=$route_id AND what_day = $day ORDER BY time_start ASC LIMIT 0,1");
+    $f_stop = $db->query("SELECT time_start FROM freight_rout_history_grease WHERE route_no=$route_id AND what_day = $day ORDER BY time_start ASC LIMIT 0,1");
     if(count($f_stop)>0){
         $fs_stop = $f_stop[0]['time_start'];
     }
@@ -1584,7 +1524,7 @@ function time_start($route_id,$day){
 function time_end($route_id,$day){
     $ls_stop = "00:00:00";
     global $db;
-    $l_stop = $db->query("SELECT time_end FROM sludge_rout_history_grease WHERE route_no=$route_id  AND what_day = $day ORDER BY time_end DESC LIMIT 0,1");
+    $l_stop = $db->query("SELECT time_end FROM freight_rout_history_grease WHERE route_no=$route_id  AND what_day = $day ORDER BY time_end DESC LIMIT 0,1");
     if(count($l_stop)>0){
         $ls_stop = $l_stop[0]['time_end'];
     }
@@ -1595,7 +1535,7 @@ function time_end($route_id,$day){
 function start_time_from_date($route_id,$day){
     global $db;
     $start_time = "00:00:00";
-     $sched = $db->query("SELECT first_stop as Time FROM sludge_rout_history_grease WHERE route_no =$route_id AND what_day =$day");
+     $sched = $db->query("SELECT first_stop as Time FROM freight_rout_history_grease WHERE route_no =$route_id AND what_day =$day");
     if(count($sched)>0){
         $start_time=  $sched[0]['Time'];
     }
@@ -1605,7 +1545,7 @@ function start_time_from_date($route_id,$day){
 function end_time_from_date($route_id,$day){
     global $db;
     $end_time = "00:00:00";
-    $end1 = $db->query("SELECT last_stop as ETime FROM sludge_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
+    $end1 = $db->query("SELECT last_stop as ETime FROM freight_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
     if(count($end1)>0){
         $end_time= $end1[0]['ETime'];
     } 
@@ -1615,7 +1555,7 @@ function end_time_from_date($route_id,$day){
 function total_hours($route_id,$day){
     global $db;
     $total_day = 0;
-    $day1 = $db->query("SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(timediff(last_stop, first_stop)))) AS totalhours FROM `sludge_rout_history_grease` WHERE route_no=$route_id AND what_day =$day GROUP BY what_day");
+    $day1 = $db->query("SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(timediff(last_stop, first_stop)))) AS totalhours FROM `freight_rout_history_grease` WHERE route_no=$route_id AND what_day =$day GROUP BY what_day");
     if(count($day1)>0){
         $total_day = $day1[0]['totalhours'];
     }
@@ -1627,7 +1567,7 @@ function first_stop_mileage($route_id,$day){
     global $db;
     $f_mileage = 0; 
     if($route_id>0 && $route_id !="" && $route_id !=" "){
-        $first_stop_mileage = $db->query("SELECT first_stop_mileage FROM sludge_rout_history_grease WHERE route_no=$route_id  AND what_day =$day");
+        $first_stop_mileage = $db->query("SELECT first_stop_mileage FROM freight_rout_history_grease WHERE route_no=$route_id  AND what_day =$day");
         if(count($first_stop_mileage)>0){
             $f_mileage = $first_stop_mileage[0]['first_stop_mileage'];
         }
@@ -1640,7 +1580,7 @@ function last_stop_mileage($route_id,$day){
     $l_mileage = 0;
     
     if($route_id>0&& $route_id !="" && $route_id !=" "){
-        $last_stop_mileage = $db->query("SELECT last_stop_mileage FROM sludge_rout_history_grease WHERE route_no=$route_id AND what_day =$day");
+        $last_stop_mileage = $db->query("SELECT last_stop_mileage FROM freight_rout_history_grease WHERE route_no=$route_id AND what_day =$day");
         if(count($last_stop_mileage)>0){
             $l_mileage = $last_stop_mileage[0]['last_stop_mileage'];
         }
@@ -1652,7 +1592,7 @@ function last_stop_mileage($route_id,$day){
 function start_mileage($route_id,$day){
     global $db;
     $start = 0;
-    $s = $db->query("SELECT start_mileage FROM sludge_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
+    $s = $db->query("SELECT start_mileage FROM freight_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
     if(count($s)>0){
        return $s[0]['start_mileage'];
     } else {
@@ -1663,7 +1603,7 @@ function start_mileage($route_id,$day){
 function end_mileage($route_id,$day){
     global $db;
     $end = 0;
-    $e = $db->query("SELECT end_mileage FROM sludge_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
+    $e = $db->query("SELECT end_mileage FROM freight_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
     if(count($e)>0){
         return $e[0]['end_mileage'];
     } else {
@@ -1720,7 +1660,7 @@ function avg_hours_stop($time_start,$total_pu_hours,$stops){
 
 function charged_amount($route_id){
     global $db;
-    $data = $db->query("SELECT ppg,inches_to_gallons FROM sludge_grease_data_table WHERE route_id = $route_id");
+    $data = $db->query("SELECT ppg,inches_to_gallons FROM freight_grease_data_table WHERE route_id = $route_id");
     if(count($data)>0){
         $all_picked_up=0;
         foreach($data as $calc){

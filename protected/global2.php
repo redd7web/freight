@@ -386,7 +386,7 @@ function priorityConverter($pri){
 function uNumToName($number){
     
     $db = new Database();
-    $answer = $db->where("user_id",$number)->get("sludge_users","first,last,user_id");
+    $answer = $db->where("user_id",$number)->get("freight_users","first,last,user_id");
     if(count($answer) >0){
         return "<a href='viewUser.php?id=$number'>".$answer[0]['first']." ".$answer[0]['last']."</a>";
     }
@@ -396,7 +396,7 @@ function uNumToName($number){
 function user_info($number,$field){
     
     $db = new Database();
-    $answer = $db->where("user_id",$number)->get("sludge_users","$field");
+    $answer = $db->where("user_id",$number)->get("freight_users","$field");
     if(count($answer) >0){
         return $answer[0][$field];
     }
@@ -449,7 +449,7 @@ function statusColors($status,$id){
 function getJake(){
     global $dbprefix;
     $db = new Database();
-    $request = $db->orderby("id","desc")->get("sludge_jacobsen");    
+    $request = $db->orderby("id","desc")->get("freight_jacobsen");    
     return $request[0]['percentage'];
 }
 
@@ -650,7 +650,7 @@ function getVehiclesList($compare = NULL){
     $table_vehicles = $dbprefix."_truck_id";
     $select ="<select id='vehicles' name='vehicles'>";    
     $db = new Database();    
-    $request = $db->get("sludge_truck_id");
+    $request = $db->get("freight_truck_id");
     if(count($request) !=0 ){
         foreach($request as $truck){
             $vehicle = new Vehicle($truck['truck_no']);            
@@ -1174,7 +1174,7 @@ function in_assoc($needle, $haystack) {
 
 function gpi($id){
     global $db;
-    $t = $db->query("SELECT gpi FROM sludge_list_of_containers WHERE container_id = $id");
+    $t = $db->query("SELECT gpi FROM freight_list_of_containers WHERE container_id = $id");
     
     if(count($t)>0){
         return $t[0]['gpi'];
@@ -1187,15 +1187,15 @@ function gpi($id){
 
 function container_amountHolds($number){
     $db = new Database();
-    $jk = $db->where("container_id",$number)->get("sludge_list_of_containers","amount_holds");
+    $jk = $db->where("container_id",$number)->get("freight_list_of_containers","amount_holds");
     return $jk[0]['amount_holds'];
 }
 
 function container_amountHolds_from_containers($entry_number){
     $db = new Database();
-    $jk = $db->where("entry",$entry_number)->get("sludge_containers","container_no");
+    $jk = $db->where("entry",$entry_number)->get("freight_containers","container_no");
     
-    $lp = $db->where("container_id",$jk[0]['container_no'])->get("sludge_list_of_containers","amount_holds");
+    $lp = $db->where("container_id",$jk[0]['container_no'])->get("freight_list_of_containers","amount_holds");
     return $lp[0]['amount_holds']; 
     
     
@@ -1203,9 +1203,9 @@ function container_amountHolds_from_containers($entry_number){
 
 function container_own_label($entry_number){
     $db = new Database();
-    $jk = $db->where("entry",$entry_number)->get("sludge_containers","container_no");
+    $jk = $db->where("entry",$entry_number)->get("freight_containers","container_no");
     
-    $lp = $db->where("container_id",$jk[0]['container_no'])->get("sludge_list_of_containers","container_id");
+    $lp = $db->where("container_id",$jk[0]['container_no'])->get("freight_list_of_containers","container_id");
     return $lp[0]['container_id'];
     
 }
@@ -1237,7 +1237,7 @@ function service_list ($name = NULL,$compare =NULL){
 
 function start_date($route_id,$day){
     global $db;
-    $sched = $db->query("SELECT DATE(start_date) as Date FROM sludge_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
+    $sched = $db->query("SELECT DATE(start_date) as Date FROM freight_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
     if(count($sched)>0){
         return $sched[0]['Date'];
     }else {
@@ -1248,7 +1248,7 @@ function start_date($route_id,$day){
 function time_start($route_id,$day){
     $fs_stop ="00:00:00";
     global $db;
-    $f_stop = $db->query("SELECT time_start FROM sludge_rout_history_grease WHERE route_no=$route_id AND what_day = $day ORDER BY time_start ASC LIMIT 0,1");
+    $f_stop = $db->query("SELECT time_start FROM freight_rout_history_grease WHERE route_no=$route_id AND what_day = $day ORDER BY time_start ASC LIMIT 0,1");
     if(count($f_stop)>0){
         $fs_stop = $f_stop[0]['time_start'];
     }
@@ -1258,7 +1258,7 @@ function time_start($route_id,$day){
 function time_end($route_id,$day){
     $ls_stop = "00:00:00";
     global $db;
-    $l_stop = $db->query("SELECT time_end FROM sludge_rout_history_grease WHERE route_no=$route_id  AND what_day = $day ORDER BY time_end DESC LIMIT 0,1");
+    $l_stop = $db->query("SELECT time_end FROM freight_rout_history_grease WHERE route_no=$route_id  AND what_day = $day ORDER BY time_end DESC LIMIT 0,1");
     if(count($l_stop)>0){
         $ls_stop = $l_stop[0]['time_end'];
     }
@@ -1269,7 +1269,7 @@ function time_end($route_id,$day){
 function start_time_from_date($route_id,$day){
     global $db;
     $start_time = "00:00:00";
-     $sched = $db->query("SELECT first_stop as Time FROM sludge_rout_history_grease WHERE route_no =$route_id AND what_day =$day");
+     $sched = $db->query("SELECT first_stop as Time FROM freight_rout_history_grease WHERE route_no =$route_id AND what_day =$day");
     if(count($sched)>0){
         $start_time=  $sched[0]['Time'];
     }
@@ -1279,7 +1279,7 @@ function start_time_from_date($route_id,$day){
 function end_time_from_date($route_id,$day){
     global $db;
     $end_time = "00:00:00";
-    $end1 = $db->query("SELECT last_stop as ETime FROM sludge_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
+    $end1 = $db->query("SELECT last_stop as ETime FROM freight_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
     if(count($end1)>0){
         $end_time= $end1[0]['ETime'];
     } 
@@ -1289,7 +1289,7 @@ function end_time_from_date($route_id,$day){
 function total_hours($route_id,$day){
     global $db;
     $total_day = 0;
-    $day1 = $db->query("SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(timediff(last_stop, first_stop)))) AS totalhours FROM `sludge_rout_history_grease` WHERE route_no=$route_id AND what_day =$day GROUP BY what_day");
+    $day1 = $db->query("SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(timediff(last_stop, first_stop)))) AS totalhours FROM `freight_rout_history_grease` WHERE route_no=$route_id AND what_day =$day GROUP BY what_day");
     if(count($day1)>0){
         $total_day = $day1[0]['totalhours'];
     }
@@ -1301,7 +1301,7 @@ function first_stop_mileage($route_id,$day){
     global $db;
     $f_mileage = 0; 
     if($route_id>0 && $route_id !="" && $route_id !=" "){
-        $first_stop_mileage = $db->query("SELECT first_stop_mileage FROM sludge_rout_history_grease WHERE route_no=$route_id  AND what_day =$day");
+        $first_stop_mileage = $db->query("SELECT first_stop_mileage FROM freight_rout_history_grease WHERE route_no=$route_id  AND what_day =$day");
         if(count($first_stop_mileage)>0){
             $f_mileage = $first_stop_mileage[0]['first_stop_mileage'];
         }
@@ -1314,7 +1314,7 @@ function last_stop_mileage($route_id,$day){
     $l_mileage = 0;
     
     if($route_id>0&& $route_id !="" && $route_id !=" "){
-        $last_stop_mileage = $db->query("SELECT last_stop_mileage FROM sludge_rout_history_grease WHERE route_no=$route_id AND what_day =$day");
+        $last_stop_mileage = $db->query("SELECT last_stop_mileage FROM freight_rout_history_grease WHERE route_no=$route_id AND what_day =$day");
         if(count($last_stop_mileage)>0){
             $l_mileage = $last_stop_mileage[0]['last_stop_mileage'];
         }
@@ -1326,7 +1326,7 @@ function last_stop_mileage($route_id,$day){
 function start_mileage($route_id,$day){
     global $db;
     $start = 0;
-    $s = $db->query("SELECT start_mileage FROM sludge_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
+    $s = $db->query("SELECT start_mileage FROM freight_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
     if(count($s)>0){
        return $s[0]['start_mileage'];
     } else {
@@ -1337,7 +1337,7 @@ function start_mileage($route_id,$day){
 function end_mileage($route_id,$day){
     global $db;
     $end = 0;
-    $e = $db->query("SELECT end_mileage FROM sludge_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
+    $e = $db->query("SELECT end_mileage FROM freight_rout_history_grease WHERE route_no = $route_id AND what_day =$day");
     if(count($e)>0){
         return $e[0]['end_mileage'];
     } else {
@@ -1394,7 +1394,7 @@ function avg_hours_stop($time_start,$total_pu_hours,$stops){
 
 function charged_amount($route_id){
     global $db;
-    $data = $db->query("SELECT ppg,inches_to_gallons FROM sludge_grease_data_table WHERE route_id = $route_id");
+    $data = $db->query("SELECT ppg,inches_to_gallons FROM freight_grease_data_table WHERE route_id = $route_id");
     if(count($data)>0){
         $all_picked_up=0;
         foreach($data as $calc){

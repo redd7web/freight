@@ -64,7 +64,7 @@ class Scheduled_Routes {
                     $this->division         =       $account_info->singleField($this->account_number,"division");
                     $this->code_red_email   =       $account_info->singleField($this->account_number,"code_red_email");
                     
-                    $account_info = $db->query("SELECT friendly FROM sludge_accounts WHERE account_ID = $this->account_number AND (sludge_accounts.friendly IS NOT NULL AND sludge_accounts.friendly != 'null' AND sludge_accounts.friendly !=' ')");
+                    $account_info = $db->query("SELECT friendly FROM freight_accounts WHERE account_ID = $this->account_number AND (freight_accounts.friendly IS NOT NULL AND freight_accounts.friendly != 'null' AND freight_accounts.friendly !=' ')");
                     if(count($account_info)>0){
                         $this->account_friendly = $account_info[0]['friendly'];
                     } else {
@@ -72,9 +72,9 @@ class Scheduled_Routes {
                     }
                     
                     
-                    $select2 = $db->where("schedule_id",$this->schedule_id)->get("sludge_notes");
+                    $select2 = $db->where("schedule_id",$this->schedule_id)->get("freight_notes");
                     
-                    $note_spec = $db->query("SELECT * FROM sludge_notes WHERE schedule_id = $this->schedule_id");
+                    $note_spec = $db->query("SELECT * FROM freight_notes WHERE schedule_id = $this->schedule_id");
                     if(count($note_spec)>0){
                         $buffer = explode("|",$note_spec[0]['notes']);
                         
