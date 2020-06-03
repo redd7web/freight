@@ -20,7 +20,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
               
                if(strlen($data[26])>0){
                    $parse = explode(" ",$data[26]);       
-                   $check = $db->query("SELECT user_id FROM sludge_users WHERE first like '%$parse[0]%' AND last like '%$parse[1]%'");
+                   $check = $db->query("SELECT user_id FROM freight_users WHERE first like '%$parse[0]%' AND last like '%$parse[1]%'");
                    if(count($check)>0){                        
                         $number = $check[0]['user_id'];
                         
@@ -34,7 +34,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
                
                if(strlen($data[27]) >0){
                     $parse2 = explode(" ",$data[27]);
-                    $check2 = $db->query("SELECT user_id FROM sludge_users WHERE first like '%$parse2[0]%' AND last like '%$parse2[1]%'");
+                    $check2 = $db->query("SELECT user_id FROM freight_users WHERE first like '%$parse2[0]%' AND last like '%$parse2[1]%'");
                     if(count($check2)>0){
                         $account_rep = $check2[0]['user_id'];
                     } else {
@@ -49,9 +49,9 @@ if(($handle = fopen($file,"r"))!==FALSE){
                if(strlen($data[1])>0){
                     echo "orig rep :".uNumToName($number)." #$number<br/>";
                     echo "account rep : ".uNumToName($account_rep)." #$account_rep<br/>";                    
-                   echo "UPDATE sludge_accounts set original_sales_person = $number name,account_rep=$account_rep | ".uNumToName($number)." WHERE name like '%$ac_name%';<br/><--------------------------<br/><br/>";            
+                   echo "UPDATE freight_accounts set original_sales_person = $number name,account_rep=$account_rep | ".uNumToName($number)." WHERE name like '%$ac_name%';<br/><--------------------------<br/><br/>";            
                    
-                   $db->query("UPDATE sludge_accounts set original_sales_person = $number,account_rep=$account_rep WHERE name like '%$ac_name%'");
+                   $db->query("UPDATE freight_accounts set original_sales_person = $number,account_rep=$account_rep WHERE name like '%$ac_name%'");
                }
         }
 }

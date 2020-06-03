@@ -20,7 +20,7 @@ if(($handle = fopen($file,"r"))!==FALSE){
               
                if(strlen($data[26])>0){
                    $parse = explode(" ",$data[26]);       
-                   $check = $db->query("SELECT user_id FROM sludge_users WHERE first like '%$parse[0]%' AND last like '%$parse[1]%'");
+                   $check = $db->query("SELECT user_id FROM freight_users WHERE first like '%$parse[0]%' AND last like '%$parse[1]%'");
                    if(count($check)>0){                        
                         $number = $check[0]['user_id'];
                         
@@ -33,8 +33,8 @@ if(($handle = fopen($file,"r"))!==FALSE){
                //echo "updated with ".$number."<br/>";
                
                if(strlen($data[1])>0){
-                   echo "UPDATE sludge_accounts set original_sales_person = $number name | ".uNumToName($number)." WHERE name like '%$ac_name%';<br/><--------------------------<br/><br/>";            
-                   $db->query("UPDATE sludge_accounts set original_sales_person = $number WHERE name like '%$ac_name%'");
+                   echo "UPDATE freight_accounts set original_sales_person = $number name | ".uNumToName($number)." WHERE name like '%$ac_name%';<br/><--------------------------<br/><br/>";            
+                   $db->query("UPDATE freight_accounts set original_sales_person = $number WHERE name like '%$ac_name%'");
                }
         }
 }

@@ -9,7 +9,7 @@ include "protected/global.php";
    
     
     
-    $db->where('account_ID',$_POST['id'])->update("sludge_accounts",$data);
+    $db->where('account_ID',$_POST['id'])->update("freight_accounts",$data);
     $track = array(
         "date"=>date("Y-m-d H:i:s"),
         "user"=>$person->user_id,

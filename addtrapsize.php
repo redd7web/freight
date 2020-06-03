@@ -4,7 +4,7 @@ ini_set("display_errors",1);
 if(isset($_POST['add_size'])){
     
     
-    if( $db->query("UPDATE sludge_accounts SET grease_volume = $_POST[tsize] WHERE account_ID = $_GET[account]") &&  $db->query("UPDATE sludge_grease_traps SET volume = $_POST[tsize],	grease_trap_size= $_POST[tsize] WHERE account_no = $_GET[account] AND route_status IN ('enroute','scheduled')") ){// update stops enroute or scheduled with new trap size
+    if( $db->query("UPDATE freight_accounts SET grease_volume = $_POST[tsize] WHERE account_ID = $_GET[account]") &&  $db->query("UPDATE freight_grease_traps SET volume = $_POST[tsize],	grease_trap_size= $_POST[tsize] WHERE account_no = $_GET[account] AND route_status IN ('enroute','scheduled')") ){// update stops enroute or scheduled with new trap size
          echo "<span style='color:green;'>Account and enroute/scheduled Trapsize updated</span>";
     }
 }

@@ -7,11 +7,11 @@ ini_set("display_errors",0);
 
 //print_r($_GET);
 
-$sched = $db->where("grease_route_no",$_GET['route_id'])->where("grease_no","$_GET[sched_id]")->get("sludge_grease_traps","account_no,route_status,grease_no,grease_route_no,percent_split");//schedule info
+$sched = $db->where("grease_route_no",$_GET['route_id'])->where("grease_no","$_GET[sched_id]")->get("freight_grease_traps","account_no,route_status,grease_no,grease_route_no,percent_split");//schedule info
 
-$editable = $db->where('route_id',$_GET['route_id'])->get("sludge_list_of_routes","status");
+$editable = $db->where('route_id',$_GET['route_id'])->get("freight_list_of_routes","status");
 
-$nets = $db->where("route_id",$_GET['route_id'])->get("sludge_ikg_grease");
+$nets = $db->where("route_id",$_GET['route_id'])->get("freight_ikg_grease");
 
 if($editable[0]['route_status'] == "completed"){
     $read_only = "readonly=''";

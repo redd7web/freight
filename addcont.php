@@ -12,12 +12,12 @@ $buffer = array(
 $db->insert($dbprefix.'_containers',$buffer);
 
 
-$routes  = $db->query("SELECT * FROM sludge_data_table INNER JOIN sludge_list_of_routes ON sludge_data_table.route_id = sludge_list_of_routes.route_id WHERE account_no = $_POST[account_no] AND status='enroute' ORDER BY date_of_pickup");
+$routes  = $db->query("SELECT * FROM freight_data_table INNER JOIN freight_list_of_routes ON freight_data_table.route_id = freight_list_of_routes.route_id WHERE account_no = $_POST[account_no] AND status='enroute' ORDER BY date_of_pickup");
 
 if(count($routes)>0){// 
     $new_data = array(
         "expected"=>$label[0]['amount_holds']
     );
 
-    $db->update("account_no",$_POST['account_no'])->where("route_id",$routes[0]['route_id'])->update("sludge_data_table",$new_data);
+    $db->update("account_no",$_POST['account_no'])->where("route_id",$routes[0]['route_id'])->update("freight_data_table",$new_data);
 }
