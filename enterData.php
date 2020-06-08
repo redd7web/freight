@@ -16,10 +16,37 @@ include "protected/global.php";
  
 include "source/scripts.php"; 
 include "source/css.php";
-if(isset($_SESSION['sludge_id'])){ 
+if(isset($_SESSION['freight_id'])){ 
     $person = new Person();
 }
 $driver=0;
+
+if(  isset($_POST['add_t']) && strlen(trim($_POST['account_number'])) >0 ){
+    $db->query("UPDATE freight_ikg_manifest_info SET account_numbers =concat(account_numbers,'$_POST[account_number]') WHERE route_id = $_GET[route_id]");   //modify the account string
+    $list = explode("|",$_POST['account_number']);
+    print_r($list);
+    array_pop($list);
+    foreach($list as $l){
+        $ant = new Account($l);
+        $kg = $db->query("SELECT scheduled_date,driver FROM freight_ikg_manifest_info WHERE route_id = $_GET[route_id]");
+        $h = $db->query("SELECT schedule_id FROM freight_scheduled_routes WHERE account_no = $l AND route_status='scheduled'");
+        if(count($h)>0){//is there already a stop available in the scheduled pool for this account ?
+            $db->query("UPDATE freight_scheduled_routes SET route_id=$_GET[route_id],route_status='enroute',scheduled_start_date='".$kg[0]['scheduled_date']."' WHERE schedule_id = ".$h[0]['schedule_id']);
+        }else{//create stop if one does not exist
+             $pack = array(
+                "scheduled_start_date"=>$kg[0]['scheduled_date'],
+                "facility_origin"=>$ant->divisiion,
+                "route_status"=>"enroute",
+                "created_by"=>$person->user_id,
+                "driver"=>$kg[0]['driver'],
+                "account_no"=>$l,
+                "store_type"=>$ant->store_type,
+                "route_id"=>$_GET['route_id']
+              );    
+            $db->insert("freight_scheduled_routes",$pack);
+        }
+    }
+}
 
 $ikg_info = new IKG($_GET['route_id']); 
 
@@ -59,17 +86,17 @@ body{
 <div id="google_translate_element"></div>
 <div id="loading-screen"></div>
  <div id="fullgray" style="width: 100%;height:30px;background: linear-gradient(#F0F0F0, #CFCFCF) repeat scroll 0 0 rgba(0, 0, 0, 0);border-bottom: 1px solid #808080;margin-bottom:10px;border-bottom: 3px solid rgb(62, 126, 48);">
-            <div id="info_hold" style="width: 700px;margin:auto;height:30px;background:transparent;padding">
-            <table style="width:700px;"><tr><td>Route ID:</td><td id="rid"> <?php if(isset($ikg_info->route_id)){ echo "$ikg_info->route_id";}?> </td><td>Created: <?php   if(isset($ikg_info->created_date )){ echo $ikg_info->created_date; }else { echo date("Y-m-d");}   ?></td><td>By:<?php 
-            if(!isset($ikg_info->created_by)){
+        <div id="info_hold" style="width: 700px;margin:auto;height:30px;background:transparent;padding">
+        <table style="width:700px;"><tr><td>Route ID:</td><td id="rid"> <?php if(isset($ikg_info->route_id)){ echo "$ikg_info->route_id";}?> </td><td>Created: <?php   if(isset($ikg_info->created_date )){ echo $ikg_info->created_date; }else { echo date("Y-m-d");}   ?></td><td>By:<?php 
+        if(!isset($ikg_info->created_by)){
+        
+        echo uNumToName($person->user_id);  }{
+            echo $ikg_info->created_by;
             
-            echo uNumToName($person->user_id);  }{
-                echo $ikg_info->created_by;
-                
-            }?> </td><td>Facility: <span id="facholder"><?php echo $ikg_info->recieving_facility; ?></span> </td></tr>
-            </table>
-            </div>
-    </div>
+        }?> </td><td>Facility: <span id="facholder"><?php echo $ikg_info->recieving_facility; ?></span> </td></tr>
+        </table>
+        </div>
+</div>
     
 <div id="debug">
 
@@ -77,9 +104,18 @@ body{
     
 <div id="wrapper" style="width:880px;margin:auto;height:auto;border:0px solid #bbb;">
     <div id="spacer" style="width: 100%;height:10px;">&nbsp;</div>
-   
+    <div id="left" style="float: left;width:280px;height:480px;">
+        <div id="account_add" style="width: 280px;height:200px;overflow-x:hidden;overflow-y:auto;padding:10px 10px 10px 10px;border-radius:5px 5px 5px 5px;border:3px solid rgb(242,242,242);margin-bottom:5px;">
+            <h1>Quick Add stop(s)</h1>        
+            <h5  style="text-align: center;">Please type in account name to add below</h5>
+            <form action="enterData.php?route_id=<?php echo $_GET['route_id']."&day=1"; ?>" method="POST">
+                <input type="text" id="quicks" name="quicks" placeholder="Type in account name here." style="width: 99%;" /><br /><br />
+                <input type="text" readonly placeholder="account_number" id="account_number" name="account_number" style="width:99%;"/><br /><br />
+                <input type="submit" value="Add Account(s) to this stop" style="float: right;" name="add_t" id="add_t"/>
+            </form>
+    </div>
 
-    <div id="accountHolder" style="width: 280px;height:480px;overflow-x:hidden;overflow-y:auto;padding:10px 10px 10px 10px;border-radius:5px 5px 5px 5px;border:3px solid rgb(242,242,242);float:left;margin-bottom:5px;">
+    <div id="accountHolder" style="width: 280px;height:480px;overflow-x:hidden;overflow-y:auto;padding:10px 10px 10px 10px;border-radius:5px 5px 5px 5px;border:3px solid rgb(242,242,242);margin-bottom:5px;">
     <table style="width: 99%;" id="sched_list">
     <?php
        $count =1;
@@ -115,6 +151,7 @@ body{
        }
     ?>
     </table>
+    </div>
     </div>
 
 <div id="enterData" style="padding: 10px 10px 10px 10px;width:600px;min-height:480px;float:left;margin-bottom:5px;height:auto;">
@@ -435,74 +472,26 @@ $("input#inchesleftover").change(function(){
 
 $("#pickup_complete").click(function(){
     //$("#loading-screen").show();
-    var text_id = $(this).attr('xlkr');
-    
-    var total_gal =0;    
-    var total_barrel =0;
-    var inches_entered = 0 ;
-    var inches_to_gallons = 0;
-    var inches_left_over = 0;;
-    var gallons_left_over = 0;     
-    var gal_expected = 0;
-    var entry = 0;
-    /**/
-    $("#barrel_section > tbody  > tr").each(function(){
-       //flush variables
-        total_gal = (total_gal +  (  parseInt($(this).find('.aditional_galls').val()) *1)  );
-        //total_barrel = (total_barrel +  ( parseInt(gal_expected) *1)  ); 
-    });
-    
-    $("#barrel_section > tbody  > tr").each(function(){//loop through each barrel for account
-        //flush variables
-        inches_entered = $(this).find('.addtional_inch').val();
-        inches_to_gallons = $(this).find('.aditional_galls').val(); 
-        inches_left_over = $(this).find('.inchesleftover').val();
-        gallons_left_over = $(this).find('.galslefover').val();
-        gal_expected = $(this).find('.addtional_inch').attr('total_cap');
-        entry = $(this).find('.entry').val();
-        label = $(this).find('.label').val();
-        
-        $.post("save_data_info.php",{                
+     entry = $(this).find('.entry').val();
+    $.post("save_data_info.php",{                
                 route_id:<?php echo "$_GET[route_id]"; ?>,
                 schedule_number: schedules_to_traverse[current_schedule],
-                inches_entered: inches_entered, 
-                picked_up:inches_to_gallons,
-                inches_left:inches_left_over,
-                inches_to_gallons_leftover: 0,
-                gallons_expected:gal_expected,
-                label:label,
                 account_no: $("input#update_this_account").val(),
                 zero_gallon_reason: $("#reason_for_skip_id").val(),
                 field_note:$("#field_notes").val(),
                 driver: $("#drivers").val(),
                 dop:$("input#dop").val(),
                 entry:entry,
-                sum:total_gal,
-                day:<?php echo $_GET['day']; ?>,
                 mileage:$("input#mileage").val()                             
             },function(data){
+                alert("Pickup complete");
                 $("#debug").append(data);
                 if(current_schedule == schedule_max -1){
                     alert("At end of list");
                     
                 }
                
-        });    
-        
-        //alert(label);
-    });
-    
-
-    
-    
-    
-    
-    
-    if( $("input#"+text_id).val() != 1 ){        
-        alert("schedule: "+schedules_to_traverse[current_schedule]+" route_id: <?php echo "$_GET[route_id]"; ?>"+" account_no"+ $("input#update_this_account").val());
-        $.post("save_oil_history.php",{route_id:<?php echo $_GET['route_id'] ?>,what_day:<?php echo $_GET['day']; ?>,account_no:$("input#update_this_account").val()},function(data){});
-        $.post("decrement_inc.php",{route_id:<?php echo $_GET['route_id'] ?>},function(data){});//when pick up is complete decrement incomplete one less than number started( which is the same amount as stops in the begginning)
-    }
+    }); 
     
     $("#loading-screen").fadeOut("slow");    
         
@@ -554,6 +543,70 @@ $("#barrel_section").on('click','.view_form',function(){
 });
 
 $("input#dop").datepicker({dateFormat: "yy-mm-dd",changeMonth: true, changeYear: true});
+
+
+
+<?php
+
+$act[]="";
+$ac = $db->get("freight_accounts");
+if(count($ac) !=0){   
+    foreach($ac as $value){
+        $name =str_replace("-","",htmlspecialchars($value['name']));
+        $act[] = "\"".$name." - $value[account_ID]\" \r\n";
+    }
+}
+
+echo "var accountlist = [";
+ echo implode(",",array_filter($act) )."]; ";
+?>
+
+$("#quicks").autocomplete({    
+     minLength: 3, 
+     source: function(req, responseFn) {
+          var matches = new Array();
+          var needle = req.term.toLowerCase();            
+          var len = accountlist.length;
+          for(i = 0; i < len; ++i){
+              var haystack = accountlist[i].toLowerCase();
+              if(haystack.indexOf(needle) === 0 || haystack.indexOf(" " + needle) != -1)
+              {
+                  matches.push(accountlist[i]);
+              }
+          }
+          responseFn(matches);
+    },
+    select: function(event, ui) {
+        var origEvent = event;
+        while (origEvent.originalEvent !== undefined){
+            origEvent = origEvent.originalEvent;
+        }
+        //console.info('Event type = ' + origEvent.type);
+        //console.info('ui.item.value = ' + ui.item.value);
+        if (origEvent.type == 'click'){
+            var k = ui.item.value;
+            var buffer = k.split("-");     
+            var number = buffer[1].replace(/[^0-9]/g, '');
+            var o,y;
+            y= buffer[0];
+            o = y.toUpperCase();
+            $("input#quicks").val(buffer[0]);
+            $("input#account_number").val( $("input#account_number").val()+ number+"|" );
+            $("input#quicks").val("");
+        } else {
+            var k = ui.item.value;
+            var buffer = k.split("-");     
+            var number = buffer[1].replace(/[^0-9]/g, '');
+            var o,y;
+            y= buffer[0];
+            o = y.toUpperCase();
+            $("input#quicks").val(buffer[0]);
+            $("input#account_number").val( $("input#account_number").val()+ number+"|"  );   
+            $("input#quicks").val("");
+        }
+    }
+});
+
 </script>
 <script src="js/general.js"></script>
 </body>
